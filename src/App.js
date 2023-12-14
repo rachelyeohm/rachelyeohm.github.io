@@ -8,7 +8,7 @@ import {
   MenuUnfoldOutlined, 
 } from '@ant-design/icons';
 import Form from "./Form.js"
-import MST from "./Tree.js"
+import MST from "./MST.js"
 
 
 
