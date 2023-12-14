@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import GraphCalc from "./GraphCalculations"
 import Graph from "./Graph"
-
+import KruskalCalc from "./KruskalCalculations"
+import PrimCalc from "./PrimCalculations"
 
 const MatrixForm = ({usecase, directed}) => {
   const [number, setNumber]  = useState({
@@ -92,8 +93,8 @@ const MatrixForm = ({usecase, directed}) => {
             {matrix.length > 0 ? addBlanks() : null}
             <button className="button" type="submit">Submit</button>
         </form>
-        {isFormSubmitted && (usecase === "visualisation" ? <Graph graphData={matrix} width={600} height={200} directed={true}/> : null) }
-        {isFormSubmitted && (usecase === "visualisation" ? <GraphCalc graphData={matrix}/> : null)}
+        {isFormSubmitted && (usecase === "visualisation" ? <Graph graphData={matrix} width={600} height={200} directed={true}/> : <KruskalCalc graphData={matrix} width={200} height={200}/>) }
+        {isFormSubmitted && (usecase === "visualisation" ? <GraphCalc graphData={matrix}/> : <PrimCalc graphData={matrix} width={200} height={200}/>)}
     </div>
     
   );

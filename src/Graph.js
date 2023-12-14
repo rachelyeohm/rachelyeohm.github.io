@@ -125,7 +125,7 @@ export default function Graph(props) {
 
 export function PrimGraph(props){
 
-  // add options for selected. maybe a usestate.
+  // TODO: add options for selected. maybe a usestate.
     const graphnodes = createNodes(props.graphData, props.directed);
     // componentDidMount = () => {
     //   this.setState({
