@@ -61,7 +61,7 @@ const App = () => {
         />
       </div>
       <div style={{ marginLeft: 16 }}>
-        {openKey === 'graph' && <Form />}
+        {openKey === 'graph' && <Form usecase = {"visualisation"} directed = {true}/>}
         {openKey === 'tree' && <MST />}
       </div>
     </div>

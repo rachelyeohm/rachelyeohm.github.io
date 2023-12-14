@@ -3,7 +3,7 @@ import GraphCalc from "./GraphCalculations"
 import Graph from "./Graph"
 
 
-const MatrixForm = () => {
+const MatrixForm = ({usecase, directed}) => {
   const [number, setNumber]  = useState({
     n:4
   });
@@ -43,6 +43,9 @@ const MatrixForm = () => {
     const { value } = event.target;
     const updatedMatrix = [...matrix];
     updatedMatrix[rowIndex][colIndex] = value;
+    if (!directed){
+      updatedMatrix[colIndex][rowIndex] = value;
+    }
     //setIsFormSubmitted(false);
     setMatrix(updatedMatrix);
   };
@@ -89,8 +92,8 @@ const MatrixForm = () => {
             {matrix.length > 0 ? addBlanks() : null}
             <button className="button" type="submit">Submit</button>
         </form>
-        {isFormSubmitted && <Graph graphData={matrix} width={600} height={200} directed={true}/>  }
-        {isFormSubmitted && <GraphCalc graphData={matrix}/>}
+        {isFormSubmitted && (usecase === "visualisation" ? <Graph graphData={matrix} width={600} height={200} directed={true}/> : null) }
+        {isFormSubmitted && (usecase === "visualisation" ? <GraphCalc graphData={matrix}/> : null)}
     </div>
     
   );
