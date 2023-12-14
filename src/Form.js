@@ -48,7 +48,6 @@ const MatrixForm = ({usecase, directed}) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Convert the matrix into a flat array
     setIsFormSubmitted(true);
   };
 
@@ -60,6 +59,8 @@ const MatrixForm = ({usecase, directed}) => {
                     <input
                     key={colIndex}
                     type="number"
+                    min = "0"
+                    step = "1"
                     value={cell}
                     onChange={(event) => handleInputChange(rowIndex, colIndex, event)}
                     />
@@ -76,6 +77,8 @@ const MatrixForm = ({usecase, directed}) => {
               Enter number of rows/columns:   &nbsp; &nbsp;
               <input
               type="number"
+              min = "0"
+              step = "1"
               name="n"
               value={number.n}
               onChange={handleNumChange}
