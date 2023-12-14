@@ -1,6 +1,3 @@
-import { useState, useRef} from "react";
-import cytoscape from 'cytoscape';
-
 import React, { Component } from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
 
