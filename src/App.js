@@ -8,7 +8,7 @@ import {
   MenuUnfoldOutlined, 
 } from '@ant-design/icons';
 import Form from "./Form.js"
-import Tree from "./Tree.js"
+import MST from "./Tree.js"
 
 
 
@@ -62,7 +62,7 @@ const App = () => {
       </div>
       <div style={{ marginLeft: 16 }}>
         {openKey === 'graph' && <Form />}
-        {openKey === 'tree' && <Tree />}
+        {openKey === 'tree' && <MST />}
       </div>
     </div>
   );
