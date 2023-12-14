@@ -107,7 +107,6 @@ const undirected_stylesheet = [
 
 export default function Graph(props) {
 
-
     const graphnodes = createNodes(props.graphData, props.directed);
 
     return (<CytoscapeComponent 

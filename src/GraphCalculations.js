@@ -1,10 +1,11 @@
-
-const Graph = ({graphData, width, height}) => {
+import React from "react";
+import Graph from "./Graph"
+const GraphCalculations = ({graphData, width, height}) => {
   
   return (
       
     <div className="general">
-        
+        <Graph graphData = {graphData} width = {width} height = {height} directed = {true}/>
         <p>Determinant: {determinant(graphData)}</p>
         <p>Symmetric: {symmetric(graphData) ? "Yes" : "No"}</p>
         <p>Euler: {euler(graphData) ? "Yes" : "No"}</p>
@@ -14,7 +15,7 @@ const Graph = ({graphData, width, height}) => {
     
   );
 };
-export default Graph;
+export default GraphCalculations;
 
 
 
