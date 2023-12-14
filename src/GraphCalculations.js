@@ -1,5 +1,5 @@
 
-const Graph = ({graphData}) => {
+const Graph = ({graphData, width, height}) => {
   
   return (
       

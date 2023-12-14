@@ -64,7 +64,7 @@ const MatrixForm = () => {
                 {row.map((cell, colIndex) => (
                     <input
                     key={colIndex}
-                    type="text"
+                    type="number"
                     value={cell}
                     onChange={(event) => handleInputChange(rowIndex, colIndex, event)}
                     />
