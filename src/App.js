@@ -11,13 +11,3 @@ function App() {
 }
 
 export default App;
-
-
-// <div style={{ display: 'flex' }}>
-// <div style={{ flex: 1 }}>
-//   <Navbar />
-// </div>
-// <div style={{ flex: 2 }}>
-//   <Form />
-// </div>
-// </div>
