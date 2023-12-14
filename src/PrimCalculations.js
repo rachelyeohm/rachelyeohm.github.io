@@ -5,12 +5,10 @@ import Graph, {PrimGraph} from "./Graph"
 //prim: start with mstSet (vertices already included)
 //make every vertices except the vertex u want as first infinite. the vertex u want first is 0
 
-const createEmptyMatrix = (n) => {
-  return Array.from({ length: n }, () => Array(n).fill(0));
-};
+const createEmptyMatrix = n => Array.from({ length: n }, () => Array(n).fill(0));
 
-function minKey(weights, vertexSet, numVertices) 
-{ 
+//code for Prim's Theorem partially taken from Dharanendra L V. from geeksforgeeks.org
+function minKey(weights, vertexSet, numVertices) { 
     // Initialize min value 
     let min = Number.MAX_VALUE, min_index; 
     console.log(weights);
