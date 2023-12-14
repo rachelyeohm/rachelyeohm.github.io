@@ -28,12 +28,8 @@ const MatrixForm = ({usecase, directed}) => {
     
   const handleNumSubmit = (event) => {
     event.preventDefault();
-    // Handle form submission with formData.n
     const num_rows = event.target.value;
-    
     setMatrix(createEmptyArray(num_rows));
-    
-    
   };
 
   const [matrix, setMatrix] = useState(
@@ -47,7 +43,6 @@ const MatrixForm = ({usecase, directed}) => {
     if (!directed){
       updatedMatrix[colIndex][rowIndex] = value;
     }
-    //setIsFormSubmitted(false);
     setMatrix(updatedMatrix);
   };
 

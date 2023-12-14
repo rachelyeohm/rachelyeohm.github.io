@@ -35,13 +35,6 @@ const determinant = ([xs, ...xss]) =>
 
 const sum_arr = (arr) => arr.reduce((partialSum, a) => partialSum + a, 0);
 
-// const sum_arr = (arr) => {
-//   let sum = 0;
-//   for (let i = 0; i < arr.length; i++ ) {
-//     sum += arr[i];
-//   }
-//   return sum;
-// }
 const col = (arr,idx) => arr.map((value,index) =>{ return value[idx]; });
 
 const row = (arr,idx) => arr[idx];

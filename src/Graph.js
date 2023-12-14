@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
 
 
-
+const number_to_alpha = (number) => String.fromCharCode(97 + number);
 function getDefaultStylesheet() {
   return [{ selector: "node", style: { label: "data(label)" } }];
 }
@@ -11,13 +11,13 @@ function createNodes(graphData, directed){
 
     var graphnodes = [];
     for (let i=0; i < graphData.length; i++){
-        graphnodes.push({data: {id : String.fromCharCode(97 + i), label: String.fromCharCode(97 + i)}})
+        graphnodes.push({data: {id : number_to_alpha(i), label: number_to_alpha(i)}})
     } 
     if (directed){
       for (let i=0; i < graphData.length; i++){
         for (let j=0; j < graphData.length; j++){
             if (graphData[i][j] > 0){
-              graphnodes.push({data: {source: String.fromCharCode(97 + j), target: String.fromCharCode(97 + i), label: graphData[i][j]}})
+              graphnodes.push({data: {source: number_to_alpha(j), target: number_to_alpha(j), label: graphData[i][j]}})
             }
         }
       }
@@ -34,8 +34,8 @@ function createNodes(graphData, directed){
             if (!visitedEdges.includes(edgeKey) && !visitedEdges.includes(reverseEdgeKey)) {
               graphnodes.push({
                 data: {
-                  source: String.fromCharCode(97 + j),
-                  target: String.fromCharCode(97 + i),
+                  source: number_to_alpha(j),
+                  target: number_to_alpha(i),
                   label: graphData[i][j]
                 }
               });
@@ -47,8 +47,8 @@ function createNodes(graphData, directed){
         if (graphData[i][i] > 0) {
           graphnodes.push({
               data: {
-                source: String.fromCharCode(97 + i),
-                target: String.fromCharCode(97 + i),
+                source: number_to_alpha(i),
+                target: number_to_alpha(i),
                 label: graphData[i][i]
               }
             });
