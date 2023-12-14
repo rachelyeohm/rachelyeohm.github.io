@@ -62,7 +62,7 @@ const MatrixForm = () => {
                 {row.map((cell, colIndex) => (
                     <input
                     key={colIndex}
-                    type="text"
+                    type="number"
                     value={cell}
                     onChange={(event) => handleInputChange(rowIndex, colIndex, event)}
                     />
@@ -91,7 +91,7 @@ const MatrixForm = () => {
             {matrix.length > 0 ? addBlanks() : null}
             <button className="button" type="submit">Submit</button>
         </form>
-        {isFormSubmitted && <Graph graphData={matrix} width={600} height={200} directed={true}></Graph>  }
+        {isFormSubmitted && <Graph graphData={matrix} width={600} height={200} directed={true}/>  }
         {isFormSubmitted && <GraphCalc graphData={matrix}/>}
     </div>
     
