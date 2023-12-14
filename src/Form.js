@@ -23,7 +23,6 @@ const MatrixForm = () => {
       } else {
         setMatrix([]);
       }
-      //alert(matrix.length);
     };
     
   const handleNumSubmit = (event) => {
@@ -57,7 +56,6 @@ const MatrixForm = () => {
   function addBlanks(){
       
       return matrix.map((row, rowIndex) => (
-                //alert(rowIndex),
                 <div key={rowIndex}>
                 {row.map((cell, colIndex) => (
                     <input
