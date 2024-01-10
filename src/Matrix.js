@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 
 const NumForm = ({text, number, onChange}) => { //form format for entering of rows / columns
@@ -77,24 +77,23 @@ const Matrix = ({onFormSubmit}) => {
   
   const onColChange = (event) => {
     setCol(event.target.value);
-    setNewMatrix();
   };
   const onRowChange = (event) => {
     setRow(event.target.value);
-    setNewMatrix();
   };
-  const setNewMatrix = () => {
-    if(row > 0 && col > 0){
-      const new_arr = createEmptyArray(row, col); //issue is here
-      setMatrix(new_arr);
+  useEffect(() => {
+    if (row > 0 && col>0) {
+      const newMatrix = createEmptyArray(row, col);
+      setMatrix(newMatrix);
     } else {
       setMatrix([]);
     }
-  };
+  }, [row, col]);
+
   return (
     <div>
-      <NumForm text="Enter the number of rows:" number={row} onChange={onRowChange}/>
-      <NumForm text="Enter the number of columns:" number={col} onChange={onColChange}/>
+      <NumForm text="Enter the number of rows" number={row} onChange={onRowChange}/>
+      <NumForm text="Enter the number of columns" number={col} onChange={onColChange}/>
       <MatrixForm row={row} col={col} directed={false} matrix={matrix} setMatrix={setMatrix} onFormSubmit={onFormSubmit}/>
     </div>
   )
@@ -108,13 +107,18 @@ export const SquareMatrix = ({directed, onFormSubmit}) => {
 
   const onChange = (event) => {
       setRow(event.target.value);
-      if(row > 0){
-        const new_arr = createEmptyArray(row, row); //issue is here
-        setMatrix(new_arr);
-      } else {
-        setMatrix([]);
-      }
   };
+
+  useEffect(() => {
+    if (row > 0) {
+      const newMatrix = createEmptyArray(row, row);
+      setMatrix(newMatrix);
+    } else {
+      setMatrix([]);
+    }
+  }, [row]);
+
+
   return (
     <div>
       <NumForm text="Enter the number of rows/columns" number={row} onChange={onChange}/>
