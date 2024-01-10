@@ -1,24 +1,8 @@
 import React, { useState } from 'react';
 
 
-function addBlanks(){
-  return matrix.map((row, rowIndex) => (
-            <div key={rowIndex}>
-            {row.map((cell, colIndex) => (
-                <input
-                key={colIndex}
-                type="number"
-                min = "0"
-                step = "1"
-                value={cell}
-                onChange={(event) => handleInputChange(rowIndex, colIndex, event)}
-                />
-            ))}
-            </div>
-        ));
-}
-
-const numForm = ({text, number, onChange}) => { //form format for entering of rows / columns
+const NumForm = ({text, number, onChange}) => { //form format for entering of rows / columns
+  console.log(text);
   return (
     <form className = "general">
     <label>
@@ -38,9 +22,7 @@ const numForm = ({text, number, onChange}) => { //form format for entering of ro
 
 const MatrixForm = ({row, col, directed, matrix, setMatrix, onFormSubmit}) => { //for matrix and submission without input rows
   
-  const [localMatrix, setlocalMatrix] = useState(
-    matrix
-  );
+  const [localMatrix, setLocalMatrix] = useState(matrix);
   
   const handleInputChange = (rowIndex, colIndex, event) => {
     const { value } = event.target;
@@ -57,6 +39,23 @@ const MatrixForm = ({row, col, directed, matrix, setMatrix, onFormSubmit}) => { 
     event.preventDefault();
     onFormSubmit(matrix);
   };
+
+  function addBlanks(){
+    return matrix.map((row, rowIndex) => (
+              <div key={rowIndex}>
+              {row.map((cell, colIndex) => (
+                  <input
+                  key={colIndex}
+                  type="number"
+                  min = "0"
+                  step = "1"
+                  value={cell}
+                  onChange={(event) => handleInputChange(rowIndex, colIndex, event)}
+                  />
+              ))}
+              </div>
+          ));
+  }
 
   return (
     <div>
@@ -94,8 +93,8 @@ const Matrix = ({onFormSubmit}) => {
   };
   return (
     <div>
-      <numForm text="Enter the number of rows:" number={row} onChange={onChange}/>
-      <numForm text="Enter the number of columns:" number={col} onChange={onChange}/>
+      <NumForm text="Enter the number of rows:" number={row} onChange={onRowChange}/>
+      <NumForm text="Enter the number of columns:" number={col} onChange={onColChange}/>
       <MatrixForm row={row} col={col} directed={false} matrix={matrix} setMatrix={setMatrix} onFormSubmit={onFormSubmit}/>
     </div>
   )
@@ -118,10 +117,9 @@ export const SquareMatrix = ({directed, onFormSubmit}) => {
   };
   return (
     <div>
-      <numForm text="Enter the number of rows/columns:" number={row} onChange={onChange}/>
-      <MatrixForm row={row} col={col} directed={directed} matrix={matrix} setMatrix={setMatrix} onFormSubmit={onFormSubmit}/>
+      <NumForm text="Enter the number of rows/columns" number={row} onChange={onChange}/>
+      <MatrixForm row={row} col={row} directed={directed} matrix={matrix} setMatrix={setMatrix} onFormSubmit={onFormSubmit}/>
     </div>
-      
   )
 }
 
