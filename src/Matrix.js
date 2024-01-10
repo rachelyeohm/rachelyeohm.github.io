@@ -4,10 +4,8 @@ import Graph from "./Graph"
 import KruskalCalc from "./KruskalCalculations"
 import PrimCalc from "./PrimCalculations"
 
-const Matrix = ({usecase, directed}) => {
-  const [number, setNumber]  = useState({
-    n:4
-  });
+const Matrix = ({directed, onFormSubmit}) => {
+  const [number, setNumber]  = useState({n:4});
 
   const handleNumChange = (event) => {
       setIsFormSubmitted(false);
@@ -32,6 +30,11 @@ const Matrix = ({usecase, directed}) => {
     setMatrix(createEmptyArray(num_rows));
   };
 
+
+
+
+
+
   const [matrix, setMatrix] = useState(
     createEmptyArray(number.n)
   );
@@ -48,7 +51,7 @@ const Matrix = ({usecase, directed}) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setIsFormSubmitted(true);
+    onFormSubmit(matrix);
   };
 
   function addBlanks(){
@@ -90,8 +93,6 @@ const Matrix = ({usecase, directed}) => {
             {matrix.length > 0 ? addBlanks() : null}
             <button className="button" type="submit">Submit</button>
         </form>
-        {isFormSubmitted && (usecase === "visualisation" ? null : <KruskalCalc graphData={matrix} width={200} height={200}/>) }
-        {isFormSubmitted && (usecase === "visualisation" ? <GraphCalc graphData={matrix}/> : <PrimCalc graphData={matrix} width={200} height={200}/>)}
     </div>
     
   );
