@@ -4,7 +4,7 @@ import Graph from "./Graph"
 import KruskalCalc from "./KruskalCalculations"
 import PrimCalc from "./PrimCalculations"
 
-const MatrixForm = ({usecase, directed}) => {
+const Matrix = ({usecase, directed}) => {
   const [number, setNumber]  = useState({
     n:4
   });
@@ -52,7 +52,6 @@ const MatrixForm = ({usecase, directed}) => {
   };
 
   function addBlanks(){
-      
       return matrix.map((row, rowIndex) => (
                 <div key={rowIndex}>
                 {row.map((cell, colIndex) => (
@@ -72,7 +71,7 @@ const MatrixForm = ({usecase, directed}) => {
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   return (
     <div>
-          <form className = "general" onSubmit={handleNumSubmit}>
+        <form className = "general" onSubmit={handleNumSubmit}>
           <label>
               Enter number of rows/columns:   &nbsp; &nbsp;
               <input
@@ -84,7 +83,7 @@ const MatrixForm = ({usecase, directed}) => {
               onChange={handleNumChange}
               />
           </label>
-          </form>
+        </form>
 
         <p className = "general"> Input your adjacency matrix: </p>
         <form className="matrix-form" onSubmit={handleSubmit}>
@@ -98,7 +97,7 @@ const MatrixForm = ({usecase, directed}) => {
   );
 };
 
-export default MatrixForm;
+export default Matrix;
 
 
 function createEmptyArray(n) {

@@ -7,8 +7,9 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined, 
 } from '@ant-design/icons';
-import Form from "./Form.js"
+import GraphVisualisation from "./GraphVisualisation.js"
 import MST from "./MST.js"
+
 
 
 
@@ -61,7 +62,7 @@ const GraphProject = () => {
         />
       </div>
       <div style={{ marginLeft: 16 }}>
-        {openKey === 'graph' && <Form usecase = {"visualisation"} directed = {true}/>}
+        {openKey === 'graph' && <GraphVisualisation/>}
         {openKey === 'tree' && <MST />}
       </div>
     </div>
