@@ -1,6 +1,7 @@
 import React from "react";
 import Graph from "./Graph"
 const GraphCalculations = ({graphData, width, height}) => {
+
   
   return (
       
@@ -11,7 +12,6 @@ const GraphCalculations = ({graphData, width, height}) => {
         <p>Euler: {euler(graphData) ? "Yes" : "No"}</p>
         
     </div>
-      
     
   );
 };
@@ -27,12 +27,18 @@ const sum = (xs) =>
 const excluding = (i) => (xs) => 
   [... xs .slice (0, i), ...xs .slice (i + 1)]
 
-const determinant = ([xs, ...xss]) => 
-  xs .length == 1
+const determinant = (matrix) => {
+    if (matrix.length === 0) {
+      return "Nil";
+    }
+    const [xs, ...xss] = matrix;
+    return xs .length == 1
     ? xs [0]
     : sum (xs .map (
         (x, i) => (-1) ** i * x * determinant (xss .map (excluding (i)))
       ))
+};
+  
 
 const sum_arr = (arr) => arr.reduce((partialSum, a) => partialSum + a, 0);
 
