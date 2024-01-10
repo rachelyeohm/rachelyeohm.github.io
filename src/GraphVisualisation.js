@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import Matrix from "./Matrix"
+import {SquareMatrix} from "./Matrix"
 import GraphCalc from "./GraphCalculations"
 //form is directed - true
 
@@ -11,7 +11,7 @@ const GraphVisualisation= () => {
     console.log(submittedMatrix);
     return (
         <div>
-            <Matrix directed = {true} onFormSubmit = {handleFormSubmit} />
+            <SquareMatrix directed = {true} onFormSubmit = {handleFormSubmit} />
             <GraphCalc graphData={submittedMatrix}/>
         </div>
         
