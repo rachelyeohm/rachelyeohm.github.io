@@ -65,9 +65,7 @@ function prim(graph)
             weights[v] = graph[u][v];
             pairSet.push([u, v, weights[v]]);
           }
-          
         }
-        console.log(pairSet);
     } 
  
     // print the constructed MST 
@@ -103,7 +101,7 @@ function prim(graph)
   
 
 const TreeCalc = ({graphData, width, height}) => {
-  
+  console.log(graphData, width, height);
   const prim_dict = prim(graphData.map(row => row.map(str => parseInt(str, 10))));
   return (
     <div>
