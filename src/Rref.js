@@ -13,7 +13,7 @@ const RREF = () => {
     return (
       <div>
             <Matrix onFormSubmit={handleFormSubmit}/>
-            {submittedMatrix.length === 0 ? null : <calcRREF array={submittedMatrix}/>}
+            {submittedMatrix.length === 0 ? null : <CalcRREF array={submittedMatrix}/>}
             
       </div>
         
@@ -21,9 +21,10 @@ const RREF = () => {
   };
 export default RREF;
 
-function calcRREF(array){
+function CalcRREF(array){
   
     console.log("Here2");
+    // Assuming yourObject is the problematic object
     console.log(array);
     console.log("array length is " + array.length);
       

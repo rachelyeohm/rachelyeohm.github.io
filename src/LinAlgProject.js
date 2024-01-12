@@ -8,6 +8,7 @@ import {
   MenuUnfoldOutlined, 
 } from '@ant-design/icons';
 import RREF from "./Rref.js";
+import LinearIndependence from "./LinearIndependence.js";
 
 
 
@@ -62,7 +63,7 @@ const GraphProject = () => {
       </div>
       <div style={{ marginLeft: 16 }}>
         {openKey === 'rref' && <RREF/>}
-        {openKey === 'linearindep' && <RREF/>}
+        {openKey === 'linearindep' && <LinearIndependence/>}
       </div>
     </div>
   );
