@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 
 
 const NumForm = ({text, number, onChange}) => { //form format for entering of rows / columns
-  console.log(text);
   return (
     <form className = "general">
     <label>
@@ -94,7 +93,7 @@ const Matrix = ({onFormSubmit}) => {
     <div>
       <NumForm text="Enter the number of rows" number={row} onChange={onRowChange}/>
       <NumForm text="Enter the number of columns" number={col} onChange={onColChange}/>
-      <MatrixForm row={row} col={col} directed={false} matrix={matrix} setMatrix={setMatrix} onFormSubmit={onFormSubmit}/>
+      <MatrixForm row={row} col={col} directed={true} matrix={matrix} setMatrix={setMatrix} onFormSubmit={onFormSubmit}/>
     </div>
   )
 }

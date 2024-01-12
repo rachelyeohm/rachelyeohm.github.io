@@ -101,7 +101,6 @@ function prim(graph)
   
 
 const TreeCalc = ({graphData, width, height}) => {
-  console.log(graphData, width, height);
   const prim_dict = prim(graphData.map(row => row.map(str => parseInt(str, 10))));
   return (
     <div>

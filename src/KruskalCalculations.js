@@ -110,6 +110,7 @@ const createEmptyMatrix = (n) => {
   
 
 const TreeCalc = ({graphData, width, height}) => {
+  console.log(graphData);
   
   const kruskal_dict = kruskal(graphData);
   return (
