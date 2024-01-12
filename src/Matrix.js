@@ -21,7 +21,7 @@ const NumForm = ({text, number, onChange}) => { //form format for entering of ro
 
 const MatrixForm = ({row, col, directed, matrix, setMatrix, onFormSubmit}) => { //for matrix and submission without input rows
   
-  const [localMatrix, setLocalMatrix] = useState(matrix);
+  //const [localMatrix, setLocalMatrix] = useState(matrix);
   
   const handleInputChange = (rowIndex, colIndex, event) => {
     const { value } = event.target;
@@ -30,7 +30,7 @@ const MatrixForm = ({row, col, directed, matrix, setMatrix, onFormSubmit}) => { 
     if (!directed){
       updatedMatrix[colIndex][rowIndex] = value;
     }
-    setLocalMatrix(updatedMatrix);
+    //setLocalMatrix(updatedMatrix);
     setMatrix(updatedMatrix);
   };
 
