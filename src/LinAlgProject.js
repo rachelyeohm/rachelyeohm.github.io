@@ -62,8 +62,8 @@ const GraphProject = () => {
         />
       </div>
       <div style={{ marginLeft: 16 }}>
-        {openKey === 'rref' && <RREF/>}
-        {openKey === 'linearindep' && <LinearIndependence/>}
+        {openKey === 'rref'}
+        {openKey === 'linearindep'}
       </div>
     </div>
   );
