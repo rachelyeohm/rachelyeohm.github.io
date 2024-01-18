@@ -8,6 +8,7 @@ import {
   MenuUnfoldOutlined, 
 } from '@ant-design/icons';
 import RREF from "./Rref.js";
+import Solutions from "./Solutions.js";
 import LinearIndependence from "./LinearIndependence.js";
 
 
@@ -23,8 +24,9 @@ function getItem(label, key, icon, children, type) {
   };
 }
 const items = [
-  getItem('Find RREF', 'rref', <NodeIndexOutlined/>),
-  getItem('Check Linear Independence, Orthogonality', 'linearindep', <ApartmentOutlined/>),
+  getItem('Find RREF', 'rref'),
+  getItem('Find number of solutions', 'solutions'),
+  getItem('Check Linear Independence, Orthogonality', 'linearindep'),
 ];
 const GraphProject = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -63,6 +65,7 @@ const GraphProject = () => {
       </div>
       <div style={{ marginLeft: 16 }}>
         {openKey === 'rref' && <RREF/>}
+        {openKey === 'solutions' && <Solutions/>}
         {openKey === 'linearindep' && <LinearIndependence/>}
       </div>
     </div>

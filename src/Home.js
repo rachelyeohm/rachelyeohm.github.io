@@ -35,7 +35,8 @@
               <MainButton name = "Linear Algebra" onClick = {()=>navigate("/linear_algebra")}/>
               <p>Functionality:</p>
                 <ul>
-                  <li> Matrix Multiplication</li>
+                  <li> Calculating Reduced Row-Echelon Form</li>
+                  <li> Calculating number of solutions</li>
                   <li> Checking for Linear Independence</li>
                   <li> Checking for orthogonality + orthonormality</li>
                 </ul>
