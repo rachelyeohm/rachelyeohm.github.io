@@ -12,7 +12,7 @@ const RREF = () => {
       <div>
         <div>
             <Matrix onFormSubmit={handleFormSubmit}/>
-            {submittedMatrix.length === 0 ? null : <CalcRREF array={submittedMatrix}/>}
+            {submittedMatrix.length === 0 ? null : <DisplayRREF array={submittedMatrix}/>}
 
         </div>
             
@@ -22,7 +22,7 @@ const RREF = () => {
   };
 export default RREF;
 
-function CalcRREF({array}){
+export function CalcRREF(array){
     
     array = array.map(innerArray =>innerArray.map(element => parseInt(element, 10)));
 
@@ -92,11 +92,21 @@ function CalcRREF({array}){
 
     
     const result= moveZeroRows(array);
+    
+    return result;
+
+}
+
+  
+function DisplayRREF({array}){
+    const result = CalcRREF(array);
+
     return (
-        <div style={{ display: 'flex', flexDirection: "column", alignContent: "center",   justifyContent: 'center' }}>
+        <div className="general">
+            <p>The reduced row-echelon form of the matrix is:</p>
             <table>
             <tbody>
-                {array.map((row, rowIndex) => (
+                {result.map((row, rowIndex) => (
                 <tr key={rowIndex}>
                     {row.map((cell, cellIndex) => (
                     <React.Fragment key={cellIndex}>
@@ -110,11 +120,7 @@ function CalcRREF({array}){
             </table>
         </div>
         
-      );
-
-
+      ); 
 }
-  
-  
   
   
