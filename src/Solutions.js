@@ -1,17 +1,17 @@
 import './App.css';
 import React, {useState} from "react";
-import Matrix from "./Matrix"
+import {AugmentedMatrix} from "./Matrix"
 
 const Solutions = () => {
-    const [submittedMatrix, setSubmittedMatrix] = useState([]);
-    const handleFormSubmit = (matrix) => {
-        setSubmittedMatrix(matrix);
-    }
+    const [submittedAMatrix, setSubmittedAMatrix] = useState([]);
+    const [submittedBMatrix, setSubmittedBMatrix] = useState([]);
+    const handleAFormSubmit = (matrix) => setSubmittedAMatrix(matrix);
+    const handleBFormSubmit = (matrix) => setSubmittedBMatrix(matrix);
   
     return (
       <div>
         <div>
-            <Matrix onFormSubmit={handleFormSubmit}/>
+            <AugmentedMatrix onAFormSubmit={handleAFormSubmit} onBFormSubmit={handleBFormSubmit}/>
 
         </div>
             

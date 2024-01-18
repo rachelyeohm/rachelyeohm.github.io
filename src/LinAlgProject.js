@@ -34,8 +34,9 @@ const GraphProject = () => {
   // const toggleCollapsed = () => {
   //   setCollapsed(!collapsed);
   // };
-  const navigateBack = ()=>navigate("/");
   let navigate = useNavigate();
+  const navigateBack = ()=>navigate("/");
+  
   const onClick = (e) => {
     
     setOpenKey(e.key);

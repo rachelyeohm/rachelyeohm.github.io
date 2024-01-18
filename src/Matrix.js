@@ -19,7 +19,7 @@ const NumForm = ({text, number, onChange}) => { //form format for entering of ro
   );
 }
 
-const MatrixForm = ({row, col, directed, matrix, setMatrix, onFormSubmit}) => { //for matrix and submission without input rows
+const MatrixForm = ({directed, matrix, setMatrix, onFormSubmit}) => { //for matrix and submission without input rows
   
   //const [localMatrix, setLocalMatrix] = useState(matrix);
   
@@ -124,6 +124,107 @@ export const SquareMatrix = ({directed, onFormSubmit}) => {
       <MatrixForm row={row} col={row} directed={directed} matrix={matrix} setMatrix={setMatrix} onFormSubmit={onFormSubmit}/>
     </div>
   )
+}
+
+export const AugmentedMatrix({onFormSubmit}) => {
+    const [row, setRow]  = useState(4); //length of coefficient matrix
+    const [col, setCol] = useState(4); //length of coefficient matrix
+    const [coefficientMatrix, setCoefficientMatrix] = useState([]);
+    const [constantsMatrix, setConstantsMatrix] = useState([]);
+
+    const onColChange = (event) => {
+      setCol(event.target.value);
+    };
+    const onRowChange = (event) => {
+      setRow(event.target.value);
+    };
+
+    useEffect(() => {
+      if (row > 0 && col > 0) {
+        const newMatrix = createEmptyArray(row, col);
+        const newConstMatrix = createEmptyArray(row, 1);
+        setCoefficientMatrix(newMatrix);
+        setConstantsMatrix(newConstMatrix);
+      } else {
+        setCoefficientMatrix([]);
+        setConstantsMatrix([]);
+      }
+    }, [row, col]);
+
+    
+  
+    return (
+      <div>
+        <NumForm text="Enter the number of rows" number={row} onChange={onRowChange}/>
+        <NumForm text="Enter the number of columns" number={col} onChange={onColChange}/>
+        <AugmentedMatrixForm coefficientMatrix={coefficientMatrix} setCoefficientMatrix={setCoefficientMatrix} constantsMatrix={constantsMatrix} setConstantsMatrix={setConstantsMatrix} onFormSubmit={onFormSubmit}/>
+      </div>
+    )
+  }
+
+
+
+export const AugmentedMatrixForm = ({coefficientMatrix, setCoefficientMatrix, constantsMatrix, setConstantsMatrix, onFormSubmit}) => {
+
+
+  const handleInputChange = (rowIndex, colIndex, event, matrixType) => {
+    const { value } = event.target;
+    const updatedMatrix = matrixType === 'coefficient' ? [...coefficientMatrix] : [...constantsMatrix];
+    updatedMatrix[rowIndex][colIndex] = value;
+    if (matrixType === 'coefficient') {
+      setCoefficientMatrix(updatedMatrix);
+    } else {
+      setConstantsMatrix(updatedMatrix);
+    }
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    onFormSubmit(coefficientMatrix, constantsMatrix);
+  };
+
+  function addBlanks(matrix, matrixType){
+    return matrix.map((row, rowIndex) => (
+              <div key={rowIndex}>
+              {row.map((cell, colIndex) => (
+                  <input
+                  key={colIndex}
+                  type="number"
+                  min = "0"
+                  step = "1"
+                  value={cell}
+                  onChange={(event) => handleInputChange(rowIndex, colIndex, event, matrixType)}
+                  />
+              ))}
+              </div>
+          ));
+  }
+
+  return (
+    <div>
+      <form className='matrix-form' onSubmit={handleSubmit}>
+        <div className="matrix-container">
+          {/* Coefficient Matrix */}
+          <div className="matrix">
+            {addBlanks(coefficientMatrix, 'coefficient')}
+              
+          </div>
+          {/* Vertical Line */}
+          <div className="vertical-line"></div>
+
+          {/* Constants Matrix */}
+          <div className="matrix">
+            {addBlanks(constantsMatrix, 'constants')}
+              
+          </div>
+        </div>
+      <button type="submit">Submit</button>
+    </form>
+    </div>
+
+  )
+
+
 }
 
 
