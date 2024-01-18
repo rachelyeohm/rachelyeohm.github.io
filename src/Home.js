@@ -36,9 +36,9 @@
               <p>Functionality:</p>
                 <ul>
                   <li> Calculating Reduced Row-Echelon Form</li>
-                  <li> Calculating number of solutions</li>
-                  <li> Checking for Linear Independence</li>
-                  <li> Checking for orthogonality + orthonormality</li>
+                  <li> Calculating number of solutions (In progress)</li>
+                  <li> Checking for Linear Independence (In progress)</li>
+                  <li> Checking for orthogonality + orthonormality (In progress)</li>
                 </ul>
               <MainButton name = "Graph Theory" onClick = {()=>navigate("/graph_theory")}/>
               <p>Functionality:</p>
