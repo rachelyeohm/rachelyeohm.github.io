@@ -132,3 +132,15 @@ button {
   font-size: 18px;
   
 }
+
+.center-container {
+  position: relative;
+  height: 100vh;
+}
+
+.center-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

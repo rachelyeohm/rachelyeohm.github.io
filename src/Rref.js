@@ -6,14 +6,15 @@ const RREF = () => {
     const [submittedMatrix, setSubmittedMatrix] = useState([]);
     const handleFormSubmit = (matrix) => {
         setSubmittedMatrix(matrix);
-        console.log("Here");
-        console.log(submittedMatrix);
     }
   
     return (
       <div>
+        <div>
             <Matrix onFormSubmit={handleFormSubmit}/>
             {submittedMatrix.length === 0 ? null : <CalcRREF array={submittedMatrix}/>}
+
+        </div>
             
       </div>
         
@@ -91,7 +92,25 @@ function CalcRREF({array}){
 
     
     const result= moveZeroRows(array);
-    return result;
+    return (
+        <div style={{ display: 'flex', flexDirection: "column", alignContent: "center",   justifyContent: 'center' }}>
+            <table>
+            <tbody>
+                {array.map((row, rowIndex) => (
+                <tr key={rowIndex}>
+                    {row.map((cell, cellIndex) => (
+                    <React.Fragment key={cellIndex}>
+                        <td>{cell}</td>
+                        {cellIndex !== row.length - 1 && <td className="line"></td>}
+                    </React.Fragment>
+                    ))}
+                </tr>
+                ))}
+            </tbody>
+            </table>
+        </div>
+        
+      );
 
 
 }
