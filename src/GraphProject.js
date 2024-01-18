@@ -1,11 +1,13 @@
 import './App.css';
 import React, {useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Menu , Button} from 'antd';
 import {
   ApartmentOutlined,
   NodeIndexOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined, 
+  LeftOutlined
 } from '@ant-design/icons';
 import GraphVisualisation from "./GraphVisualisation.js"
 import MST from "./MST.js"
@@ -29,9 +31,11 @@ const items = [
 const GraphProject = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [openKey, setOpenKey] = useState("graph");
-  const toggleCollapsed = () => {
-    setCollapsed(!collapsed);
-  };
+  // const toggleCollapsed = () => {
+  //   setCollapsed(!collapsed);
+  // };
+  let navigate = useNavigate();
+  const navigateBack = ()=>navigate("/");
   const onClick = (e) => {
     
     setOpenKey(e.key);
@@ -45,12 +49,12 @@ const GraphProject = () => {
       >
         <Button
           type="primary"
-          onClick={toggleCollapsed}
+          onClick={navigateBack}
           style={{
             marginBottom: 16,
           }}
         >
-          {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+          <LeftOutlined/>
         </Button>
         <Menu
           defaultSelectedKeys={['graph']}

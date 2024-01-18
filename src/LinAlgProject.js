@@ -1,9 +1,9 @@
 import './App.css';
 import React, {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import { Menu , Button} from 'antd';
 import {
-  ApartmentOutlined,
-  NodeIndexOutlined,
+  LeftOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined, 
 } from '@ant-design/icons';
@@ -31,9 +31,11 @@ const items = [
 const GraphProject = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [openKey, setOpenKey] = useState("rref");
-  const toggleCollapsed = () => {
-    setCollapsed(!collapsed);
-  };
+  // const toggleCollapsed = () => {
+  //   setCollapsed(!collapsed);
+  // };
+  const navigateBack = ()=>navigate("/");
+  let navigate = useNavigate();
   const onClick = (e) => {
     
     setOpenKey(e.key);
@@ -47,12 +49,12 @@ const GraphProject = () => {
       >
         <Button
           type="primary"
-          onClick={toggleCollapsed}
+          onClick={navigateBack}
           style={{
             marginBottom: 16,
           }}
         >
-          {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+          <LeftOutlined/>
         </Button>
         <Menu
           defaultSelectedKeys={['rref']}
