@@ -144,3 +144,10 @@ button {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+.vertical-line {
+  height: 100%;
+  width: 1px; /* Adjust the width of the vertical line as needed */
+  background-color: #000; /* Change the color of the line */
+  margin: 0 10px; /* Adjust the margin for spacing */
+}

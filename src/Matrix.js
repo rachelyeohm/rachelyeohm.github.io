@@ -126,7 +126,7 @@ export const SquareMatrix = ({directed, onFormSubmit}) => {
   )
 }
 
-export const AugmentedMatrix({onFormSubmit}) => {
+export const AugmentedMatrix  = ({onFormSubmit}) => {
     const [row, setRow]  = useState(4); //length of coefficient matrix
     const [col, setCol] = useState(4); //length of coefficient matrix
     const [coefficientMatrix, setCoefficientMatrix] = useState([]);
@@ -198,32 +198,26 @@ export const AugmentedMatrixForm = ({coefficientMatrix, setCoefficientMatrix, co
               ))}
               </div>
           ));
-  }
+  };
 
   return (
     <div>
       <form className='matrix-form' onSubmit={handleSubmit}>
-        <div className="matrix-container">
+        <div display = "flex">
           {/* Coefficient Matrix */}
-          <div className="matrix">
-            {addBlanks(coefficientMatrix, 'coefficient')}
-              
-          </div>
+          {addBlanks(coefficientMatrix, 'coefficient')}
+
           {/* Vertical Line */}
           <div className="vertical-line"></div>
 
           {/* Constants Matrix */}
-          <div className="matrix">
-            {addBlanks(constantsMatrix, 'constants')}
-              
-          </div>
+          {addBlanks(constantsMatrix, 'constants')}
         </div>
       <button type="submit">Submit</button>
     </form>
     </div>
 
-  )
-
+  );
 
 }
 
