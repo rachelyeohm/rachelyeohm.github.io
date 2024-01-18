@@ -203,7 +203,7 @@ export const AugmentedMatrixForm = ({coefficientMatrix, setCoefficientMatrix, co
   return (
     <div>
       <form className='matrix-form' onSubmit={handleSubmit}>
-        <div  style={{ display: 'flex', alignItems: 'flex-start' }}>
+        <div  style={{ display: 'flex'}}>
           {/* Coefficient Matrix */}
           <div>
             {addBlanks(coefficientMatrix, 'coefficient')}
