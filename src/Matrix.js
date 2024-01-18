@@ -222,7 +222,7 @@ export const AugmentedMatrixForm = ({coefficientMatrix, setCoefficientMatrix, co
           </div>
           
         </div>
-      <button type="submit">Submit</button>
+        <button className="button" type="submit">Submit</button>
     </form>
     </div>
 
