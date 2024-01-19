@@ -14,6 +14,7 @@ const MST= () => {
     <div>
           <p className='general'>A minimum spanning tree is a subgraph with every vertex of the graph that is also a tree.</p>
           <p className='general'>We will use Kruskal's Algorithm and Prim's Algorithm to calculate the minimum spanning tree.</p>
+          <p className='general'>Here, an adjacency matrix is used to represent a graph.</p>
           <SquareMatrix directed = {false} onFormSubmit={handleFormSubmit}/>
           {submittedMatrix.length === 0 ? null  :
           (

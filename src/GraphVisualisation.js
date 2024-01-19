@@ -13,6 +13,7 @@ const GraphVisualisation= () => {
     }
     return (
         <div>
+            <p className='general'>Here, an adjacency matrix is used to represent a graph.</p>
             <SquareMatrix directed = {true} onFormSubmit = {handleFormSubmit} />
             {submittedMatrix.length === 0 ? null  :
             (<div>

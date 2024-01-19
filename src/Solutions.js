@@ -15,7 +15,7 @@ const Solutions = () => {
       <div>
         <div>
             <AugmentedMatrix onFormSubmit={handleFormSubmit}/>
-            <p className='general'>There are {submittedCoeffMatrix.length === 0 ? "____" : calcNumberOfSolutions(submittedCoeffMatrix)} solutions.</p>
+            <p className='general'>There are {submittedCoeffMatrix.length === 0 ? "____" : calcNumberOfSolutions(submittedCoeffMatrix, submittedConstMatrix)} solutions.</p>
             
         </div>
             
@@ -26,8 +26,8 @@ const Solutions = () => {
 export default Solutions;
 
 
-const calcNumberOfSolutions = (coeffMatrix) => {
-  const result = calcAugmentedRREF(coeffMatrix);
+const calcNumberOfSolutions = (coeffMatrix, constMatrix) => {
+  const result = calcAugmentedRREF(coeffMatrix, constMatrix);
   function combineMatrices(coeffMatrix, constMatrix) {
     const rowCount = coeffMatrix.length;
     const combinedMatrix = new Array(rowCount);

@@ -58,7 +58,7 @@ const MatrixForm = ({directed, matrix, setMatrix, onFormSubmit}) => { //for matr
 
   return (
     <div>
-        <p className = "general"> Input your adjacency matrix: </p>
+        <p className = "general"> Input your matrix: </p>
         <form className="matrix-form" onSubmit={handleSubmit}>
             {matrix.length > 0 ? addBlanks() : null}
             <button className="button" type="submit">Submit</button>
