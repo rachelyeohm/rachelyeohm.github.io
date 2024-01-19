@@ -97,6 +97,91 @@ export function calcRREF(array){
 
 }
 
+export function calcAugmentedRREF(coeffMatrix, constMatrix) {
+    coeffMatrix = coeffMatrix.map(innerArray => innerArray.map(element => parseInt(element, 10)));
+
+    function reduceToRREF(matrix, constMatrix) {
+        let lead = 0; // leading column
+        const rowCount = matrix.length;
+        const colCount = matrix[0].length;
+
+        for (let r = 0; r < rowCount; r++) { // for each row
+            if (colCount <= lead) { // lead column has been found.
+                break;
+            }
+
+            let i = r;
+
+            while (matrix[i][lead] === 0) {
+                i++;
+                if (rowCount === i) {
+                    i = r;
+                    lead++;
+                    if (colCount === lead) {
+                        break;
+                    }
+                }
+            }
+
+            if (colCount > lead) { // must iterate through all columns first
+                let temp = matrix[i];
+                matrix[i] = matrix[r];
+                matrix[r] = temp;
+
+                // Switch the corresponding row in the constant matrix [CHANGE]
+                let tempConst = constMatrix[i];
+                constMatrix[i] = constMatrix[r];
+                constMatrix[r] = tempConst;
+
+                let val = matrix[r][lead];
+
+                // Check if the divisor (val) is not zero before performing operations
+                if (val !== 0) {
+                    for (let j = 0; j < colCount; j++) {
+                        matrix[r][j] /= val;
+                    }
+
+                    // Divide the corresponding element in the constant matrix by val [CHANGE]
+                    constMatrix[r][0] /= val;
+
+                    // Perform row operations on both the coefficient matrix and the constant matrix
+                    for (let i = 0; i < rowCount; i++) {
+                        if (i !== r) {
+                            val = matrix[i][lead];
+                            for (let j = 0; j < colCount; j++) {
+                                matrix[i][j] -= val * matrix[r][j];
+                            }
+                            constMatrix[i][0] -= val * constMatrix[r][0];
+                        }
+                    }
+                }
+            }
+
+            lead++;
+        }
+
+        return { matrix, constMatrix };
+    }
+
+    function moveZeroRows(coeffMatrix, constMatrix) {
+        let nonZeroCoeff = coeffMatrix.filter(row => !row.every(val => val === 0));
+        let zeroRow = Array(coeffMatrix[0].length).fill(0);
+
+        const {matrix: resultCoeff, constMatrix: resultConst} = reduceToRREF(nonZeroCoeff, constMatrix);
+
+        for (let i = 0; i < coeffMatrix.length - nonZeroCoeff.length; i++) {
+            resultCoeff.push(zeroRow);
+        }
+        console.log(resultCoeff);
+        console.log(resultConst);
+        return { coeffMatrix: resultCoeff, constMatrix: resultConst};
+    }
+
+    const result = moveZeroRows(coeffMatrix, constMatrix);
+    console.log("Result = " + result.coeffMatrix);
+
+    return { coeffMatrix: result.coeffMatrix, constMatrix: result.constMatrix };
+}
 // export function solveLinearSystem(matrix, constMatrix) {
 //     const augmentedMatrix = matrix.map((row, index) => [...row, constMatrix[index][0]]);
 //     const rowCount = augmentedMatrix.length;

@@ -1,7 +1,7 @@
 import './App.css';
 import React, {useState} from "react";
 import {AugmentedMatrix} from "./Matrix"
-import {calcRREF, findNumberOfSolutions} from "./Rref";
+import {calcAugmentedRREF, findNumberOfSolutions} from "./Rref";
 
 const Solutions = () => {
     const [submittedCoeffMatrix, setSubmittedCoeffMatrix] = useState([]);
@@ -27,7 +27,18 @@ export default Solutions;
 
 
 const calcNumberOfSolutions = (coeffMatrix) => {
-  const RREF = calcRREF(coeffMatrix);
-  const numberOfSolutions = findNumberOfSolutions(RREF);
+  const result = calcAugmentedRREF(coeffMatrix);
+  function combineMatrices(coeffMatrix, constMatrix) {
+    const rowCount = coeffMatrix.length;
+    const combinedMatrix = new Array(rowCount);
+
+    for (let i = 0; i < rowCount; i++) {
+        combinedMatrix[i] = [...coeffMatrix[i], ...constMatrix[i]];
+    }
+
+    return combinedMatrix;
+  }
+  const combinedMatrix = combineMatrices(result.coeffMatrix, result.constMatrix);
+  const numberOfSolutions = findNumberOfSolutions(combinedMatrix);
   return numberOfSolutions;
 }
