@@ -175,11 +175,12 @@ function findPivotIndexes(matrix) {
             columnIndexes.push(pivotColumnIndex);
         }
     }
-
+    console.log({rowIndexes, columnIndexes});
     return { rowIndexes, columnIndexes };
 }
 
 export function findNumberOfSolutions(matrix){
+    matrix = matrix.filter((row)=>!row.every(val => val === 0)); //filtering out zero rows
     const { rowIndexes, columnIndexes } = findPivotIndexes(matrix);
 
     const rowCount = matrix.length;
