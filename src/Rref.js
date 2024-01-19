@@ -22,7 +22,7 @@ const RREF = () => {
   };
 export default RREF;
 
-export function CalcRREF(array){
+export function calcRREF(array){
     
     array = array.map(innerArray =>innerArray.map(element => parseInt(element, 10)));
 
@@ -97,61 +97,61 @@ export function CalcRREF(array){
 
 }
 
-export function solveLinearSystem(matrix, constMatrix) {
-    const augmentedMatrix = matrix.map((row, index) => [...row, constMatrix[index][0]]);
-    const rowCount = augmentedMatrix.length;
-    const colCount = augmentedMatrix[0].length;
-    let lead = 0;
+// export function solveLinearSystem(matrix, constMatrix) {
+//     const augmentedMatrix = matrix.map((row, index) => [...row, constMatrix[index][0]]);
+//     const rowCount = augmentedMatrix.length;
+//     const colCount = augmentedMatrix[0].length;
+//     let lead = 0;
 
-    for (let r = 0; r < rowCount; r++) {
-        if (colCount <= lead) {
-            break;
-        }
+//     for (let r = 0; r < rowCount; r++) {
+//         if (colCount <= lead) {
+//             break;
+//         }
 
-        let i = r;
+//         let i = r;
 
-        while (augmentedMatrix[i][lead] === 0) {
-            i++;
-            if (rowCount === i) {
-                i = r;
-                lead++;
-                if (colCount === lead) {
-                    break;
-                }
-            }
-        }
+//         while (augmentedMatrix[i][lead] === 0) {
+//             i++;
+//             if (rowCount === i) {
+//                 i = r;
+//                 lead++;
+//                 if (colCount === lead) {
+//                     break;
+//                 }
+//             }
+//         }
 
-        if (colCount > lead) {
-            let temp = augmentedMatrix[i];
-            augmentedMatrix[i] = augmentedMatrix[r];
-            augmentedMatrix[r] = temp;
+//         if (colCount > lead) {
+//             let temp = augmentedMatrix[i];
+//             augmentedMatrix[i] = augmentedMatrix[r];
+//             augmentedMatrix[r] = temp;
 
-            let val = augmentedMatrix[r][lead];
+//             let val = augmentedMatrix[r][lead];
 
-            if (val !== 0) {
-                for (let j = 0; j < colCount; j++) {
-                    augmentedMatrix[r][j] /= val;
-                }
+//             if (val !== 0) {
+//                 for (let j = 0; j < colCount; j++) {
+//                     augmentedMatrix[r][j] /= val;
+//                 }
 
-                for (let i = 0; i < rowCount; i++) {
-                    if (i !== r) {
-                        val = augmentedMatrix[i][lead];
-                        for (let j = 0; j < colCount; j++) {
-                            augmentedMatrix[i][j] -= val * augmentedMatrix[r][j];
-                        }
-                    }
-                }
-            }
-        }
+//                 for (let i = 0; i < rowCount; i++) {
+//                     if (i !== r) {
+//                         val = augmentedMatrix[i][lead];
+//                         for (let j = 0; j < colCount; j++) {
+//                             augmentedMatrix[i][j] -= val * augmentedMatrix[r][j];
+//                         }
+//                     }
+//                 }
+//             }
+//         }
 
-        lead++;
-    }
+//         lead++;
+//     }
 
-    // Extract the solution column vector
-    const solutionVector = augmentedMatrix.map(row => [row[colCount - 1]]);
+//     // Extract the solution column vector
+//     const solutionVector = augmentedMatrix.map(row => [row[colCount - 1]]);
 
-    return solutionVector;
-}
+//     return solutionVector;
+// }
 
 function findPivotColumnIndex(row){
     if (row.every(element => element === 0)) { //zero row: index is -1
@@ -168,7 +168,7 @@ function findPivotIndexes(matrix) {
     const columnIndexes = [];
 
     for (let r = 0; r < rowCount; r++) {
-        const pivotColumnIndex = findPivotColumn(matrix[r]);
+        const pivotColumnIndex = findPivotColumnIndex(matrix[r]);
 
         if (pivotColumnIndex !== -1) { //-1 means zero row => skip
             rowIndexes.push(r);
@@ -205,7 +205,7 @@ export function findNumberOfSolutions(matrix){
 }
   
 function DisplayRREF({array}){
-    const result = CalcRREF(array);
+    const result = calcRREF(array);
 
     return (
         <div className="general">
