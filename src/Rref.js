@@ -27,12 +27,12 @@ export function CalcRREF(array){
     array = array.map(innerArray =>innerArray.map(element => parseInt(element, 10)));
 
     function reduceToRREF(matrix) {
-        let lead = 0;
+        let lead = 0; //leading column 
         const rowCount = matrix.length;
         const colCount = matrix[0].length;
     
-        for (let r = 0; r < rowCount; r++) {
-            if (colCount <= lead) {
+        for (let r = 0; r < rowCount; r++) { //for each row
+            if (colCount <= lead) { //lead column has been found.
                 break;
             }
     
@@ -49,7 +49,7 @@ export function CalcRREF(array){
                 }
             }
     
-            if (colCount > lead) {
+            if (colCount > lead) { //must iterate through all columns first 
                 let temp = matrix[i];
                 matrix[i] = matrix[r];
                 matrix[r] = temp;
@@ -97,6 +97,112 @@ export function CalcRREF(array){
 
 }
 
+export function solveLinearSystem(matrix, constMatrix) {
+    const augmentedMatrix = matrix.map((row, index) => [...row, constMatrix[index][0]]);
+    const rowCount = augmentedMatrix.length;
+    const colCount = augmentedMatrix[0].length;
+    let lead = 0;
+
+    for (let r = 0; r < rowCount; r++) {
+        if (colCount <= lead) {
+            break;
+        }
+
+        let i = r;
+
+        while (augmentedMatrix[i][lead] === 0) {
+            i++;
+            if (rowCount === i) {
+                i = r;
+                lead++;
+                if (colCount === lead) {
+                    break;
+                }
+            }
+        }
+
+        if (colCount > lead) {
+            let temp = augmentedMatrix[i];
+            augmentedMatrix[i] = augmentedMatrix[r];
+            augmentedMatrix[r] = temp;
+
+            let val = augmentedMatrix[r][lead];
+
+            if (val !== 0) {
+                for (let j = 0; j < colCount; j++) {
+                    augmentedMatrix[r][j] /= val;
+                }
+
+                for (let i = 0; i < rowCount; i++) {
+                    if (i !== r) {
+                        val = augmentedMatrix[i][lead];
+                        for (let j = 0; j < colCount; j++) {
+                            augmentedMatrix[i][j] -= val * augmentedMatrix[r][j];
+                        }
+                    }
+                }
+            }
+        }
+
+        lead++;
+    }
+
+    // Extract the solution column vector
+    const solutionVector = augmentedMatrix.map(row => [row[colCount - 1]]);
+
+    return solutionVector;
+}
+
+function findPivotColumnIndex(row){
+    if (row.every(element => element === 0)) { //zero row: index is -1
+        return -1;
+    }
+    const pivotColumnIndex = row.findIndex(element => element !== 0);
+    return pivotColumnIndex;
+}
+
+function findPivotIndexes(matrix) {
+    const rowCount = matrix.length;
+    const colCount = matrix[0].length;
+    const rowIndexes = [];
+    const columnIndexes = [];
+
+    for (let r = 0; r < rowCount; r++) {
+        const pivotColumnIndex = findPivotColumn(matrix[r]);
+
+        if (pivotColumnIndex !== -1) { //-1 means zero row => skip
+            rowIndexes.push(r);
+            columnIndexes.push(pivotColumnIndex);
+        }
+    }
+
+    return { rowIndexes, columnIndexes };
+}
+
+export function findNumberOfSolutions(matrix){
+    const { rowIndexes, columnIndexes } = findPivotIndexes(matrix);
+
+    const rowCount = matrix.length;
+    const colCount = matrix[0].length;
+
+    const hasPivotInEveryColumn = Array.from({ length: colCount }, (_, index) => index).every(columnIndex =>
+        columnIndexes.includes(columnIndex)
+    );
+
+    const hasPivotInEveryRow = Array.from({ length: rowCount }, (_, index) => index).every(rowIndex =>
+        rowIndexes.includes(rowIndex)
+    );
+
+    if (hasPivotInEveryRow) {
+        if (hasPivotInEveryColumn) {
+            return "1";
+        } else {
+            return "infinity";
+        }
+    } else {
+        return "0";
+    }
+}
   
 function DisplayRREF({array}){
     const result = CalcRREF(array);
