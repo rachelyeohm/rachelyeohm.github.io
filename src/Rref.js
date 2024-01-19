@@ -165,12 +165,14 @@ export function calcAugmentedRREF(coeffMatrix, constMatrix) {
 
     function moveZeroRows(coeffMatrix, constMatrix) {
         let nonZeroCoeff = coeffMatrix.filter(row => !row.every(val => val === 0));
+        let nonZeroConst = constMatrix.filter(row => !row.every(val => val === 0));
         let zeroRow = Array(coeffMatrix[0].length).fill(0);
 
-        const {matrix: resultCoeff, constMatrix: resultConst} = reduceToRREF(nonZeroCoeff, constMatrix);
+        const {matrix: resultCoeff, constMatrix: resultConst} = reduceToRREF(nonZeroCoeff, nonZeroConst);
 
         for (let i = 0; i < coeffMatrix.length - nonZeroCoeff.length; i++) {
             resultCoeff.push(zeroRow);
+            resultConst.push([0]);
         }
         console.log(resultCoeff);
         console.log(resultConst);
