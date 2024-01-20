@@ -10,6 +10,25 @@ const Solutions = () => {
       setSubmittedCoeffMatrix(coeffMatrix);
       setSubmittedConstMatrix(constMatrix);
     }
+    
+    const calcNumberOfSolutions = (coeffMatrix, constMatrix) => {
+      console.log(submittedConstMatrix);
+      const result = calcAugmentedRREF(coeffMatrix, constMatrix);
+      function combineMatrices(coeffMatrix, constMatrix) {
+        const rowCount = coeffMatrix.length;
+        const combinedMatrix = new Array(rowCount);
+
+        for (let i = 0; i < rowCount; i++) {
+            combinedMatrix[i] = [...coeffMatrix[i], ...constMatrix[i]];
+        }
+
+        return combinedMatrix;
+      }
+      const combinedMatrix = combineMatrices(result.coeffMatrix, result.constMatrix);
+      const numberOfSolutions = findNumberOfSolutions(combinedMatrix);
+      console.log(submittedConstMatrix);
+      return numberOfSolutions;
+    }
 
     return (
       <div>
@@ -25,20 +44,3 @@ const Solutions = () => {
   };
 export default Solutions;
 
-
-const calcNumberOfSolutions = (coeffMatrix, constMatrix) => {
-  const result = calcAugmentedRREF(coeffMatrix, constMatrix);
-  function combineMatrices(coeffMatrix, constMatrix) {
-    const rowCount = coeffMatrix.length;
-    const combinedMatrix = new Array(rowCount);
-
-    for (let i = 0; i < rowCount; i++) {
-        combinedMatrix[i] = [...coeffMatrix[i], ...constMatrix[i]];
-    }
-
-    return combinedMatrix;
-  }
-  const combinedMatrix = combineMatrices(result.coeffMatrix, result.constMatrix);
-  const numberOfSolutions = findNumberOfSolutions(combinedMatrix);
-  return numberOfSolutions;
-}

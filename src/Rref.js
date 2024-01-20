@@ -98,7 +98,10 @@ export function calcRREF(array){
 }
 
 export function calcAugmentedRREF(coeffMatrix, constMatrix) {
+    console.log(constMatrix);
+    console.log(coeffMatrix);
     coeffMatrix = coeffMatrix.map(innerArray => innerArray.map(element => parseInt(element, 10)));
+    constMatrix = constMatrix.map(innerArray => innerArray.map(element => parseInt(element, 10)));
 
     function reduceToRREF(matrix, constMatrix) {
         let lead = 0; // leading column
