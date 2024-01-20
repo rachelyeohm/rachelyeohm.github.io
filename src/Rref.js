@@ -22,226 +22,113 @@ const RREF = () => {
   };
 export default RREF;
 
-export function calcRREF(array){
-    
-    array = array.map(innerArray =>innerArray.map(element => parseInt(element, 10)));
-
-    function reduceToRREF(matrix) {
-        let lead = 0; //leading column 
-        const rowCount = matrix.length;
-        const colCount = matrix[0].length;
-    
-        for (let r = 0; r < rowCount; r++) { //for each row
-            if (colCount <= lead) { //lead column has been found.
-                break;
-            }
-    
-            let i = r;
-    
-            while (matrix[i][lead] === 0) {
-                i++;
-                if (rowCount === i) {
-                    i = r;
-                    lead++;
-                    if (colCount === lead) {
-                        break;
-                    }
-                }
-            }
-    
-            if (colCount > lead) { //must iterate through all columns first 
-                let temp = matrix[i];
-                matrix[i] = matrix[r];
-                matrix[r] = temp;
-    
-                let val = matrix[r][lead];
-    
-                // Check if the divisor (val) is not zero before performing operations
-                if (val !== 0) {
-                    for (let j = 0; j < colCount; j++) {
-                        matrix[r][j] /= val;
-                    }
-    
-                    for (let i = 0; i < rowCount; i++) {
-                        if (i !== r) {
-                            val = matrix[i][lead];
-                            for (let j = 0; j < colCount; j++) {
-                                matrix[i][j] -= val * matrix[r][j];
-                            }
-                        }
-                    }
-                }
-            }
-    
-            lead++;
-        }
-  
-        return matrix;
+export function calcRREF(matrix){
+    const constMatrix = [];
+    for (let i=0; i < matrix.length; i++){
+        constMatrix.push([0]);
     }
-
-    function moveZeroRows(array){
-        let result = array.filter((row)=>!row.every(val => val === 0));
-        let zeroRow = Array(array[0].length).fill(0);
-        
-        result = reduceToRREF(result);
-        for (let i=0; i < array.length - result.length; i++){
-            result.push(zeroRow);
-        }
-        return result;
-    }
-
-    
-    const result= moveZeroRows(array);
-    
+    const result = calcAugmentedRREF(matrix, constMatrix);
+    for (let i = 0; i < result.length; i++) {
+        result[i].pop();
+      }
     return result;
 
 }
-
-export function calcAugmentedRREF(coeffMatrix, constMatrix) {
+function calcAugmentedRREF(coeffMatrix, constMatrix) {
     console.log(constMatrix);
     console.log(coeffMatrix);
     coeffMatrix = coeffMatrix.map(innerArray => innerArray.map(element => parseInt(element, 10)));
     constMatrix = constMatrix.map(innerArray => innerArray.map(element => parseInt(element, 10)));
+    let nonZeroCoeff = [];
+    let nonZeroConst = [];
+    let zeroRow = Array(coeffMatrix[0].length).fill(0);
+    for (let i = 0; i < coeffMatrix.length; i++) {
+        let isZeroRow = coeffMatrix[i].every(element => element === 0);
 
-    function reduceToRREF(matrix, constMatrix) {
-        let lead = 0; // leading column
-        const rowCount = matrix.length;
-        const colCount = matrix[0].length;
-
-        for (let r = 0; r < rowCount; r++) { // for each row
-            if (colCount <= lead) { // lead column has been found.
-                break;
+        if (isZeroRow) {
+            if (constMatrix[i][0] === 0) { //complete zero row: dont add to the new matrix
+                continue;
+            } else {
+                return -1; // coefficients are zero and constant is nonzero => inconsistent
             }
-
-            let i = r;
-
-            while (matrix[i][lead] === 0) {
-                i++;
-                if (rowCount === i) {
-                    i = r;
-                    lead++;
-                    if (colCount === lead) {
-                        break;
-                    }
-                }
-            }
-
-            if (colCount > lead) { // must iterate through all columns first
-                let temp = matrix[i];
-                matrix[i] = matrix[r];
-                matrix[r] = temp;
-
-                // Switch the corresponding row in the constant matrix [CHANGE]
-                let tempConst = constMatrix[i];
-                constMatrix[i] = constMatrix[r];
-                constMatrix[r] = tempConst;
-
-                let val = matrix[r][lead];
-
-                // Check if the divisor (val) is not zero before performing operations
-                if (val !== 0) {
-                    for (let j = 0; j < colCount; j++) {
-                        matrix[r][j] /= val;
-                    }
-
-                    // Divide the corresponding element in the constant matrix by val [CHANGE]
-                    constMatrix[r][0] /= val;
-
-                    // Perform row operations on both the coefficient matrix and the constant matrix
-                    for (let i = 0; i < rowCount; i++) {
-                        if (i !== r) {
-                            val = matrix[i][lead];
-                            for (let j = 0; j < colCount; j++) {
-                                matrix[i][j] -= val * matrix[r][j];
-                            }
-                            constMatrix[i][0] -= val * constMatrix[r][0];
-                        }
-                    }
-                }
-            }
-
-            lead++;
         }
-
-        return { matrix, constMatrix };
+        nonZeroCoeff.push(coeffMatrix[i].slice());
+        nonZeroConst.push(constMatrix[i]);
     }
 
-    function moveZeroRows(coeffMatrix, constMatrix) {
-        let nonZeroCoeff = coeffMatrix.filter(row => !row.every(val => val === 0));
-        let nonZeroConst = constMatrix.filter(row => !row.every(val => val === 0));
-        let zeroRow = Array(coeffMatrix[0].length).fill(0);
+    const {matrix: resultCoeff, constMatrix: resultConst} = reduceToRREF(nonZeroCoeff, nonZeroConst);
 
-        const {matrix: resultCoeff, constMatrix: resultConst} = reduceToRREF(nonZeroCoeff, nonZeroConst);
-
-        for (let i = 0; i < coeffMatrix.length - nonZeroCoeff.length; i++) {
-            resultCoeff.push(zeroRow);
-            resultConst.push([0]);
-        }
-        console.log(resultCoeff);
-        console.log(resultConst);
-        return { coeffMatrix: resultCoeff, constMatrix: resultConst};
+    //add back zero rows.
+    for (let i = 0; i < coeffMatrix.length - nonZeroCoeff.length; i++) {
+        resultCoeff.push(zeroRow);
+        resultConst.push([0]);
     }
-
-    const result = moveZeroRows(coeffMatrix, constMatrix);
-    console.log("Result = " + result.coeffMatrix);
-
-    return { coeffMatrix: result.coeffMatrix, constMatrix: result.constMatrix };
+    return combineMatrices(resultCoeff, resultConst);
 }
-// export function solveLinearSystem(matrix, constMatrix) {
-//     const augmentedMatrix = matrix.map((row, index) => [...row, constMatrix[index][0]]);
-//     const rowCount = augmentedMatrix.length;
-//     const colCount = augmentedMatrix[0].length;
-//     let lead = 0;
 
-//     for (let r = 0; r < rowCount; r++) {
-//         if (colCount <= lead) {
-//             break;
-//         }
+function reduceToRREF(matrix, constMatrix) {
+    let lead = 0; // leading column
+    const rowCount = matrix.length;
+    const colCount = matrix[0].length;
+    console.log(matrix);
+    console.log(constMatrix);
+    for (let r = 0; r < rowCount; r++) { // for each row
+        if (colCount <= lead) { // lead column has been found.
+            break;
+        }
 
-//         let i = r;
+        let i = r;
 
-//         while (augmentedMatrix[i][lead] === 0) {
-//             i++;
-//             if (rowCount === i) {
-//                 i = r;
-//                 lead++;
-//                 if (colCount === lead) {
-//                     break;
-//                 }
-//             }
-//         }
+        while (matrix[i][lead] === 0) {
+            i++;
+            if (rowCount === i) {
+                i = r;
+                lead++;
+                if (colCount === lead) {
+                    break;
+                }
+            }
+        }
 
-//         if (colCount > lead) {
-//             let temp = augmentedMatrix[i];
-//             augmentedMatrix[i] = augmentedMatrix[r];
-//             augmentedMatrix[r] = temp;
+        if (colCount > lead) { // must iterate through all columns first
+            let temp = matrix[i];
+            matrix[i] = matrix[r];
+            matrix[r] = temp;
 
-//             let val = augmentedMatrix[r][lead];
+            // Switch the corresponding row in the constant matrix [CHANGE]
+            let tempConst = constMatrix[i];
+            constMatrix[i] = constMatrix[r];
+            constMatrix[r] = tempConst;
 
-//             if (val !== 0) {
-//                 for (let j = 0; j < colCount; j++) {
-//                     augmentedMatrix[r][j] /= val;
-//                 }
+            let val = matrix[r][lead];
 
-//                 for (let i = 0; i < rowCount; i++) {
-//                     if (i !== r) {
-//                         val = augmentedMatrix[i][lead];
-//                         for (let j = 0; j < colCount; j++) {
-//                             augmentedMatrix[i][j] -= val * augmentedMatrix[r][j];
-//                         }
-//                     }
-//                 }
-//             }
-//         }
+            // Check if the divisor (val) is not zero before performing operations
+            if (val !== 0) {
+                for (let j = 0; j < colCount; j++) {
+                    matrix[r][j] /= val;
+                }
 
-//         lead++;
-//     }
+                // Divide the corresponding element in the constant matrix by val [CHANGE]
+                constMatrix[r][0] /= val;
 
-//     // Extract the solution column vector
-//     const solutionVector = augmentedMatrix.map(row => [row[colCount - 1]]);
+                // Perform row operations on both the coefficient matrix and the constant matrix
+                for (let i = 0; i < rowCount; i++) {
+                    if (i !== r) {
+                        val = matrix[i][lead];
+                        for (let j = 0; j < colCount; j++) {
+                            matrix[i][j] -= val * matrix[r][j];
+                        }
+                        constMatrix[i][0] -= val * constMatrix[r][0];
+                    }
+                }
+            }
+        }
 
-//     return solutionVector;
-// }
+        lead++;
+    }
+
+    return { matrix, constMatrix };
+}
 
 function findPivotColumnIndex(row){
     if (row.every(element => element === 0)) { //zero row: index is -1
@@ -269,12 +156,30 @@ function findPivotIndexes(matrix) {
     return { rowIndexes, columnIndexes };
 }
 
-export function findNumberOfSolutions(matrix){
-    matrix = matrix.filter((row)=>!row.every(val => val === 0)); //filtering out zero rows
-    const { rowIndexes, columnIndexes } = findPivotIndexes(matrix);
+function combineMatrices(coeffMatrix, constMatrix) {
+    const rowCount = coeffMatrix.length;
+    const combinedMatrix = new Array(rowCount);
 
-    const rowCount = matrix.length;
-    const colCount = matrix[0].length;
+    for (let i = 0; i < rowCount; i++) {
+        combinedMatrix[i] = [...coeffMatrix[i], ...constMatrix[i]];
+    }
+
+    return combinedMatrix;
+}
+
+export const calcNumberOfSolutions = (coeffMatrix, constMatrix) => {
+    let combinedMatrix = calcAugmentedRREF(coeffMatrix, constMatrix);
+    if (combinedMatrix === -1) {
+        return "0"
+    }
+    
+    
+    combinedMatrix = combinedMatrix.filter((row)=>!row.every(val => val === 0)); //filtering out zero rows
+    const { rowIndexes, columnIndexes } = findPivotIndexes(combinedMatrix);
+    console.log(combinedMatrix);
+
+    const rowCount = combinedMatrix.length;
+    const colCount = combinedMatrix[0].length;
 
     const hasPivotInEveryColumn = Array.from({ length: colCount }, (_, index) => index).every(columnIndex =>
         columnIndexes.includes(columnIndex)
@@ -293,6 +198,7 @@ export function findNumberOfSolutions(matrix){
     } else {
         return "0";
     }
+    
 }
   
 function DisplayRREF({array}){
