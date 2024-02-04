@@ -36,7 +36,7 @@
               <p>Functionality:</p>
                 <ul>
                   <li> Calculating Reduced Row-Echelon Form</li>
-                  <li> Calculating number of solutions (In progress)</li>
+                  <li> Calculating number of solutions</li>
                   <li> Checking for Linear Independence (In progress)</li>
                   <li> Checking for orthogonality + orthonormality (In progress)</li>
                 </ul>

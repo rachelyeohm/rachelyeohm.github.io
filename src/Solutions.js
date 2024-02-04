@@ -1,7 +1,7 @@
 import './App.css';
 import React, {useState} from "react";
 import {AugmentedMatrix} from "./Matrix"
-import {calcAugmentedRREF, calcNumberOfSolutions} from "./Rref";
+import {calcAugmentedRREF, calcNumberOfSolutions} from "./RrefUtility";
 
 const Solutions = () => {
     const [submittedCoeffMatrix, setSubmittedCoeffMatrix] = useState([]);

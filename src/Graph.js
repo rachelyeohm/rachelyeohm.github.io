@@ -17,7 +17,7 @@ function createNodes(graphData, directed){
       for (let i=0; i < graphData.length; i++){
         for (let j=0; j < graphData.length; j++){
             if (graphData[i][j] > 0){
-              graphnodes.push({data: {source: number_to_alpha(j), target: number_to_alpha(j), label: graphData[i][j]}})
+              graphnodes.push({data: {source: number_to_alpha(i), target: number_to_alpha(j), label: graphData[i][j]}})
             }
         }
       }
