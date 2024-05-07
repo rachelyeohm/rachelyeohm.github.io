@@ -25,18 +25,18 @@ html, body {
   height: 100%;
 }
 
-html {
+/* html {
   display: table;
   margin: auto;
-}
+} */
 
 body {
   margin: 0;
   display: flex;
-  place-items: center;
+  /* place-items: center;
   min-width: 320px;
   min-height: 50vh;
-  vertical-align: middle;
+  vertical-align: middle; */
 }
 
 h1 {
@@ -75,3 +75,13 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+/* .ant-menu-item-selected {
+  background-color: #ffebfb !important;
+  color: #df2ab8 !important;
+}
+
+.ant-btn-primary {
+  background-color: #df2ac4;
+  @btn-primary-color: @primary-color;
+} */

@@ -30,8 +30,8 @@ const Home = () => {
           <h1>Home</h1>
           <p>Welcome to math!</p>
         </div>
-        <div>
-          <div>
+        <div style={{ display: 'flex', flexDirection: "column", alignContent: "center",   justifyContent: 'center' }}>
+          <div >
             <MainButton name = "Linear Algebra" onClick = {()=>navigate("/linear_algebra")}/>
             <p>Functionality:</p>
               <ul>
