@@ -120,6 +120,7 @@ button:focus-visible {
 
 .content {
   position: relative;
+  padding-left: 15px;
 }
 
 .content .line {
@@ -128,4 +129,6 @@ button:focus-visible {
   position:absolute;
   top: 0;
   bottom:0;
+  left: 0; /* Position the line on the right side of the container */
+  
 }

@@ -64,16 +64,11 @@ const AugmentedMatrixForm = ({coefficientMatrix, setCoefficientMatrix, constants
             </div>
             
   
-            {/* Vertical Line */}
-            <div className="vertical-line-container">
-                <div className="vertical-line"></div>
-            </div>
-            
-  
             {/* Constants Matrix */}
             <div className = "content">
                 {addBlanks(constantsMatrix, 'constants')}
                 <div className = "line"></div>
+                
             </div>
             
           </div>
