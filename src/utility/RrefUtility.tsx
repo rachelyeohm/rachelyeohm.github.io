@@ -107,6 +107,7 @@ function reduceToRREF(matrix : number[][], constMatrix : number[][]) {
     return { matrix, constMatrix } ;
 }
 
+//take a row as input, find the pivot column index.
 function findPivotColumnIndex(row : number[]){
     if (row.every(element => element === 0)) { //zero row: index is -1
         return -1; 
@@ -116,7 +117,7 @@ function findPivotColumnIndex(row : number[]){
     return pivotColumnIndex;
 }
 
-function findPivotIndexes(matrix : number[][]) {
+export function findPivotIndexes(matrix : number[][]) {
     const rowCount = matrix.length;
     const colCount = matrix[0].length;
     const rowIndexes : number[] = [];

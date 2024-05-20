@@ -44,7 +44,6 @@ const AugmentedMatrixForm = ({coefficientMatrix, setCoefficientMatrix, constants
                     <input
                     key={colIndex}
                     type="number"
-                    min = "0"
                     step = "1"
                     value={cell}
                     onChange={(event) => handleInputChange(rowIndex, colIndex, event, matrixType)}
