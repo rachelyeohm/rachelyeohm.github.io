@@ -6,7 +6,7 @@ import { findPivotIndexes } from '../utility/RrefUtility';
 type calcSolutionsResults  = {
   numSolutions : string;
   pivotColumns : string;
-  solution : string;
+  solution : string[];
 }
 
 const Solutions = () => { 
@@ -15,7 +15,7 @@ const Solutions = () => {
     const [solutions, setSolutions] = useState<calcSolutionsResults>({
       numSolutions : "nil",
       pivotColumns : "nil",
-      solution : "nil"
+      solution : ["nil"]
     });
     const handleFormSubmit = (coeffMatrix: number[][], constMatrix: number[][]) => {
       setSubmittedCoeffMatrix(coeffMatrix);
@@ -37,9 +37,9 @@ const Solutions = () => {
                     ? "___" 
                     : solutions.pivotColumns}.</p>
 
-            <p className='general'> The solution(s) are {submittedCoeffMatrix.length === 0 
-                    ? "___" 
-                    : solutions.solution}.</p>
+            <p className='general'> {submittedCoeffMatrix.length === 0 
+                    ? "The solution(s) are _____" 
+                    : displaySolutions(solutions.solution)}</p>
         </div>
             
       </div>
@@ -48,3 +48,16 @@ const Solutions = () => {
 }
 
 export default Solutions;
+
+
+function displaySolutions(solutions : string[]) {
+  return (
+    <div className = "general">
+      The solutions(s) are:
+      <br></br>
+      {solutions.map((eqn, index) => (
+        <div key={index}>{eqn}</div>
+      ))}
+    </div>
+  );
+}
