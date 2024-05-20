@@ -16,7 +16,7 @@ export default function calcSolutions(coeffMatrix : number[][], constMatrix : nu
 
 
     let numSolutions = "";
-    let pivotColumns = convertToPivotIndex(coeffMatrix, constMatrix);
+    let pivotColumns = convertToPivotIndex(result.coeffMatrix, result.constMatrix);
     let solution = "";
 
 
@@ -31,7 +31,7 @@ export default function calcSolutions(coeffMatrix : number[][], constMatrix : nu
     const range: number[] = Array.from({ length: combinedMatrix.length-2 }, (_, i) => i);
     if (range.every(num => pivotIndexes.rowIndexes.includes(num))) {
         numSolutions = "1";
-        solution = generateVariableString(constMatrix.map(subArray => subArray[0]))
+        solution = generateVariableString(result.constMatrix.map(subArray => subArray[0]))
     } else {
         numSolutions = "infinite";
         solution = "???";
