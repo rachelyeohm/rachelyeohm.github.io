@@ -1,20 +1,20 @@
 import React, {useState} from "react";
-import {calcRREF} from "./RrefUtility";
-import Matrix from "./Matrix.tsx"
+import {calcRREF} from "../utility/RrefUtility.tsx";
+import Matrix from "../components/matrix/Matrix.tsx"
 
 
 
 //<Matrix onFormSubmit={handleFormSubmit}/>
 const RREF = () => {
-    const [submittedMatrix, setSubmittedMatrix] = useState([]);
-    const handleFormSubmit = (matrix) => {
+    const [submittedMatrix, setSubmittedMatrix] = useState<number[][]>([]);
+    const handleFormSubmit = (matrix : number[][]) => {
         setSubmittedMatrix(matrix);
     }
   
+    //
     return (
       <div>
         <div>
-            HI
             <Matrix onFormSubmit={handleFormSubmit}/>
             {submittedMatrix.length === 0 ? null : <DisplayRREF array={submittedMatrix}/>}
 
@@ -29,6 +29,7 @@ export default RREF;
 
   
 function DisplayRREF({array} : {array : number[][]}){
+    console.log(array);
     const result : number[][] = calcRREF(array);
     const roundToTwoDecimalPlaces = (num : number) => Math.round((num + Number.EPSILON) * 100) / 100;
 

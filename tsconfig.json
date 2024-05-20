@@ -20,6 +20,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"],
+  "include": ["src", "src/pages/GraphProject.tsx", "src/pages/Home.tsx", "src/pages/LinAlgProject.tsx", "src/pages/LinearIndependence.tsx", "src/main.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

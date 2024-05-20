@@ -4,9 +4,9 @@ import { BrowserRouter, Routes, Route} from 'react-router-dom';
 import type { ThemeConfig } from 'antd';
 import {ConfigProvider, theme } from 'antd';
 
-import Home from './Home.tsx'
-import LinAlgProject from './LinAlgProject.tsx'
-import GraphProject from './GraphProject.tsx'
+import Home from './pages/Home.tsx'
+import LinAlgProject from './pages/LinAlgProject.tsx'
+import GraphProject from './pages/GraphProject.tsx'
 import './index.css'
 
 

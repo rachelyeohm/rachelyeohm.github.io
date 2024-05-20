@@ -75,6 +75,12 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+.general {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
 
 /* .ant-menu-item-selected {
   background-color: #ffebfb !important;
@@ -85,3 +91,41 @@ button:focus-visible {
   background-color: #df2ac4;
   @btn-primary-color: @primary-color;
 } */
+
+.matrix-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.matrix-form div {
+  margin-bottom: 10px;
+}
+
+.matrix-form input {
+  width: 30px; /* Adjust the width as needed */
+  padding: 5px;
+  margin-right: 10px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #000000;
+}
+
+.matrix-form button {
+  width: 100px;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.content {
+  position: relative;
+}
+
+.content .line {
+  width: 1px;
+  background-color: black;
+  position:absolute;
+  top: 0;
+  bottom:0;
+}

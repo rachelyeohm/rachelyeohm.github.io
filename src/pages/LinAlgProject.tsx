@@ -21,8 +21,8 @@ const items : MenuItem[] = [
 ]
 
 const LinAlgProject = () => {
-  const [collapsed, setCollapsed] = useState(false);
-  const [openKey, setOpenKey] = useState("rref");
+  const [collapsed, setCollapsed] = useState<boolean>(false);
+  const [openKey, setOpenKey] = useState<string>("rref");
   let navigate = useNavigate();
   const navigateBack = ()=>navigate("/");
   
