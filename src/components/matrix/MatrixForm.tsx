@@ -39,7 +39,7 @@ const MatrixForm = ({directed, matrix, setMatrix, onFormSubmit} : MatrixFormProp
                   <input
                   key={colIndex}
                   type="number"
-                  step = "1"
+                  step = "0.000001"
                   value={cell}
                   onChange={(event) => handleInputChange(rowIndex, colIndex, event)}
                   />

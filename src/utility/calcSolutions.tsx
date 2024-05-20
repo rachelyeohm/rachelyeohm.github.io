@@ -1,5 +1,5 @@
 import { findPivotIndexes } from "./RrefUtility";
-
+import { reduceToRREF } from "./RrefUtility";
 
 
 type calcSolutionsResults  = {
@@ -9,7 +9,10 @@ type calcSolutionsResults  = {
 }
 export default function calcSolutions(coeffMatrix : number[][], constMatrix : number[][]) : calcSolutionsResults{
 
-    const combinedMatrix : number[][] = coeffMatrix.map((row, index) => row.concat(constMatrix[index]));
+    const result = reduceToRREF(coeffMatrix, constMatrix)
+    
+    const combinedMatrix : number[][] = result.coeffMatrix.map((row, index) =>
+                                 row.concat(result.constMatrix[index]));
 
 
     let numSolutions = "";
@@ -21,7 +24,7 @@ export default function calcSolutions(coeffMatrix : number[][], constMatrix : nu
     const pivotIndexes = findPivotIndexes(combinedMatrix);
     if (pivotIndexes.rowIndexes.includes(combinedMatrix.length - 1)) {
         numSolutions = "0";
-        solution = "no solution";
+        solution = "nil";
     }
 
     //all rows (except the last row) have pivot column - one solution;
@@ -55,7 +58,7 @@ function generateVariableString(matrix: number[]): string {
     const variables = baseVariables.slice(0, matrix.length).reverse();
   
     // Map the numbers to their corresponding variables and join them into a string
-    const result = matrix.map((value, index) => `${variables[index]} = ${value}`).join(', ');
+    const result = matrix.map((value, index) => `${variables[index]} = ${value.toFixed(3)}`).join(', ');
   
     return result;
   }

@@ -33,78 +33,74 @@ function calcAugmentedRREF(coeffMatrix : number[][], constMatrix : number[][]) {
         nonZeroCoeff.push(coeffMatrix[i].slice());
         nonZeroConst.push(constMatrix[i]);
     }
-    const {matrix: resultCoeff, constMatrix: resultConst} = reduceToRREF(nonZeroCoeff, nonZeroConst);
+    const result : {coeffMatrix : number[][], constMatrix : number[][]}= reduceToRREF(nonZeroCoeff, nonZeroConst);
 
     //add back zero rows.
     for (let i = 0; i < numZeroRows; i++) {
-        resultCoeff.push(zeroRow);
-        resultConst.push([0]);
+        result.coeffMatrix.push(zeroRow);
+        result.constMatrix.push([0]);
     }
-    return combineMatrices(resultCoeff, resultConst);
+    return combineMatrices(result.coeffMatrix, result.constMatrix);
 }
 
-function reduceToRREF(matrix : number[][], constMatrix : number[][]) {
-    let lead = 0; // leading column
-    const rowCount = matrix.length;
-    const colCount = matrix[0].length;
-    console.log(matrix);
-    console.log(constMatrix);
-    for (let r = 0; r < rowCount; r++) { // for each row
-        if (colCount <= lead) { // lead column has been found.
-            break;
-        }
+export function reduceToRREF(matrix : number[][], constMatrix : number[][]) : {coeffMatrix : number[][], constMatrix : number[][]}{
 
+    const rows = matrix.length;
+    const columns = matrix[0].length;
+
+    //deep copies the arrays
+    let matrix2 : number[][] = JSON.parse(JSON.stringify(matrix));
+    let constMatrix2 : number[][] = JSON.parse(JSON.stringify(constMatrix));
+    
+    //credit goes to taylorrodriguez
+    let lead = 0; //lead column
+    for (let r = 0; r < rows; r++) {
+        if (columns <= lead) {
+            //exceeded number of columns
+            return { coeffMatrix : matrix2, constMatrix : constMatrix2 } ;
+        }
         let i = r;
-
-        while (matrix[i][lead] === 0) {
-            i++;
-            if (rowCount === i) {
-                i = r;
-                lead++;
-                if (colCount === lead) {
-                    break;
-                }
+        while (matrix2[i][lead] == 0) {
+        i++;
+        if (rows == i) {
+            i = r;
+            lead++;
+            if (columns == lead) {
+                return { coeffMatrix : matrix2, constMatrix : constMatrix2 } ;
             }
         }
-
-        if (colCount > lead) { // must iterate through all columns first
-            let temp = matrix[i];
-            matrix[i] = matrix[r];
-            matrix[r] = temp;
-
-            // Switch the corresponding row in the constant matrix [CHANGED]
-            let tempConst = constMatrix[i];
-            constMatrix[i] = constMatrix[r];
-            constMatrix[r] = tempConst;
-
-            let val = matrix[r][lead];
-
-            // Check if the divisor (val) is not zero before performing operations
-            if (val !== 0) {
-                for (let j = 0; j < colCount; j++) {
-                    matrix[r][j] /= val;
-                }
-
-                // Divide the corresponding element in the constant matrix by val [CHANGED]
-                constMatrix[r][0] /= val;
-
-                // Perform row operations on both the coefficient matrix and the constant matrix
-                for (let i = 0; i < rowCount; i++) {
-                    if (i !== r) {
-                        val = matrix[i][lead];
-                        for (let j = 0; j < colCount; j++) {
-                            matrix[i][j] -= val * matrix[r][j];
-                        }
-                        constMatrix[i][0] -= val * constMatrix[r][0];
-                    }
-                }
-            }
         }
+        let tmp = matrix2[i];
+        matrix2[i] = matrix2[r];
+        matrix2[r] = tmp;
 
+        tmp = constMatrix2[i];
+        constMatrix2[i] = constMatrix2[r];
+        constMatrix2[r] = tmp;
+
+        let val = matrix2[r][lead];
+        for (let j = 0; j < columns; j++) {
+            matrix2[r][j] /= val;  
+        }
+        constMatrix2[r][0] /= val;
+
+        for (let i = 0; i < rows; i++) {
+            if (i == r) continue;
+            val = matrix2[i][lead];
+            for (let j = 0; j < columns; j++) {
+                matrix2[i][j] -= val * matrix2[r][j];
+            }
+            constMatrix2[i][0] -= val * constMatrix2[r][0]
+        }
         lead++;
     }
 
-    return { matrix, constMatrix } ;
+    console.log("matrix: " + matrix)
+    console.log("constMatrix: " + constMatrix)
+    console.log("matrix2: " + matrix2)
+    console.log("constMatrix2: " + constMatrix2)
+
+    return { coeffMatrix : matrix2, constMatrix : constMatrix2 } ;
 }
 
 //take a row as input, find the pivot column index.
@@ -113,7 +109,7 @@ function findPivotColumnIndex(row : number[]){
         return -1; 
     }
     const pivotColumnIndex = row.findIndex(element => element !== 0);
-    console.log("pivot column indexes: " + pivotColumnIndex);
+    //console.log("pivot column indexes: " + pivotColumnIndex);
     return pivotColumnIndex;
 }
 
@@ -131,8 +127,8 @@ export function findPivotIndexes(matrix : number[][]) {
             columnIndexes.push(pivotColumnIndex);
         }
     }
-    console.log("pivot indexes:");
-    console.log({rowIndexes, columnIndexes});
+    // console.log("pivot indexes:");
+    // console.log({rowIndexes, columnIndexes});
     return { rowIndexes, columnIndexes };
 }
 
