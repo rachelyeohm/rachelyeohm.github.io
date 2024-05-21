@@ -28,7 +28,7 @@ export default RREF;
 
 
   
-function DisplayRREF({array} : {array : number[][]}){
+export function DisplayRREF({array} : {array : number[][]}){
     console.log(array);
     const result : number[][] = calcRREF(array);
     const roundToTwoDecimalPlaces = (num : number) => Math.round((num + Number.EPSILON) * 100) / 100;

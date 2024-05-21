@@ -4,6 +4,7 @@ import calcSolutions from '../utility/calcSolutions';
 import { findPivotIndexes } from '../utility/RrefUtility';
 
 type calcSolutionsResults  = {
+  rref : {coeffMatrix : number[][], constMatrix : number[][]}
   numSolutions : string;
   pivotColumns : string;
   solution : string[];
@@ -13,6 +14,7 @@ const Solutions = () => {
     const [submittedCoeffMatrix, setSubmittedCoeffMatrix] = useState<number[][]>([]);
     const [submittedConstMatrix, setSubmittedConstMatrix] = useState<number[][]>([]);
     const [solutions, setSolutions] = useState<calcSolutionsResults>({
+      rref : {coeffMatrix : [], constMatrix : []},
       numSolutions : "nil",
       pivotColumns : "nil",
       solution : ["nil"]
@@ -30,6 +32,9 @@ const Solutions = () => {
       <div>
         <div>
             <AugmentedMatrix onFormSubmit={handleFormSubmit}/>
+            <p className='general'>The reduced row-echelon form is {submittedCoeffMatrix.length === 0 
+                  ? "_____"
+                  : DisplayAugmentedRREF(solutions.rref) }</p>
             <p className='general'>There are {submittedCoeffMatrix.length === 0 
                     ? "____" 
                     : solutions.numSolutions} solutions.</p>
@@ -61,3 +66,49 @@ function displaySolutions(solutions : string[]) {
     </div>
   );
 }
+
+
+export function DisplayAugmentedRREF(rref : {coeffMatrix : number[][], constMatrix : number[][]}){
+
+  const roundToTwoDecimalPlaces = (num : number) => Math.round((num + Number.EPSILON) * 100) / 100;
+
+  return (
+    <div style={{display : "flex"}}>
+      <div className="general">
+          <table>
+          <tbody>
+              {rref.coeffMatrix.map((row, rowIndex) => (
+              <tr key={rowIndex}>
+                  {row.map((cell, cellIndex) => (
+                  <React.Fragment key={cellIndex}>
+                      <td>{cell.toFixed()}</td>
+                      {cellIndex !== row.length - 1 && <td className="line"></td>}
+                  </React.Fragment>
+                  ))}
+              </tr>
+              ))}
+          </tbody>
+          </table>
+      </div>
+
+      <div className="content">
+        <table>
+        <tbody>
+            {rref.constMatrix.map((row, rowIndex) => (
+            <tr key={rowIndex}>
+                {row.map((cell, cellIndex) => (
+                <React.Fragment key={cellIndex}>
+                    <td>{cell.toFixed()}</td>
+                    {cellIndex !== row.length - 1 && <td className="line"></td>}
+                </React.Fragment>
+                ))}
+            </tr>
+            ))}
+        </tbody>
+        </table>
+        <div className = "line"></div>
+      </div>
+    </div>
+  ); 
+}
+
