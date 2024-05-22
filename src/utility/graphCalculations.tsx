@@ -7,14 +7,20 @@ const excluding = (i : number) => (xs : number[]) =>
 
 export const determinant = (matrix : number[][]) : number => {
     if (matrix.length === 0) {
-    return -1 ;
+        return -1 ;
+    } else if (matrix.length === 1) {
+        return matrix[0][0]
     }
-    const [xs, ...xss] = matrix;
-    return xs .length == 1
-    ? xs [0]
-    : sum (xs .map (
-        (x, i) => (-1) ** i * x * determinant (xss .map (excluding (i)))
-    ))
+    const multiplierArray : number[] = Array.from({ length: matrix.length}, 
+                                        (_, i) => (i % 2 === 0 ? 1 : -1));
+    let sum = 0;
+    for (let i = 0; i < matrix.length; i ++) {
+        let subMatrix : number[][] = matrix.filter((_, index) => index !== i);
+        subMatrix = subMatrix.map(row => row.slice(1));
+        sum += multiplierArray[i] * matrix[i][0] * determinant(subMatrix)
+    }
+    
+    return sum;
 };
 
 
