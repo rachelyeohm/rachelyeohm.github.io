@@ -87,6 +87,13 @@ button:focus-visible {
   margin-top: 20px;
 }
 
+
+.general-no-space {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 /* .ant-menu-item-selected {
   background-color: #ffebfb !important;
   color: #df2ab8 !important;
@@ -125,7 +132,7 @@ button:focus-visible {
 
 .content {
   position: relative;
-  padding-left: 15px;
+  padding-left: 10px;
 }
 
 .content .line {
@@ -137,3 +144,4 @@ button:focus-visible {
   left: 0; /* Position the line on the right side of the container */
   
 }
+

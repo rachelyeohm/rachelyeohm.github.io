@@ -3,8 +3,6 @@ import {calcRREF} from "../utility/RrefUtility.tsx";
 import Matrix from "../components/matrix/Matrix.tsx"
 
 
-
-//<Matrix onFormSubmit={handleFormSubmit}/>
 const RREF = () => {
     const [submittedMatrix, setSubmittedMatrix] = useState<number[][]>([]);
     const handleFormSubmit = (matrix : number[][]) => {

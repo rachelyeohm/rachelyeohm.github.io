@@ -32,17 +32,16 @@ const Solutions = () => {
       <div>
         <div>
             <AugmentedMatrix onFormSubmit={handleFormSubmit}/>
-            <p className='general'>The reduced row-echelon form is {submittedCoeffMatrix.length === 0 
+            <p className='general-no-space'>The reduced row-echelon form is {submittedCoeffMatrix.length === 0 
                   ? "_____"
                   : DisplayAugmentedRREF(solutions.rref) }</p>
-            <p className='general'>There are {submittedCoeffMatrix.length === 0 
+            <p className='general-no-space'>There are {submittedCoeffMatrix.length === 0 
                     ? "____" 
                     : solutions.numSolutions} solutions.</p>
-            <p className='general'> The pivot columns are {submittedCoeffMatrix.length === 0 
+            <p className='general-no-space'> The pivot columns are {submittedCoeffMatrix.length === 0 
                     ? "___" 
                     : solutions.pivotColumns}.</p>
-
-            <p className='general'> {submittedCoeffMatrix.length === 0 
+            <p className='general-no-space'> {submittedCoeffMatrix.length === 0 
                     ? "The solution(s) are _____" 
                     : displaySolutions(solutions.solution)}</p>
         </div>
@@ -57,9 +56,8 @@ export default Solutions;
 
 function displaySolutions(solutions : string[]) {
   return (
-    <div className = "general">
-      The solutions(s) are:
-      <br></br>
+    <div>
+      <p>The solutions(s) are:</p>
       {solutions.map((eqn, index) => (
         <div key={index}>{eqn}</div>
       ))}
@@ -69,8 +67,6 @@ function displaySolutions(solutions : string[]) {
 
 
 export function DisplayAugmentedRREF(rref : {coeffMatrix : number[][], constMatrix : number[][]}){
-
-  const roundToTwoDecimalPlaces = (num : number) => Math.round((num + Number.EPSILON) * 100) / 100;
 
   return (
     <div style={{display : "flex"}}>
@@ -91,22 +87,26 @@ export function DisplayAugmentedRREF(rref : {coeffMatrix : number[][], constMatr
           </table>
       </div>
 
-      <div className="content">
-        <table>
-        <tbody>
-            {rref.constMatrix.map((row, rowIndex) => (
-            <tr key={rowIndex}>
-                {row.map((cell, cellIndex) => (
-                <React.Fragment key={cellIndex}>
-                    <td>{cell.toFixed()}</td>
-                    {cellIndex !== row.length - 1 && <td className="line"></td>}
-                </React.Fragment>
-                ))}
-            </tr>
-            ))}
-        </tbody>
-        </table>
-        <div className = "line"></div>
+
+      <div className = "general">
+        <div className = "content">
+          <table>
+          <tbody>
+              {rref.constMatrix.map((row, rowIndex) => (
+              <tr key={rowIndex}>
+                  {row.map((cell, cellIndex) => (
+                  <React.Fragment key={cellIndex}>
+                      <td>{cell.toFixed()}</td>
+                      {cellIndex !== row.length - 1 && <td className="line"></td>}
+                  </React.Fragment>
+                  ))}
+              </tr>
+              ))}
+          </tbody>
+          </table>
+          <div className = "line"></div>
+        </div>
+        
       </div>
     </div>
   ); 

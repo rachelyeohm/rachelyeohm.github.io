@@ -21,12 +21,15 @@ export default function calcSolutions(coeffMatrix : number[][], constMatrix : nu
     let pivotColumns = convertToPivotIndex(result.coeffMatrix, result.constMatrix);
     let solution = [];
 
+    
 
     //last row has a pivot column - inconsistent
+    
     const pivotIndexes = findPivotIndexes(combinedMatrix);
-    if (pivotIndexes.rowIndexes.includes(combinedMatrix.length - 1)) {
+    if (pivotIndexes.columnIndexes.includes(coeffMatrix[0].length)) {
         numSolutions = "0";
         solution = ["nil"];
+        return {rref: result, numSolutions : numSolutions, pivotColumns : pivotColumns, solution : solution}
     }
 
     //all rows (except the last row) have pivot column - one solution;
