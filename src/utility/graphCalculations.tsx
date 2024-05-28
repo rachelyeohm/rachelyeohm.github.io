@@ -1,9 +1,9 @@
 
-const sum = (xs : number[]) =>
-    xs . reduce ((a, b) => a + b, 0)
+// const sum = (xs : number[]) =>
+//     xs . reduce ((a, b) => a + b, 0)
     
-const excluding = (i : number) => (xs : number[]) => 
-[... xs .slice (0, i), ...xs .slice (i + 1)]
+// const excluding = (i : number) => (xs : number[]) => 
+// [... xs .slice (0, i), ...xs .slice (i + 1)]
 
 export const determinant = (matrix : number[][]) : number => {
     if (matrix.length === 0) {
@@ -26,24 +26,24 @@ export const determinant = (matrix : number[][]) : number => {
 
 
   
-const sum_arr = (arr : number[]) => arr.reduce((partialSum, a) => partialSum + a, 0);
+// const sum_arr = (arr : number[]) => arr.reduce((partialSum, a) => partialSum + a, 0);
 
-const col = (arr : number[][] ,idx : number) => arr.map((value,index) =>{ return value[idx]; });
+// const col = (arr : number[][] ,idx : number) => arr.map((value,_) =>{ return value[idx]; });
 
-const row = (arr : number[][] ,idx : number) => arr[idx];
+// const row = (arr : number[][] ,idx : number) => arr[idx];
 
-function degree(array : number[][]){
-    let sum = 0;
-    for (let i=0; i < array.length; i++){
-      alert(row(array,i));
-      for (let j=0; j < array[0].length; j++){
-        sum += sum_arr(row(array,i)) + sum_arr(col(array,j))
-      }
+// function degree(array : number[][]){
+//     let sum = 0;
+//     for (let i=0; i < array.length; i++){
+//       alert(row(array,i));
+//       for (let j=0; j < array[0].length; j++){
+//         sum += sum_arr(row(array,i)) + sum_arr(col(array,j))
+//       }
   
-    }
-    alert(sum);
-    return sum;
-}
+//     }
+//     alert(sum);
+//     return sum;
+// }
 
 export function symmetric(matrix : number[][]){
       if (!Array.isArray(matrix) || matrix.length === 0 || matrix[0].length === 0) {
