@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
 import AugmentedMatrix from '../components/matrix/AugmentedMatrix';
 import calcSolutions from '../utility/calcSolutions';
-import { findPivotIndexes } from '../utility/RrefUtility';
 
 type calcSolutionsResults  = {
   rref : {coeffMatrix : number[][], constMatrix : number[][]}
@@ -12,7 +11,7 @@ type calcSolutionsResults  = {
 
 const Solutions = () => { 
     const [submittedCoeffMatrix, setSubmittedCoeffMatrix] = useState<number[][]>([]);
-    const [submittedConstMatrix, setSubmittedConstMatrix] = useState<number[][]>([]);
+    const [_, setSubmittedConstMatrix] = useState<number[][]>([]);
     const [solutions, setSolutions] = useState<calcSolutionsResults>({
       rref : {coeffMatrix : [], constMatrix : []},
       numSolutions : "nil",

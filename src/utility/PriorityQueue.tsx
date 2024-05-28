@@ -1,20 +1,16 @@
 
 
 export class PriorityQueue<Type> {
-
-    private top : number = 0;
     // private parent = (i : number) => ((i + 1) >>> 1) - 1;
     // private left = (i : number) => (i << 1) + 1;
     // private right = (i : number) => (i + 1) << 1;
     private map = new Map<Type, number>();
-    private _index : number[];
     private _heap : Type[];
     private _comparator: (a : Type, b : Type) => boolean;
     private _equals : (a : Type, b : Type) => boolean;
 
     constructor(comparator = (a : Type, b : Type) => a > b, 
     equals = (a : Type, b : Type) => a == b) {
-        this._index = [];
         this._heap = [];
         this._comparator = comparator;
         this._equals = equals;

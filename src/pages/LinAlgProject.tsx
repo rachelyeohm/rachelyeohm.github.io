@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import { Menu , Button} from 'antd';
 import type { MenuProps } from 'antd';
@@ -21,12 +21,12 @@ const items : MenuItem[] = [
 ]
 
 const LinAlgProject = () => {
-  const [collapsed, setCollapsed] = useState<boolean>(false);
+  const [collapsed, _] = useState<boolean>(false);
   const [openKey, setOpenKey] = useState<string>("rref");
   let navigate = useNavigate();
   const navigateBack = ()=>navigate("/");
   
-  const onClick = (e) => {
+  const onClick : MenuProps['onClick'] = (e) => {
     
     setOpenKey(e.key);
   };

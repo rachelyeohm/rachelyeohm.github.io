@@ -1,4 +1,3 @@
-import React from "react"
 
 export default function createZeroArray(row: number, col: number) : number[][] {
     const array : number[][] = [];

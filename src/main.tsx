@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Routes, Route} from 'react-router-dom';
 import type { ThemeConfig } from 'antd';
-import {ConfigProvider, theme } from 'antd';
+import {ConfigProvider} from 'antd';
 
 import Home from './pages/Home.tsx'
 import LinAlgProject from './pages/LinAlgProject.tsx'
@@ -10,7 +10,7 @@ import GraphProject from './pages/GraphProject.tsx'
 import './index.css'
 
 
-const { getDesignToken, useToken } = theme;
+// const { getDesignToken, useToken } = theme;
 
 const config: ThemeConfig = {
     "token": {
@@ -26,7 +26,7 @@ const config: ThemeConfig = {
 };
 
 
-const globalToken = getDesignToken(config);
+// const globalToken = getDesignToken(config);
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

@@ -1,5 +1,3 @@
-import React, {useState} from "react";
-
 
 export function calcRREF(matrix : number[][]){
     const constMatrix : number[][] = [];
@@ -115,7 +113,6 @@ function findPivotColumnIndex(row : number[]){
 
 export function findPivotIndexes(matrix : number[][]) {
     const rowCount = matrix.length;
-    const colCount = matrix[0].length;
     const rowIndexes : number[] = [];
     const columnIndexes : number[] = [];
 

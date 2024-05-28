@@ -116,7 +116,7 @@ button:focus-visible {
 }
 
 .matrix-form input {
-  width: 30px; /* Adjust the width as needed */
+  width: 40px; /* Adjust the width as needed */
   padding: 5px;
   margin-right: 10px;
   background: transparent;

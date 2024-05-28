@@ -5,7 +5,7 @@ import {
   RightOutlined,
 } from '@ant-design/icons';
 
-const MainButton = ({name, onClick}) => {
+const MainButton = ({name, onClick} : {name : string, onClick : React.MouseEventHandler<HTMLElement>}) => {
   return (
     <Flex gap="small" wrap="wrap" style={{
         width: '100%',
