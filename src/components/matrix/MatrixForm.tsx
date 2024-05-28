@@ -19,7 +19,7 @@ const MatrixForm = ({directed, matrix, setMatrix, onFormSubmit} : MatrixFormProp
     const updatedMatrix = matrix.map((row, i) => {
       if (i === rowIndex) {
         return row.map((cell, j) => j === colIndex ? parseInt(value) : cell);
-      } else if (!directed && colIndex < matrix.length && rowIndex < matrix[i].length) {
+      } else if (!directed && i === colIndex && colIndex < matrix.length && rowIndex < matrix[i].length) {
         return row.map((cell, j) => j === rowIndex ? parseInt(value) : cell);
       }
       return row;
