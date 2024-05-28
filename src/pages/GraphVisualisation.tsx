@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import React, {useState} from 'react';
 import {SquareMatrix} from "../components/matrix/Matrix"
 import {determinant, symmetric, euler} from "../utility/graphCalculations"
 import Graph from "../components/graph/Graph"

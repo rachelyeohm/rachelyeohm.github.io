@@ -1,3 +1,4 @@
+import React from "react"
 import CytoscapeComponent from 'react-cytoscapejs';
 import {createNodes, directed_stylesheet, undirected_stylesheet} from "./GraphFunction"
 
