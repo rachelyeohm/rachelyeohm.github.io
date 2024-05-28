@@ -1,8 +1,8 @@
 import cytoscape from "cytoscape"
 const number_to_alpha = (number : number) => String.fromCharCode(97 + number);
-function getDefaultStylesheet() {
-  return [{ selector: "node", style: { label: "data(label)" } }];
-}
+// function getDefaultStylesheet() {
+//   return [{ selector: "node", style: { label: "data(label)" } }];
+// }
 
 export function createNodes(graphData : number[][], directed: boolean){
 

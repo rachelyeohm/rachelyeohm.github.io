@@ -1,10 +1,8 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Menu , Button} from 'antd';
 import type {MenuProps} from 'antd';
 import {
-  ApartmentOutlined,
-  NodeIndexOutlined,
   LeftOutlined
 } from '@ant-design/icons';
 import GraphVisualisation from "./GraphVisualisation.tsx"
@@ -25,7 +23,7 @@ const items : MenuItem[] = [
 
 
 const GraphProject = () => {
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, _] = useState(false);
   const [openKey, setOpenKey] = useState("graph");
   // const toggleCollapsed = () => {
   //   setCollapsed(!collapsed);
