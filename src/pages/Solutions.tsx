@@ -21,7 +21,8 @@ const Solutions = () => {
     const handleFormSubmit = (coeffMatrix: number[][], constMatrix: number[][]) => {
       setSubmittedCoeffMatrix(coeffMatrix);
       setSubmittedConstMatrix(constMatrix);
-      setSolutions(calcSolutions(coeffMatrix, constMatrix))
+      setSolutions(calcSolutions(convertMatrixStrToFloat(coeffMatrix), 
+      convertMatrixStrToFloat(constMatrix)));
     }
 
 

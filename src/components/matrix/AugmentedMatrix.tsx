@@ -4,15 +4,15 @@ import MatrixSizeForm from "./MatrixSizeForm";
 import AugmentedMatrixForm from "./AugmentedMatrixForm";
 
 interface AugmentedMatrixProps {
-    onFormSubmit : (coeffMatrix : number[][], constMatrix : number[][]) => void
+    onFormSubmit : (coeffMatrix : string[][], constMatrix : string[][]) => void
 }
 
 
 export const AugmentedMatrix  = ({onFormSubmit} : AugmentedMatrixProps) => {
     const [row, setRow]  = useState(4); //length of coefficient matrix
     const [col, setCol] = useState(4); //length of coefficient matrix
-    const [coefficientMatrix, setCoefficientMatrix] = useState<number[][]>([]);
-    const [constantsMatrix, setConstantsMatrix] = useState<number[][]>([]);
+    const [coefficientMatrix, setCoefficientMatrix] = useState<string[][]>([]);
+    const [constantsMatrix, setConstantsMatrix] = useState<string[][]>([]);
 
     const onColChange = (event : React.ChangeEvent<HTMLInputElement>) => {
       setCol(parseInt(event.target.value));

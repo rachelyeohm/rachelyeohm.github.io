@@ -1,10 +1,10 @@
 
 interface AugmentedMatrixFormProps {
-    coefficientMatrix : number[][];
+    coefficientMatrix : string[][];
     setCoefficientMatrix :  React.Dispatch<React.SetStateAction<number[][]>>;
-    constantsMatrix : number[][];
+    constantsMatrix : string[][];
     setConstantsMatrix :  React.Dispatch<React.SetStateAction<number[][]>>;
-    onFormSubmit: (coeffMatrix : number[][], constMatrix : number[][]) => void;
+    onFormSubmit: (coeffMatrix : string[][], constMatrix : string[][]) => void;
 
 }
 
@@ -14,22 +14,27 @@ const AugmentedMatrixForm = ({coefficientMatrix, setCoefficientMatrix, constants
     const handleInputChange = (rowIndex : number, 
         colIndex : number, event : React.ChangeEvent<HTMLInputElement>, matrixType : string) => {
       const { value } = event.target;
-      if (matrixType === 'coefficient') {
-        const updatedMatrix = coefficientMatrix.map((row, i) => {
-            if (i === rowIndex) {
-              return row.map((cell, j) => j === colIndex ? parseInt(value) : cell);
-            } 
-            return row;
-          });
-        setCoefficientMatrix(updatedMatrix);
+      const regex = /^[-]?\d*\.?\d*$/;
+      if (!regex.test(value)) {
+        event.target.value = value;
       } else {
-        const updatedMatrix = constantsMatrix.map((row, i) => {
-            if (i === rowIndex) {
-              return row.map((cell, j) => j === colIndex ? parseInt(value) : cell);
-            } 
-            return row;
-          });
-        setConstantsMatrix(updatedMatrix);
+        if (matrixType === 'coefficient') {
+          const updatedMatrix = coefficientMatrix.map((row, i) => {
+              if (i === rowIndex) {
+                return row.map((cell, j) => j === colIndex ? value : cell);
+              } 
+              return row;
+            });
+          setCoefficientMatrix(updatedMatrix);
+        } else {
+          const updatedMatrix = constantsMatrix.map((row, i) => {
+              if (i === rowIndex) {
+                return row.map((cell, j) => j === colIndex ? value : cell);
+              } 
+              return row;
+            });
+          setConstantsMatrix(updatedMatrix);
+        }
       }
     };
   
@@ -38,14 +43,13 @@ const AugmentedMatrixForm = ({coefficientMatrix, setCoefficientMatrix, constants
       onFormSubmit(coefficientMatrix, constantsMatrix);
     };
   
-    function addBlanks(matrix : number[][], matrixType : string){
+    function displayBlanks(matrix : string[][], matrixType : string){
       return matrix.map((row, rowIndex) => (
                 <div key={rowIndex}>
                 {row.map((cell, colIndex) => (
                     <input
                     key={colIndex}
-                    type="number"
-                    step = "0.000001"
+                    type="text"
                     value={cell}
                     onChange={(event) => handleInputChange(rowIndex, colIndex, event, matrixType)}
                     />
@@ -60,13 +64,13 @@ const AugmentedMatrixForm = ({coefficientMatrix, setCoefficientMatrix, constants
           <div  style={{ display: 'flex'}}>
             {/* Coefficient Matrix */}
             <div>
-              {addBlanks(coefficientMatrix, 'coefficient')}
+              {displayBlanks(coefficientMatrix, 'coefficient')}
             </div>
             
   
             {/* Constants Matrix */}
             <div className = "content">
-                {addBlanks(constantsMatrix, 'constants')}
+                {displayBlanks(constantsMatrix, 'constants')}
                 <div className = "line"></div>
                 
             </div>

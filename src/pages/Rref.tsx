@@ -28,7 +28,7 @@ export default RREF;
   
 export function DisplayRREF({array} : {array : string[][]}){
     console.log(array);
-    const result : number[][] = calcRREF(array.map(row => row.map(elem => parseFloat(elem))));
+    const result : number[][] = calcRREF(convertMatrixStrToFloat(array));
     const roundToTwoDecimalPlaces = (num : number) => Math.round((num + Number.EPSILON) * 100) / 100;
 
     // Display 2D array with 2 decimal places
