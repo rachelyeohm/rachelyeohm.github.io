@@ -4,8 +4,8 @@ import Matrix from "../components/matrix/Matrix.tsx"
 
 
 const RREF = () => {
-    const [submittedMatrix, setSubmittedMatrix] = useState<number[][]>([]);
-    const handleFormSubmit = (matrix : number[][]) => {
+    const [submittedMatrix, setSubmittedMatrix] = useState<string[][]>([]);
+    const handleFormSubmit = (matrix : string[][]) => {
         setSubmittedMatrix(matrix);
     }
   
@@ -26,15 +26,15 @@ export default RREF;
 
 
   
-export function DisplayRREF({array} : {array : number[][]}){
+export function DisplayRREF({array} : {array : string[][]}){
     console.log(array);
-    const result : number[][] = calcRREF(array);
+    const result : number[][] = calcRREF(array.map(row => row.map(elem => parseFloat(elem))));
     const roundToTwoDecimalPlaces = (num : number) => Math.round((num + Number.EPSILON) * 100) / 100;
 
     // Display 2D array with 2 decimal places
     for (let i = 0; i < result.length; i++) {
     for (let j = 0; j < result[i].length; j++) {
-        result[i][j] = roundToTwoDecimalPlaces(result[i][j]);
+        result[i][j] = roundToTwoDecimalPlaces(result[i][j]); //TODO : optimise for map
     }
     }
     return (

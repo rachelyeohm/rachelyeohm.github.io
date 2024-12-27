@@ -25,7 +25,7 @@ const Home = () => {
 
 
   return (
-          <div>
+          <div style = {{paddingLeft: 30}}>
         <div>
           <h1>Home</h1>
           <p>Welcome to math!</p>

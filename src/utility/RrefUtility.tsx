@@ -31,6 +31,7 @@ function calcAugmentedRREF(coeffMatrix : number[][], constMatrix : number[][]) {
         nonZeroCoeff.push(coeffMatrix[i].slice());
         nonZeroConst.push(constMatrix[i]);
     }
+    console.log(nonZeroCoeff);
     const result : {coeffMatrix : number[][], constMatrix : number[][]}= reduceToRREF(nonZeroCoeff, nonZeroConst);
 
     //add back zero rows.
@@ -42,63 +43,56 @@ function calcAugmentedRREF(coeffMatrix : number[][], constMatrix : number[][]) {
 }
 
 export function reduceToRREF(matrix : number[][], constMatrix : number[][]) : {coeffMatrix : number[][], constMatrix : number[][]}{
-
     const rows = matrix.length;
     const columns = matrix[0].length;
-
-    //deep copies the arrays
-    let matrix2 : number[][] = JSON.parse(JSON.stringify(matrix));
-    let constMatrix2 : number[][] = JSON.parse(JSON.stringify(constMatrix));
     
     //credit goes to taylorrodriguez
     let lead = 0; //lead column
     for (let r = 0; r < rows; r++) {
         if (columns <= lead) {
             //exceeded number of columns
-            return { coeffMatrix : matrix2, constMatrix : constMatrix2 } ;
+            return { coeffMatrix : matrix, constMatrix : constMatrix } ;
         }
         let i = r;
-        while (matrix2[i][lead] == 0) {
+        while (matrix[i][lead] == 0) {
         i++;
         if (rows == i) {
             i = r;
             lead++;
             if (columns == lead) {
-                return { coeffMatrix : matrix2, constMatrix : constMatrix2 } ;
+                return { coeffMatrix : matrix, constMatrix : constMatrix } ;
             }
         }
         }
-        let tmp = matrix2[i];
-        matrix2[i] = matrix2[r];
-        matrix2[r] = tmp;
+        let tmp = matrix[i];
+        matrix[i] = matrix[r];
+        matrix[r] = tmp;
 
-        tmp = constMatrix2[i];
-        constMatrix2[i] = constMatrix2[r];
-        constMatrix2[r] = tmp;
+        tmp = constMatrix[i];
+        constMatrix[i] = constMatrix[r];
+        constMatrix[r] = tmp;
 
-        let val = matrix2[r][lead];
+        let val = matrix[r][lead];
         for (let j = 0; j < columns; j++) {
-            matrix2[r][j] /= val;  
+            matrix[r][j] /= val;  
         }
-        constMatrix2[r][0] /= val;
+        constMatrix[r][0] /= val;
 
         for (let i = 0; i < rows; i++) {
             if (i == r) continue;
-            val = matrix2[i][lead];
+            val = matrix[i][lead];
             for (let j = 0; j < columns; j++) {
-                matrix2[i][j] -= val * matrix2[r][j];
+                matrix[i][j] -= val * matrix[r][j];
             }
-            constMatrix2[i][0] -= val * constMatrix2[r][0]
+            constMatrix[i][0] -= val * constMatrix[r][0]
         }
         lead++;
     }
 
     console.log("matrix: " + matrix)
     console.log("constMatrix: " + constMatrix)
-    console.log("matrix2: " + matrix2)
-    console.log("constMatrix2: " + constMatrix2)
 
-    return { coeffMatrix : matrix2, constMatrix : constMatrix2 } ;
+    return { coeffMatrix : matrix, constMatrix : constMatrix } ;
 }
 
 //take a row as input, find the pivot column index.

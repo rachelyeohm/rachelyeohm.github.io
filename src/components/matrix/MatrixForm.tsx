@@ -1,5 +1,5 @@
 import React from "react"
-
+import { useEffect, useState } from "react";
 
 type MatrixFormProps = {
     directed : boolean;
@@ -11,20 +11,27 @@ type MatrixFormProps = {
 
 
 const MatrixForm = ({directed, matrix, setMatrix, onFormSubmit} : MatrixFormProps) => { //for matrix and submission without input rows
-  
-  //const [localMatrix, setLocalMatrix] = useState(matrix);
-  
+  const [focusedCell, setFocusedCell] = useState<[number, number] | null>(null);
+
+
+
   const handleInputChange = (rowIndex : number, colIndex : number, event : React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
-    const updatedMatrix = matrix.map((row, i) => {
-      if (i === rowIndex) {
-        return row.map((cell, j) => j === colIndex ? parseInt(value) : cell);
-      } else if (!directed && i === colIndex && colIndex < matrix.length && rowIndex < matrix[i].length) {
-        return row.map((cell, j) => j === rowIndex ? parseInt(value) : cell);
-      }
-      return row;
-    });
-    setMatrix(updatedMatrix);
+    const regex = /^[-]?\d*\.?\d*$/;
+    if (!regex.test(value)) {
+      event.target.value = value;
+    } else {
+      const updatedMatrix = matrix.map((row, i) => {
+        if (i === rowIndex) {
+          return row.map((cell, j) => j === colIndex ? value : cell); //parseFloat(value)
+        } else if (!directed && i === colIndex && colIndex < matrix.length && rowIndex < matrix[i].length) {
+          return row.map((cell, j) => j === rowIndex ? value : cell);
+        }
+        return row;
+      });
+      setMatrix(updatedMatrix);
+    }
+      
   };
 
   const handleSubmit = (event : React.ChangeEvent<HTMLFormElement>) => {
@@ -32,14 +39,12 @@ const MatrixForm = ({directed, matrix, setMatrix, onFormSubmit} : MatrixFormProp
     onFormSubmit(matrix);
   };
 
-  function addBlanks(){
+  function displayBlanks(){
     return matrix.map((row, rowIndex) => (
               <div key={rowIndex}>
               {row.map((cell, colIndex) => (
                   <input
                   key={colIndex}
-                  type="number"
-                  step = "0.000001"
                   value={cell}
                   onChange={(event) => handleInputChange(rowIndex, colIndex, event)}
                   />
@@ -52,7 +57,7 @@ const MatrixForm = ({directed, matrix, setMatrix, onFormSubmit} : MatrixFormProp
     <div>
         <p className = "general"> Input your matrix: </p>
         <form className="matrix-form" onSubmit={handleSubmit}>
-            {matrix.length > 0 ? addBlanks() : null}
+            {matrix.length > 0 ? displayBlanks() : null}
             <button className="button" type="submit">Submit</button>
         </form>
     </div>
