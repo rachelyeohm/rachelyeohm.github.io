@@ -45,7 +45,7 @@ export const determinant = (matrix : number[][]) : number => {
 //     return sum;
 // }
 
-export function symmetric(matrix : number[][]){
+export function symmetric(matrix : number[][]) {
       if (!Array.isArray(matrix) || matrix.length === 0 || matrix[0].length === 0) {
         return false; // Not a valid matrix
       }

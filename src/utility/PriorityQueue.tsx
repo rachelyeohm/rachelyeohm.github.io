@@ -29,7 +29,6 @@ export class PriorityQueue<Type> {
     }
 
     insert(value : Type) {
-        console.log("inserting")
         this._heap[this._heap.length] = value;
         this.map.set(this._heap[this._heap.length], this._heap.length);
         var i : number = this._heap.length - 1;
@@ -45,8 +44,6 @@ export class PriorityQueue<Type> {
     }
 
     extractMin() {
-        console.log("extracting")
-        console.log(this._heap)
         //delete root : 
         //0 : store the root value, remove it from the map
         const answer = this._heap[0];

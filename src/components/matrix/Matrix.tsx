@@ -1,12 +1,12 @@
 import React , {useState, useEffect} from "react"
-import createZeroArray from "../../utility/createZeroArray.tsx"
+import {createZeroArrayStr} from "../../utility/createZeroArray.tsx"
 import MatrixSizeForm from "./MatrixSizeForm.tsx"
 import MatrixForm from "./MatrixForm.tsx"
 
-const Matrix = ({onFormSubmit} : {onFormSubmit : (matrix : number[][]) => void}) => {
+const Matrix = ({handleFormSubmit: handleFormSubmit} : {handleFormSubmit : (matrix : string[][]) => void}) => {
     const [row, setRow] = useState(4);
     const [col, setCol] = useState(4);
-    const [matrix, setMatrix] = useState<number[][]>([]);
+    const [matrix, setMatrix] = useState<string[][]>([]);
     
     const onColChange = (event : React.ChangeEvent<HTMLInputElement>) => {
       setCol(parseInt(event.target.value));
@@ -15,13 +15,9 @@ const Matrix = ({onFormSubmit} : {onFormSubmit : (matrix : number[][]) => void})
       setRow(parseInt(event.target.value));
     };
     useEffect(() => {
-      if (row > 0 && col>0) {
-        const newMatrix = createZeroArray(row, col);
-        console.log("printed new array");
-        setMatrix(newMatrix);
-      } else {
-        setMatrix([]);
-      }
+      const newMatrix = createZeroArrayStr(row, col);
+      setMatrix(newMatrix);
+      
     }, [row, col]);
   
           
@@ -30,7 +26,7 @@ const Matrix = ({onFormSubmit} : {onFormSubmit : (matrix : number[][]) => void})
         <MatrixSizeForm text="Enter the number of rows" number={row} onChange={onRowChange}/>
         <MatrixSizeForm text="Enter the number of columns" number={col} onChange={onColChange}/>
         <MatrixForm directed={true} matrix={matrix} 
-              setMatrix={setMatrix} onFormSubmit={onFormSubmit}/>
+              setMatrix={setMatrix} handleFormSubmit={handleFormSubmit}/>
        
       </div>
     )
@@ -40,31 +36,28 @@ const Matrix = ({onFormSubmit} : {onFormSubmit : (matrix : number[][]) => void})
 
   type SquareMatrixProps = {
     directed: boolean,
-    onFormSubmit: (matrix : number[][]) => void
+    onFormSubmit: (matrix : string[][]) => void
   }
 
   export const SquareMatrix = ({directed, onFormSubmit} : SquareMatrixProps) => {
     const [row, setRow]  = useState(4);
-    const [matrix, setMatrix] = useState<number[][]>([]);
+    const [matrix, setMatrix] = useState<string[][]>([]);
   
     const onChange = (event : React.ChangeEvent<HTMLInputElement>) => {
-        setRow(parseInt(event.target.value));
+        setRow(parseFloat(event.target.value));
     };
   
     useEffect(() => {
-      if (row > 0) {
-        const newMatrix : number[][] = createZeroArray(row, row);
-        setMatrix(newMatrix);
-      } else {
-        setMatrix([]);
-      }
+      const newMatrix : string[][] = createZeroArrayStr(row, row);
+      setMatrix(newMatrix);
+      
     }, [row]);
   
   
     return (
       <div>
         <MatrixSizeForm text="Enter the number of rows/columns" number={row} onChange={onChange}/>
-        <MatrixForm directed={directed} matrix={matrix} setMatrix={setMatrix} onFormSubmit={onFormSubmit}/>
+        <MatrixForm directed={directed} matrix={matrix} setMatrix={setMatrix} handleFormSubmit={onFormSubmit}/>
       </div>
     )
   }

@@ -1,11 +1,13 @@
 
-import createZeroArray from "./createZeroArray";
+import createZeroArrayNum from "./createZeroArray";
 
-import { PriorityQueue } from "./PriorityQueue";
+export type KruskalResultProps = {
+  edges: EdgeProps[], adjacencyMatrix: number[][]
+}
 
-//create a new one.......
-
-
+export type PrimResultProps = {
+  start_vertex: string, vertices: string[], adjacencyMatrix: number[][]
+}
 export type EdgeProps  = {
     source : number,
     target : number,
@@ -35,7 +37,7 @@ const find = (parent : number[], i : number) : number => {
     }
   };
   
-  export const kruskal = (graph : number[][]) => {
+  export const kruskal = (graph : number[][]) : KruskalResultProps => {
     const n = graph.length;
     const parent = Array.from({ length: n }, (_, i) => i);
     const rank = Array(n).fill(0);
@@ -51,7 +53,7 @@ const find = (parent : number[], i : number) : number => {
     edges.sort((a, b) => a.weight - b.weight);    
   
     const result = [];
-    const minSpanningTree = createZeroArray(n, n);
+    const minSpanningTree = createZeroArrayNum(n, n);
   
     const findParentOfSource = (edge : EdgeProps) => find(parent, edge.source);
     const findParentOfTarget = (edge : EdgeProps) => find(parent, edge.target);
@@ -65,75 +67,75 @@ const find = (parent : number[], i : number) : number => {
         result.push({ source, target, weight });
         minSpanningTree[source][target] = weight;
         minSpanningTree[target][source] = weight;
-        union(parent, rank, sourceParent, targetParent);
+        union(parent, rank, sourceParent, targetParent)
       }
     }
   
-    return { edges: result, adjacencyMatrix: minSpanningTree };
+    return { edges: result, adjacencyMatrix: minSpanningTree }
   };
 
 
+
+ 
+export function prim(graph : number[][], start_vertex : number) : PrimResultProps
+{ 
+
+  const V = graph.length;
+  function minKey(key : number[], visited : boolean[]) { 
+    // Initialize min value 
+    let min = Number.MAX_VALUE, min_index = -1; 
+
+    for (let v = 0; v < V; v++) 
+        if (!visited[v] && key[v] < min) {
+            min = key[v];
+            min_index = v; 
+        }
+
+      return min_index; 
+  } 
+  
+  let edgeSet : EdgeProps[] = [];
+  let parent : number[] = new Array(V); 
+  let key : number[] = new Array(V); 
+  let visited : boolean[] = new Array(V); 
+
+  for (let i = 0; i < V; i++) {
+      key[i] = Number.MAX_VALUE; 
+      visited[i] = false; 
+      parent[i] = -1;
+  }
+
+  key[start_vertex] = 0; 
+
+  for (let count = 0; count < V - 1; count++) { 
+      let u : number = minKey(key, visited); 
+      visited[u] = true; 
+      for (let v = 0; v < V; v++) { 
+          if (u != -1 && v != -1 && graph[u][v] && !visited[v] && graph[u][v] < key[v]) { 
+              parent[v] = u; 
+              key[v] = graph[u][v]; 
+          } 
+      } 
+  } 
+
+  for (let i = 1; i < V; i++) {
+    if (parent[i] != -1) {
+      edgeSet.push({source : parent[i], target: i, weight : graph[i][parent[i]]})
+    }
+  }
+  return generateGraph(edgeSet, graph.length, start_vertex)
+  
+}
+
 function generateGraph(pairSet : EdgeProps[], graphLength : number, start_vertex : number) { 
   let vertices : string[] = [];
-  let new_graph = createZeroArray(graphLength, graphLength);
+  let new_graph = createZeroArrayNum(graphLength, graphLength);
   for (let i = 0; i < pairSet.length; i++) {
       new_graph[pairSet[i].source][pairSet[i].target] = pairSet[i].weight;
       new_graph[pairSet[i].target][pairSet[i].source] = pairSet[i].weight;
       if (!vertices.includes(number_to_alpha(pairSet[i].target))) {
-        vertices.push(number_to_alpha(pairSet[i].target));
+        vertices.push(number_to_alpha(pairSet[i].target))
       }
   }      
   return {start_vertex: number_to_alpha(start_vertex), vertices: vertices, adjacencyMatrix: new_graph};
 } 
- 
-// Function to construct and print MST for 
-// a graph represented using adjacency 
-// matrix representation 
-export function prim(graph : number[][], start_vertex : number) 
-{ 
-    //check for disconnected graphs. how?
-    // Array to store constructed MST 
-    let edgeSet : EdgeProps[] = []; //pairs of start vertex to end vertex and weights
-    let verticesInCut : number[] = [];
-    let verticesOutsideCut : number[] =  Array.from({ length: graph.length }, (_, i) => i)
-    
-    let comparator = (a : EdgeProps, b : EdgeProps) => a.weight > b.weight
-    let equals = (a : EdgeProps, b : EdgeProps) => a.target == b.target
-    let PQ : PriorityQueue<EdgeProps>  = new PriorityQueue<EdgeProps>(comparator, equals)
-    let startEdge : EdgeProps = {source : start_vertex, target : start_vertex, weight: 0}
-    PQ.insert(startEdge)
-    while (verticesInCut.length < graph.length) {
-      //if theres nothing in the PQ, pick another vertex and continue;
-
-      if (PQ.length() == 0) {
-        let chosenVertex : number = verticesOutsideCut.shift()!
-        for (let i = 0; i  < graph.length; i++) {
-          if (verticesOutsideCut.includes(i) && graph[chosenVertex][i] != 0) {
-             PQ.decreaseKey({source : chosenVertex, 
-                             target : i, 
-                             weight : graph[chosenVertex][i]})
-          }
-        }
-        //put all the adjacent shit
-      } else {
-         //if theres sth in the PQ, extract the minimum;
-        //find the target's adjacent vertices (that are not in the cut)
-        //decrease key those types / insert.
-        //continue
-         let chosenEdge = PQ.extractMin();
-         edgeSet.push(chosenEdge);
-         verticesInCut.push(chosenEdge.target)
-         verticesOutsideCut = verticesOutsideCut.filter(num => num != chosenEdge.target)
-         for (let i = 0; i  < graph.length; i++) {
-           if (verticesOutsideCut.includes(i) && graph[chosenEdge.target][i] != 0) {
-              console.log("inserting source: " + chosenEdge.target + " target: " + i + " weight : " + graph[chosenEdge.target][i])
-              PQ.decreaseKey({source : chosenEdge.target, 
-                              target : i, 
-                              weight : graph[chosenEdge.target][i]})
-           }
-         }
-      }
-    }
-    return generateGraph(edgeSet, graph.length, start_vertex)
-    
-}

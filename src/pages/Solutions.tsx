@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import AugmentedMatrix from '../components/matrix/AugmentedMatrix';
 import calcSolutions from '../utility/calcSolutions';
+import convertMatrixStrToFloat from '../utility/convertMatrixStrToFloat';
 
 type calcSolutionsResults  = {
   rref : {coeffMatrix : number[][], constMatrix : number[][]}
@@ -10,18 +11,19 @@ type calcSolutionsResults  = {
 }
 
 const Solutions = () => { 
-    const [submittedCoeffMatrix, setSubmittedCoeffMatrix] = useState<number[][]>([]);
-    const [_, setSubmittedConstMatrix] = useState<number[][]>([]);
+    const [submittedCoeffMatrix, setSubmittedCoeffMatrix] = useState<string[][]>([]);
+    const [_, setSubmittedConstMatrix] = useState<string[][]>([]);
     const [solutions, setSolutions] = useState<calcSolutionsResults>({
       rref : {coeffMatrix : [], constMatrix : []},
       numSolutions : "nil",
       pivotColumns : "nil",
       solution : ["nil"]
     });
-    const handleFormSubmit = (coeffMatrix: number[][], constMatrix: number[][]) => {
+    const handleFormSubmit = (coeffMatrix: string[][], constMatrix: string[][]) => {
       setSubmittedCoeffMatrix(coeffMatrix);
       setSubmittedConstMatrix(constMatrix);
-      setSolutions(calcSolutions(coeffMatrix, constMatrix))
+      setSolutions(calcSolutions(convertMatrixStrToFloat(coeffMatrix), 
+      convertMatrixStrToFloat(constMatrix)));
     }
 
 

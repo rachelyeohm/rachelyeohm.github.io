@@ -1,79 +1,77 @@
+import { Button } from "antd";
+import {createZeroArrayStr} from "../../utility/createZeroArray";
+import { handleInputChangeArgProps } from "./MatrixTypes";
+import { displayBlanks } from "../../ui/MatrixUI";
 
 interface AugmentedMatrixFormProps {
-    coefficientMatrix : number[][];
-    setCoefficientMatrix :  React.Dispatch<React.SetStateAction<number[][]>>;
-    constantsMatrix : number[][];
-    setConstantsMatrix :  React.Dispatch<React.SetStateAction<number[][]>>;
-    onFormSubmit: (coeffMatrix : number[][], constMatrix : number[][]) => void;
+    coefficientMatrix : string[][];
+    setCoefficientMatrix :  React.Dispatch<React.SetStateAction<string[][]>>;
+    constantsMatrix : string[][];
+    setConstantsMatrix :  React.Dispatch<React.SetStateAction<string[][]>>;
+    handleFormSubmit: (coeffMatrix : string[][], constMatrix : string[][]) => void;
 
 }
 
-const AugmentedMatrixForm = ({coefficientMatrix, setCoefficientMatrix, constantsMatrix, setConstantsMatrix, onFormSubmit} : AugmentedMatrixFormProps) => {
+const AugmentedMatrixForm = ({coefficientMatrix, setCoefficientMatrix, constantsMatrix, setConstantsMatrix, 
+  handleFormSubmit: handleFormSubmit} : AugmentedMatrixFormProps) => {
 
 
-    const handleInputChange = (rowIndex : number, 
-        colIndex : number, event : React.ChangeEvent<HTMLInputElement>, matrixType : string) => {
+    const handleInputChange = ({rowIndex, colIndex, event, matrixType} : handleInputChangeArgProps) => {
       const { value } = event.target;
-      if (matrixType === 'coefficient') {
-        const updatedMatrix = coefficientMatrix.map((row, i) => {
-            if (i === rowIndex) {
-              return row.map((cell, j) => j === colIndex ? parseInt(value) : cell);
-            } 
-            return row;
-          });
-        setCoefficientMatrix(updatedMatrix);
+      const regex = /^[-]?\d*\.?\d*$/;
+      if (!regex.test(value)) {
+        event.target.value = value;
       } else {
-        const updatedMatrix = constantsMatrix.map((row, i) => {
-            if (i === rowIndex) {
-              return row.map((cell, j) => j === colIndex ? parseInt(value) : cell);
-            } 
-            return row;
-          });
-        setConstantsMatrix(updatedMatrix);
+        if (matrixType === 'coefficient') {
+          const updatedMatrix = coefficientMatrix.map((row, i) => {
+              if (i === rowIndex) {
+                return row.map((cell, j) => j === colIndex ? value : cell);
+              } 
+              return row;
+            });
+          setCoefficientMatrix(updatedMatrix);
+        } else {
+          const updatedMatrix = constantsMatrix.map((row, i) => {
+              if (i === rowIndex) {
+                return row.map((cell, j) => j === colIndex ? value : cell);
+              } 
+              return row;
+            });
+          setConstantsMatrix(updatedMatrix);
+        }
       }
     };
-  
-    const handleSubmit = (event : React.ChangeEvent<HTMLFormElement>) => {
-      event.preventDefault();
-      onFormSubmit(coefficientMatrix, constantsMatrix);
-    };
-  
-    function addBlanks(matrix : number[][], matrixType : string){
-      return matrix.map((row, rowIndex) => (
-                <div key={rowIndex}>
-                {row.map((cell, colIndex) => (
-                    <input
-                    key={colIndex}
-                    type="number"
-                    step = "0.000001"
-                    value={cell}
-                    onChange={(event) => handleInputChange(rowIndex, colIndex, event, matrixType)}
-                    />
-                ))}
-                </div>
-            ));
-    };
+
+    const handleReset = (coefficientMatrix : string[][], constantsMatrix : string[][]) => {
+      setCoefficientMatrix(createZeroArrayStr(coefficientMatrix.length, coefficientMatrix.length > 0 ? coefficientMatrix[0].length : 0));
+      setCoefficientMatrix(createZeroArrayStr(constantsMatrix.length, constantsMatrix.length > 0 ? constantsMatrix[0].length : 0));
+    }
+
+
   
     return (
       <div>
-        <form className='matrix-form' onSubmit={handleSubmit}>
+        <form className='matrix-form'>
           <div  style={{ display: 'flex'}}>
             {/* Coefficient Matrix */}
             <div>
-              {addBlanks(coefficientMatrix, 'coefficient')}
+              {displayBlanks(coefficientMatrix, 'coefficient', handleInputChange)}
             </div>
             
   
             {/* Constants Matrix */}
             <div className = "content">
-                {addBlanks(constantsMatrix, 'constants')}
+                {displayBlanks(constantsMatrix, 'constants', handleInputChange)}
                 <div className = "line"></div>
                 
             </div>
             
-          </div>
-          <button className="button" type="submit">Submit</button>
+          </div>        
       </form>
+      <div className = "form-actions">
+          <Button size = "large" onClick = {() => handleReset(coefficientMatrix, constantsMatrix)}>{"Reset"}</Button>
+          <Button size="large" onClick = {() => handleFormSubmit(coefficientMatrix, constantsMatrix)}>{"Submit"}</Button>
+      </div>
       </div>
   
     );

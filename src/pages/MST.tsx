@@ -1,16 +1,26 @@
 import {useState} from 'react';
 import {SquareMatrix} from "../components/matrix/Matrix"
-import {kruskal} from "../utility/MSTcalculations"
+import {kruskal, KruskalResultProps, PrimResultProps} from "../utility/MSTcalculations"
 import {prim} from "../utility/MSTcalculations"
 import { EdgeProps } from '../utility/MSTcalculations';
 import Graph from '../components/graph/Graph';
+import convertMatrixStrToFloat from '../utility/convertMatrixStrToFloat';
 
 
 //for undirected
 const MST= () => {
 
-  const [submittedMatrix, setSubmittedMatrix] = useState<number[][]>([]);
-  const handleFormSubmit = (matrix : number[][]) => setSubmittedMatrix(matrix);
+  const [submittedMatrix, setSubmittedMatrix] = useState<string[][]>([])
+  const [isMSTPossible, setIsMSTPossible] = useState(true)
+  const [kruskalDict, setKruskalDict] = useState<KruskalResultProps>({edges: [], adjacencyMatrix: []});
+  const [primDict, setPrimDict] = useState<PrimResultProps>({start_vertex: "", vertices: [], adjacencyMatrix: []});
+  const handleFormSubmit = (matrix : string[][]) => {
+    setSubmittedMatrix(matrix)
+    const kruskalDictNew = kruskal(convertMatrixStrToFloat(matrix))
+    setKruskalDict(kruskalDictNew)
+    setPrimDict(prim(convertMatrixStrToFloat(matrix), 0))
+    setIsMSTPossible(kruskalDictNew.edges.length >= matrix.length - 1)
+  }
 
   return (
     <div>
@@ -20,10 +30,19 @@ const MST= () => {
           <SquareMatrix directed = {false} onFormSubmit={handleFormSubmit}/>
           {submittedMatrix.length === 0 ? null  :
           (
-            <div>
-                  <DisplayKruskal graphData={submittedMatrix} width={200} height={200}/>
-                  <DisplayPrim graphData={submittedMatrix} width={200} height={200}/>
+            <>
+            {isMSTPossible  ? 
+            (<div>
+                  <DisplayKruskal graphData={convertMatrixStrToFloat(submittedMatrix)} width={200} height={200}
+                   kruskalDict={kruskalDict}/>
+                  <DisplayPrim graphData={convertMatrixStrToFloat(submittedMatrix)} width={200} height={200}
+                  primDict={primDict}/>
             </div>
+            ) : 
+            <div style = {{display : "flex", justifyContent : "center"}}>
+              A minimum spanning tree is not possible.
+            </div>
+            }</>
           )
         }
           
@@ -35,16 +54,25 @@ const MST= () => {
 export default MST;
 
 
-type DisplayMSTProps = {
+type DisplayKruskalProps = {
     graphData : number[][],
     width : number,
     height : number,
+    kruskalDict : KruskalResultProps,
 }
 
-const DisplayKruskal = ({graphData, width, height} : DisplayMSTProps) => {
-    console.log(graphData);
+type DisplayPrimProps = {
+  graphData : number[][],
+  width : number,
+  height : number,
+  primDict : PrimResultProps,
+}
+
+const DisplayKruskal = ({graphData, width, height, kruskalDict} : DisplayKruskalProps) => {
     
     const kruskal_dict = kruskal(graphData);
+    console.log(kruskal_dict.edges.length >= graphData.length - 1);
+    
     return (
       <div>
         <h2>Kruskal's Algorithm</h2>
@@ -54,11 +82,11 @@ const DisplayKruskal = ({graphData, width, height} : DisplayMSTProps) => {
             <Graph graphData = {graphData} width={width} height={height} directed={false}/>
           </div>
           <div  style={{ marginLeft: 32 }}>
-            <EdgeList edges={kruskal_dict.edges}/>
+            <EdgeList edges={kruskalDict.edges}/>
           </div>
           <div style={{ marginLeft: 16 }}>
             <p>Minimum Spanning Tree</p>
-            <Graph graphData = {kruskal_dict.adjacencyMatrix} width={width} height={height} directed={false}/>
+            <Graph graphData = {kruskalDict.adjacencyMatrix} width={width} height={height} directed={false}/>
           </div>
         </div>
       </div>
@@ -73,8 +101,7 @@ const DisplayKruskal = ({graphData, width, height} : DisplayMSTProps) => {
 
 
 
-  const DisplayPrim = ({graphData, width, height} : DisplayMSTProps) => {
-    const prim_dict = prim(graphData, 0);
+  const DisplayPrim = ({graphData, width, height, primDict} : DisplayPrimProps) => {
     return (
       <div>
         <h2>Prim's Algorithm</h2>
@@ -84,11 +111,11 @@ const DisplayKruskal = ({graphData, width, height} : DisplayMSTProps) => {
             <Graph graphData = {graphData} width={width} height={height} directed={false}/>
           </div>
           <div  style={{ marginLeft: 100 }}>
-            <VertexList vertexList = {prim_dict}/>
+            <VertexList vertexList = {primDict}/>
           </div>
           <div style={{ marginLeft: 100}}>
             <p>Minimum Spanning Tree</p>
-            <Graph graphData = {prim_dict.adjacencyMatrix} width={width} height={height} directed={false}/>
+            <Graph graphData = {primDict.adjacencyMatrix} width={width} height={height} directed={false}/>
           </div>
         </div>
       </div>
