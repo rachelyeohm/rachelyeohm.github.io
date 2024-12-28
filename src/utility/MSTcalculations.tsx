@@ -1,8 +1,6 @@
 
 import createZeroArrayNum from "./createZeroArray";
 
-import { PriorityQueue } from "./PriorityQueue";
-
 export type KruskalResultProps = {
   edges: EdgeProps[], adjacencyMatrix: number[][]
 }
