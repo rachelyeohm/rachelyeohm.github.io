@@ -2,7 +2,7 @@ import { handleInputChangeArgProps } from "../components/matrix/MatrixTypes";
 
 export function displayBlanks(matrix : string[][], matrixType : string, handleInputChange : 
     (props: handleInputChangeArgProps) => void){
-    const numCols = matrix.length > 0 ?  matrix[0].length : 0;
+    //const numCols = matrix.length > 0 ?  matrix[0].length : 0;
     return (
         <div style = {{display: "flex", flexDirection: "column", flexWrap: "nowrap"}}>
             {

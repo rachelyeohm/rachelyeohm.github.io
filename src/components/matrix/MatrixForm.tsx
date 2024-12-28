@@ -1,5 +1,4 @@
 import React from "react"
-import { useState } from "react";
 import { handleInputChangeArgProps } from "./MatrixTypes";
 import { displayBlanks } from "../../ui/MatrixUI";
 import { Button } from "antd";
@@ -15,13 +14,14 @@ type MatrixFormProps = {
 
 
 const MatrixForm = ({directed, matrix, setMatrix, handleFormSubmit} : MatrixFormProps) => { //for matrix and submission without input rows
-  const [focusedCell, setFocusedCell] = useState<[number, number] | null>(null);
+  //const [focusedCell, setFocusedCell] = useState<[number, number] | null>(null);
 
 
 
   const handleInputChange = ({rowIndex, colIndex, event, matrixType} : handleInputChangeArgProps) => {
     const { value } = event.target;
     const regex = /^[-]?\d*\.?\d*$/;
+    matrixType;
     if (!regex.test(value)) {
       event.target.value = value;
     } else {

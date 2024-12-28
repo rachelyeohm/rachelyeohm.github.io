@@ -2,14 +2,15 @@ import {useState} from 'react';
 import {SquareMatrix} from "../components/matrix/Matrix"
 import {determinant, symmetric, euler} from "../utility/graphCalculations"
 import Graph from "../components/graph/Graph"
+import convertMatrixStrToFloat from '../utility/convertMatrixStrToFloat';
 //form is directed - true
 
 //for undirected
 const GraphVisualisation= () => {
 
 
-    const [submittedMatrix, setSubmittedMatrix] = useState<number[][]>([]);
-    const handleFormSubmit = (matrix : number[][]) => {
+    const [submittedMatrix, setSubmittedMatrix] = useState<string[][]>([]);
+    const handleFormSubmit = (matrix : string[][]) => {
         setSubmittedMatrix(matrix);
     }
     return (
@@ -28,12 +29,12 @@ const GraphVisualisation= () => {
             :
             (<div>
                 <p> Graph generated: </p>
-                <Graph graphData = {submittedMatrix} width={600} height={200} directed = {true}/>
+                <Graph graphData = {convertMatrixStrToFloat(submittedMatrix)} width={600} height={200} directed = {true}/>
                 <div className="general">
         
-                    <p>Determinant: {determinant(submittedMatrix)}</p>
-                    <p>Symmetric: {symmetric(submittedMatrix) ? "Yes" : "No"}</p>
-                    <p>Euler: {euler(submittedMatrix) ? "Yes" : "No"}</p>
+                    <p>Determinant: {determinant(convertMatrixStrToFloat(submittedMatrix))}</p>
+                    <p>Symmetric: {symmetric(convertMatrixStrToFloat(submittedMatrix)) ? "Yes" : "No"}</p>
+                    <p>Euler: {euler(convertMatrixStrToFloat(submittedMatrix)) ? "Yes" : "No"}</p>
                     
                 </div>
     

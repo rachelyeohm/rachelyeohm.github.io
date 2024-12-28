@@ -1,4 +1,3 @@
-import React from 'react';
 import {NavigateFunction, useNavigate} from 'react-router-dom';
 import { MainButton } from '../ui/MainButton';
 
@@ -10,7 +9,7 @@ const Home = () => {
 
   return (
 
-    
+
           <div style = {{paddingLeft: 30}}>
         <div>
           <h1>Home</h1>
