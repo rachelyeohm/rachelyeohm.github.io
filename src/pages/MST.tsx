@@ -16,9 +16,10 @@ const MST= () => {
   const [primDict, setPrimDict] = useState<PrimResultProps>({start_vertex: "", vertices: [], adjacencyMatrix: []});
   const handleFormSubmit = (matrix : string[][]) => {
     setSubmittedMatrix(matrix)
-    setKruskalDict(kruskal(convertMatrixStrToFloat(matrix)));
-    setPrimDict(prim(convertMatrixStrToFloat(matrix), 0));
-    setIsMSTPossible(kruskalDict.edges.length >= matrix.length - 1)
+    const kruskalDictNew = kruskal(convertMatrixStrToFloat(matrix))
+    setKruskalDict(kruskalDictNew)
+    setPrimDict(prim(convertMatrixStrToFloat(matrix), 0))
+    setIsMSTPossible(kruskalDictNew.edges.length >= matrix.length - 1)
   }
 
   return (
