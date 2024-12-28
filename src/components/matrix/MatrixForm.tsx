@@ -1,5 +1,7 @@
 import React from "react"
 import { useEffect, useState } from "react";
+import { handleInputChangeArgProps } from "./MatrixTypes";
+import { displayBlanks } from "./MatrixUI";
 
 type MatrixFormProps = {
     directed : boolean;
@@ -15,7 +17,7 @@ const MatrixForm = ({directed, matrix, setMatrix, onFormSubmit} : MatrixFormProp
 
 
 
-  const handleInputChange = (rowIndex : number, colIndex : number, event : React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = ({rowIndex, colIndex, event, matrixType} : handleInputChangeArgProps) => {
     const { value } = event.target;
     const regex = /^[-]?\d*\.?\d*$/;
     if (!regex.test(value)) {
@@ -39,25 +41,13 @@ const MatrixForm = ({directed, matrix, setMatrix, onFormSubmit} : MatrixFormProp
     onFormSubmit(matrix);
   };
 
-  function displayBlanks(){
-    return matrix.map((row, rowIndex) => (
-              <div key={rowIndex}>
-              {row.map((cell, colIndex) => (
-                  <input
-                  key={colIndex}
-                  value={cell}
-                  onChange={(event) => handleInputChange(rowIndex, colIndex, event)}
-                  />
-              ))}
-              </div>
-          ));
-  }
+
 
   return (
     <div>
         <p className = "general"> Input your matrix: </p>
         <form className="matrix-form" onSubmit={handleSubmit}>
-            {matrix.length > 0 ? displayBlanks() : null}
+            {matrix.length > 0 ? displayBlanks(matrix, "", handleInputChange) : null}
             <button className="button" type="submit">Submit</button>
         </form>
     </div>

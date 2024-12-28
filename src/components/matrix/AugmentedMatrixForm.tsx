@@ -1,3 +1,5 @@
+import { handleInputChangeArgProps } from "./MatrixTypes";
+import { displayBlanks } from "./MatrixUI";
 
 interface AugmentedMatrixFormProps {
     coefficientMatrix : string[][];
@@ -8,11 +10,11 @@ interface AugmentedMatrixFormProps {
 
 }
 
-const AugmentedMatrixForm = ({coefficientMatrix, setCoefficientMatrix, constantsMatrix, setConstantsMatrix, onFormSubmit} : AugmentedMatrixFormProps) => {
+const AugmentedMatrixForm = ({coefficientMatrix, setCoefficientMatrix, constantsMatrix, setConstantsMatrix, onFormSubmit} : 
+  AugmentedMatrixFormProps) => {
 
 
-    const handleInputChange = (rowIndex : number, 
-        colIndex : number, event : React.ChangeEvent<HTMLInputElement>, matrixType : string) => {
+    const handleInputChange = ({rowIndex, colIndex, event, matrixType} : handleInputChangeArgProps) => {
       const { value } = event.target;
       const regex = /^[-]?\d*\.?\d*$/;
       if (!regex.test(value)) {
@@ -42,21 +44,7 @@ const AugmentedMatrixForm = ({coefficientMatrix, setCoefficientMatrix, constants
       event.preventDefault();
       onFormSubmit(coefficientMatrix, constantsMatrix);
     };
-  
-    function displayBlanks(matrix : string[][], matrixType : string){
-      return matrix.map((row, rowIndex) => (
-                <div key={rowIndex}>
-                {row.map((cell, colIndex) => (
-                    <input
-                    key={colIndex}
-                    type="text"
-                    value={cell}
-                    onChange={(event) => handleInputChange(rowIndex, colIndex, event, matrixType)}
-                    />
-                ))}
-                </div>
-            ));
-    };
+
   
     return (
       <div>
@@ -64,13 +52,13 @@ const AugmentedMatrixForm = ({coefficientMatrix, setCoefficientMatrix, constants
           <div  style={{ display: 'flex'}}>
             {/* Coefficient Matrix */}
             <div>
-              {displayBlanks(coefficientMatrix, 'coefficient')}
+              {displayBlanks(coefficientMatrix, 'coefficient', handleInputChange)}
             </div>
             
   
             {/* Constants Matrix */}
             <div className = "content">
-                {displayBlanks(constantsMatrix, 'constants')}
+                {displayBlanks(constantsMatrix, 'constants', handleInputChange)}
                 <div className = "line"></div>
                 
             </div>

@@ -63,7 +63,6 @@ function calculateInfiniteSolutions(coeffMatrix : number[][],
 
         //iterating through the columns
         for (let i = coeffMatrix[0].length - 1; i >= 0; i--) {
-            console.error("column is now " + i)
             coeffMap.set(i, [])
             constMap.set(i, 0)
             //free variable / non-pivot column
