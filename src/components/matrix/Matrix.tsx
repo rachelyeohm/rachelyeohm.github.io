@@ -1,5 +1,5 @@
 import React , {useState, useEffect} from "react"
-import createZeroArray from "../../utility/createZeroArray.tsx"
+import {createZeroArrayStr} from "../../utility/createZeroArray.tsx"
 import MatrixSizeForm from "./MatrixSizeForm.tsx"
 import MatrixForm from "./MatrixForm.tsx"
 
@@ -15,7 +15,7 @@ const Matrix = ({handleFormSubmit: handleFormSubmit} : {handleFormSubmit : (matr
       setRow(parseInt(event.target.value));
     };
     useEffect(() => {
-      const newMatrix = createZeroArray(row, col);
+      const newMatrix = createZeroArrayStr(row, col);
       setMatrix(newMatrix);
       
     }, [row, col]);
@@ -48,7 +48,7 @@ const Matrix = ({handleFormSubmit: handleFormSubmit} : {handleFormSubmit : (matr
     };
   
     useEffect(() => {
-      const newMatrix : string[][] = createZeroArray(row, row);
+      const newMatrix : string[][] = createZeroArrayStr(row, row);
       setMatrix(newMatrix);
       
     }, [row]);

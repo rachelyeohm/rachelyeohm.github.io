@@ -1,7 +1,7 @@
 import { Button } from "antd";
-import createZeroArray from "../../utility/createZeroArray";
+import {createZeroArrayStr} from "../../utility/createZeroArray";
 import { handleInputChangeArgProps } from "./MatrixTypes";
-import { displayBlanks } from "./MatrixUI";
+import { displayBlanks } from "../../ui/MatrixUI";
 
 interface AugmentedMatrixFormProps {
     coefficientMatrix : string[][];
@@ -43,8 +43,8 @@ const AugmentedMatrixForm = ({coefficientMatrix, setCoefficientMatrix, constants
     };
 
     const handleReset = (coefficientMatrix : string[][], constantsMatrix : string[][]) => {
-      setCoefficientMatrix(createZeroArray(coefficientMatrix.length, coefficientMatrix.length > 0 ? coefficientMatrix[0].length : 0));
-      setCoefficientMatrix(createZeroArray(constantsMatrix.length, constantsMatrix.length > 0 ? constantsMatrix[0].length : 0));
+      setCoefficientMatrix(createZeroArrayStr(coefficientMatrix.length, coefficientMatrix.length > 0 ? coefficientMatrix[0].length : 0));
+      setCoefficientMatrix(createZeroArrayStr(constantsMatrix.length, constantsMatrix.length > 0 ? constantsMatrix[0].length : 0));
     }
 
 

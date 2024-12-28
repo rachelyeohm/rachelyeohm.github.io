@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react"
-import createZeroArray from "../../utility/createZeroArray";
+import {createZeroArrayStr} from "../../utility/createZeroArray";
 import MatrixSizeForm from "./MatrixSizeForm";
 import AugmentedMatrixForm from "./AugmentedMatrixForm";
 
@@ -22,8 +22,8 @@ export const AugmentedMatrix  = ({onFormSubmit} : AugmentedMatrixProps) => {
     };
 
     useEffect(() => {
-      const newMatrix = createZeroArray(row, col);
-      const newConstMatrix = createZeroArray(row, col > 0 ? 1 : 0);
+      const newMatrix = createZeroArrayStr(row, col);
+      const newConstMatrix = createZeroArrayStr(row, col > 0 ? 1 : 0);
       setCoefficientMatrix(newMatrix);
       setConstantsMatrix(newConstMatrix);
       

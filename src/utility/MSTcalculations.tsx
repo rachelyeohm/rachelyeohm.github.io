@@ -1,5 +1,5 @@
 
-import createZeroArray from "./createZeroArray";
+import createZeroArrayNum from "./createZeroArray";
 
 import { PriorityQueue } from "./PriorityQueue";
 
@@ -51,7 +51,7 @@ const find = (parent : number[], i : number) : number => {
     edges.sort((a, b) => a.weight - b.weight);    
   
     const result = [];
-    const minSpanningTree = createZeroArray(n, n);
+    const minSpanningTree = createZeroArrayNum(n, n);
   
     const findParentOfSource = (edge : EdgeProps) => find(parent, edge.source);
     const findParentOfTarget = (edge : EdgeProps) => find(parent, edge.target);
@@ -75,7 +75,7 @@ const find = (parent : number[], i : number) : number => {
 
 function generateGraph(pairSet : EdgeProps[], graphLength : number, start_vertex : number) { 
   let vertices : string[] = [];
-  let new_graph = createZeroArray(graphLength, graphLength);
+  let new_graph = createZeroArrayNum(graphLength, graphLength);
   for (let i = 0; i < pairSet.length; i++) {
       new_graph[pairSet[i].source][pairSet[i].target] = pairSet[i].weight;
       new_graph[pairSet[i].target][pairSet[i].source] = pairSet[i].weight;

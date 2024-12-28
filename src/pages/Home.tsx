@@ -9,6 +9,8 @@ const Home = () => {
 
 
   return (
+
+    
           <div style = {{paddingLeft: 30}}>
         <div>
           <h1>Home</h1>

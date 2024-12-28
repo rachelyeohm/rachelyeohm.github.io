@@ -1,9 +1,9 @@
 import React from "react"
 import { useState } from "react";
 import { handleInputChangeArgProps } from "./MatrixTypes";
-import { displayBlanks } from "./MatrixUI";
+import { displayBlanks } from "../../ui/MatrixUI";
 import { Button } from "antd";
-import createZeroArray from "../../utility/createZeroArray";
+import {createZeroArrayStr} from "../../utility/createZeroArray";
 
 type MatrixFormProps = {
     directed : boolean;
@@ -38,9 +38,8 @@ const MatrixForm = ({directed, matrix, setMatrix, handleFormSubmit} : MatrixForm
   };
 
   const handleReset = (matrix : string[][]) => {
-    setMatrix(createZeroArray(matrix.length, matrix.length > 0 ? matrix[0].length : 0))
+    setMatrix(createZeroArrayStr(matrix.length, matrix.length > 0 ? matrix[0].length : 0))
   }
-
 
 
 

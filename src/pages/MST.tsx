@@ -4,13 +4,14 @@ import {kruskal} from "../utility/MSTcalculations"
 import {prim} from "../utility/MSTcalculations"
 import { EdgeProps } from '../utility/MSTcalculations';
 import Graph from '../components/graph/Graph';
+import convertMatrixStrToFloat from '../utility/convertMatrixStrToFloat';
 
 
 //for undirected
 const MST= () => {
 
-  const [submittedMatrix, setSubmittedMatrix] = useState<number[][]>([]);
-  const handleFormSubmit = (matrix : number[][]) => setSubmittedMatrix(matrix);
+  const [submittedMatrix, setSubmittedMatrix] = useState<string[][]>([]);
+  const handleFormSubmit = (matrix : string[][]) => setSubmittedMatrix(matrix);
 
   return (
     <div>
@@ -21,8 +22,8 @@ const MST= () => {
           {submittedMatrix.length === 0 ? null  :
           (
             <div>
-                  <DisplayKruskal graphData={submittedMatrix} width={200} height={200}/>
-                  <DisplayPrim graphData={submittedMatrix} width={200} height={200}/>
+                  <DisplayKruskal graphData={convertMatrixStrToFloat(submittedMatrix)} width={200} height={200}/>
+                  <DisplayPrim graphData={convertMatrixStrToFloat(submittedMatrix)} width={200} height={200}/>
             </div>
           )
         }
@@ -42,7 +43,6 @@ type DisplayMSTProps = {
 }
 
 const DisplayKruskal = ({graphData, width, height} : DisplayMSTProps) => {
-    console.log(graphData);
     
     const kruskal_dict = kruskal(graphData);
     return (
