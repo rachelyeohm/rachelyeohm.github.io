@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {calcRREF} from "../utility/RrefUtility.tsx";
 import Matrix from "../components/matrix/Matrix.tsx"
+import convertMatrixStrToFloat from "../utility/convertMatrixStrToFloat.tsx";
 
 
 const RREF = () => {
@@ -27,7 +28,6 @@ export default RREF;
 
   
 export function DisplayRREF({array} : {array : string[][]}){
-    console.log(array);
     const result : number[][] = calcRREF(convertMatrixStrToFloat(array));
     const roundToTwoDecimalPlaces = (num : number) => Math.round((num + Number.EPSILON) * 100) / 100;
 

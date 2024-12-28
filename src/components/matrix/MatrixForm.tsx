@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 
 type MatrixFormProps = {
     directed : boolean;
-    matrix : number[][];
-    setMatrix : React.Dispatch<React.SetStateAction<number[][]>>;
-    onFormSubmit : (matrix : number[][]) => void;
+    matrix : string[][];
+    setMatrix : React.Dispatch<React.SetStateAction<string[][]>>;
+    onFormSubmit : (matrix : string[][]) => void;
   }
 
 

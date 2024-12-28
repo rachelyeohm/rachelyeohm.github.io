@@ -39,12 +39,12 @@ const Matrix = ({onFormSubmit} : {onFormSubmit : (matrix : string[][]) => void})
 
   type SquareMatrixProps = {
     directed: boolean,
-    onFormSubmit: (matrix : number[][]) => void
+    onFormSubmit: (matrix : string[][]) => void
   }
 
   export const SquareMatrix = ({directed, onFormSubmit} : SquareMatrixProps) => {
     const [row, setRow]  = useState(4);
-    const [matrix, setMatrix] = useState<number[][]>([]);
+    const [matrix, setMatrix] = useState<string[][]>([]);
   
     const onChange = (event : React.ChangeEvent<HTMLInputElement>) => {
         setRow(parseFloat(event.target.value));
@@ -52,7 +52,7 @@ const Matrix = ({onFormSubmit} : {onFormSubmit : (matrix : string[][]) => void})
   
     useEffect(() => {
       if (row > 0) {
-        const newMatrix : number[][] = createZeroArray(row, row);
+        const newMatrix : string[][] = createZeroArray(row, row);
         setMatrix(newMatrix);
       } else {
         setMatrix([]);

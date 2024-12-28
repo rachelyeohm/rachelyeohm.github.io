@@ -13,8 +13,6 @@ export function calcRREF(matrix : number[][]){
 }
 
 function calcAugmentedRREF(coeffMatrix : number[][], constMatrix : number[][]) {
-    console.log(constMatrix);
-    console.log(coeffMatrix);
     let nonZeroCoeff : number[][] = [];
     let nonZeroConst : number[][] = [];
     let zeroRow = Array(coeffMatrix[0].length).fill(0);
@@ -31,7 +29,9 @@ function calcAugmentedRREF(coeffMatrix : number[][], constMatrix : number[][]) {
         nonZeroCoeff.push(coeffMatrix[i].slice());
         nonZeroConst.push(constMatrix[i]);
     }
-    console.log(nonZeroCoeff);
+    if (numZeroRows == coeffMatrix.length) {
+        return combineMatrices(coeffMatrix, constMatrix);
+    }
     const result : {coeffMatrix : number[][], constMatrix : number[][]}= reduceToRREF(nonZeroCoeff, nonZeroConst);
 
     //add back zero rows.

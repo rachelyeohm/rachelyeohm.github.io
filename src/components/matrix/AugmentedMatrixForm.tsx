@@ -1,9 +1,9 @@
 
 interface AugmentedMatrixFormProps {
     coefficientMatrix : string[][];
-    setCoefficientMatrix :  React.Dispatch<React.SetStateAction<number[][]>>;
+    setCoefficientMatrix :  React.Dispatch<React.SetStateAction<string[][]>>;
     constantsMatrix : string[][];
-    setConstantsMatrix :  React.Dispatch<React.SetStateAction<number[][]>>;
+    setConstantsMatrix :  React.Dispatch<React.SetStateAction<string[][]>>;
     onFormSubmit: (coeffMatrix : string[][], constMatrix : string[][]) => void;
 
 }
