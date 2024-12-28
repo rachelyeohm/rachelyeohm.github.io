@@ -1,3 +1,5 @@
+import { Button } from "antd";
+import createZeroArray from "../../utility/createZeroArray";
 import { handleInputChangeArgProps } from "./MatrixTypes";
 import { displayBlanks } from "./MatrixUI";
 
@@ -6,12 +8,12 @@ interface AugmentedMatrixFormProps {
     setCoefficientMatrix :  React.Dispatch<React.SetStateAction<string[][]>>;
     constantsMatrix : string[][];
     setConstantsMatrix :  React.Dispatch<React.SetStateAction<string[][]>>;
-    onFormSubmit: (coeffMatrix : string[][], constMatrix : string[][]) => void;
+    handleFormSubmit: (coeffMatrix : string[][], constMatrix : string[][]) => void;
 
 }
 
-const AugmentedMatrixForm = ({coefficientMatrix, setCoefficientMatrix, constantsMatrix, setConstantsMatrix, onFormSubmit} : 
-  AugmentedMatrixFormProps) => {
+const AugmentedMatrixForm = ({coefficientMatrix, setCoefficientMatrix, constantsMatrix, setConstantsMatrix, 
+  handleFormSubmit: handleFormSubmit} : AugmentedMatrixFormProps) => {
 
 
     const handleInputChange = ({rowIndex, colIndex, event, matrixType} : handleInputChangeArgProps) => {
@@ -39,16 +41,17 @@ const AugmentedMatrixForm = ({coefficientMatrix, setCoefficientMatrix, constants
         }
       }
     };
-  
-    const handleSubmit = (event : React.ChangeEvent<HTMLFormElement>) => {
-      event.preventDefault();
-      onFormSubmit(coefficientMatrix, constantsMatrix);
-    };
+
+    const handleReset = (coefficientMatrix : string[][], constantsMatrix : string[][]) => {
+      setCoefficientMatrix(createZeroArray(coefficientMatrix.length, coefficientMatrix.length > 0 ? coefficientMatrix[0].length : 0));
+      setCoefficientMatrix(createZeroArray(constantsMatrix.length, constantsMatrix.length > 0 ? constantsMatrix[0].length : 0));
+    }
+
 
   
     return (
       <div>
-        <form className='matrix-form' onSubmit={handleSubmit}>
+        <form className='matrix-form'>
           <div  style={{ display: 'flex'}}>
             {/* Coefficient Matrix */}
             <div>
@@ -63,9 +66,12 @@ const AugmentedMatrixForm = ({coefficientMatrix, setCoefficientMatrix, constants
                 
             </div>
             
-          </div>
-          <button className="button" type="submit">Submit</button>
+          </div>        
       </form>
+      <div className = "form-actions">
+          <Button size = "large" onClick = {() => handleReset(coefficientMatrix, constantsMatrix)}>{"Reset"}</Button>
+          <Button size="large" onClick = {() => handleFormSubmit(coefficientMatrix, constantsMatrix)}>{"Submit"}</Button>
+      </div>
       </div>
   
     );

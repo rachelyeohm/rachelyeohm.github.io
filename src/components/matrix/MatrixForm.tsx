@@ -1,18 +1,20 @@
 import React from "react"
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { handleInputChangeArgProps } from "./MatrixTypes";
 import { displayBlanks } from "./MatrixUI";
+import { Button } from "antd";
+import createZeroArray from "../../utility/createZeroArray";
 
 type MatrixFormProps = {
     directed : boolean;
     matrix : string[][];
     setMatrix : React.Dispatch<React.SetStateAction<string[][]>>;
-    onFormSubmit : (matrix : string[][]) => void;
+    handleFormSubmit : (matrix : string[][]) => void;
   }
 
 
 
-const MatrixForm = ({directed, matrix, setMatrix, onFormSubmit} : MatrixFormProps) => { //for matrix and submission without input rows
+const MatrixForm = ({directed, matrix, setMatrix, handleFormSubmit} : MatrixFormProps) => { //for matrix and submission without input rows
   const [focusedCell, setFocusedCell] = useState<[number, number] | null>(null);
 
 
@@ -25,31 +27,35 @@ const MatrixForm = ({directed, matrix, setMatrix, onFormSubmit} : MatrixFormProp
     } else {
       const updatedMatrix = matrix.map((row, i) => {
         if (i === rowIndex) {
-          return row.map((cell, j) => j === colIndex ? value : cell); //parseFloat(value)
+          return row.map((cell, j) => j === colIndex ? value : cell); 
         } else if (!directed && i === colIndex && colIndex < matrix.length && rowIndex < matrix[i].length) {
           return row.map((cell, j) => j === rowIndex ? value : cell);
         }
         return row;
       });
       setMatrix(updatedMatrix);
-    }
-      
+    }   
   };
 
-  const handleSubmit = (event : React.ChangeEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    onFormSubmit(matrix);
-  };
+  const handleReset = (matrix : string[][]) => {
+    setMatrix(createZeroArray(matrix.length, matrix.length > 0 ? matrix[0].length : 0))
+  }
+
 
 
 
   return (
     <div>
         <p className = "general"> Input your matrix: </p>
-        <form className="matrix-form" onSubmit={handleSubmit}>
+        <form className="matrix-form" onReset = {() => handleReset(matrix)}>
             {matrix.length > 0 ? displayBlanks(matrix, "", handleInputChange) : null}
-            <button className="button" type="submit">Submit</button>
         </form>
+        <div className = "form-actions">
+          <Button size = "large" onClick = {() => handleReset(matrix)}>{"Reset"}</Button>
+          <Button size="large" onClick = {() => handleFormSubmit(matrix)}>{"Submit"}</Button>
+        </div>
+          
+        
     </div>
 
   )

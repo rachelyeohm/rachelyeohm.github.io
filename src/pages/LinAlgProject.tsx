@@ -31,12 +31,8 @@ const LinAlgProject = () => {
     setOpenKey(e.key);
   };
   return (
-    <div style={{ display: 'flex' }}>
-      <div
-        style={{
-          width: 256,
-        }}
-      >
+    <div style={{ display: 'flex' , justifyContent : "center", width: '100vw'}}>
+      <div>
         <Button type="primary" onClick={navigateBack} style={{marginBottom: 16}}>
           <LeftOutlined/>
         </Button>
@@ -49,7 +45,7 @@ const LinAlgProject = () => {
           items={items}
         />
       </div>
-      <div style={{ marginLeft: 16 }}>
+      <div style={{width: '100vw', paddingLeft : 16, display : "flex", justifyContent : "center", alignItems : "center"}}>
         {openKey === 'rref' && <RREF/>}
         {openKey === 'solutions' && <Solutions/>}
         {openKey === 'linearindep' && <LinearIndependence/>}

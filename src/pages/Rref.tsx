@@ -14,7 +14,7 @@ const RREF = () => {
     return (
       <div>
         <div>
-            <Matrix onFormSubmit={handleFormSubmit}/>
+            <Matrix handleFormSubmit={handleFormSubmit}/>
             {submittedMatrix.length === 0 ? null : <DisplayRREF array={submittedMatrix}/>}
 
         </div>

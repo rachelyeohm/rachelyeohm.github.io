@@ -22,15 +22,11 @@ export const AugmentedMatrix  = ({onFormSubmit} : AugmentedMatrixProps) => {
     };
 
     useEffect(() => {
-      if (row > 0 && col > 0) {
-        const newMatrix = createZeroArray(row, col);
-        const newConstMatrix = createZeroArray(row, 1);
-        setCoefficientMatrix(newMatrix);
-        setConstantsMatrix(newConstMatrix);
-      } else {
-        setCoefficientMatrix([]);
-        setConstantsMatrix([]);
-      }
+      const newMatrix = createZeroArray(row, col);
+      const newConstMatrix = createZeroArray(row, col > 0 ? 1 : 0);
+      setCoefficientMatrix(newMatrix);
+      setConstantsMatrix(newConstMatrix);
+      
     }, [row, col]);
 
     
@@ -39,7 +35,7 @@ export const AugmentedMatrix  = ({onFormSubmit} : AugmentedMatrixProps) => {
       <div>
         <MatrixSizeForm text="Enter the number of rows" number={row} onChange={onRowChange}/>
         <MatrixSizeForm text="Enter the number of columns" number={col} onChange={onColChange}/>
-        <AugmentedMatrixForm coefficientMatrix={coefficientMatrix} setCoefficientMatrix={setCoefficientMatrix} constantsMatrix={constantsMatrix} setConstantsMatrix={setConstantsMatrix} onFormSubmit={onFormSubmit}/>
+        <AugmentedMatrixForm coefficientMatrix={coefficientMatrix} setCoefficientMatrix={setCoefficientMatrix} constantsMatrix={constantsMatrix} setConstantsMatrix={setConstantsMatrix} handleFormSubmit={onFormSubmit}/>
       </div>
     )
   }

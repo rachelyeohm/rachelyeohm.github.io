@@ -3,7 +3,7 @@ import createZeroArray from "../../utility/createZeroArray.tsx"
 import MatrixSizeForm from "./MatrixSizeForm.tsx"
 import MatrixForm from "./MatrixForm.tsx"
 
-const Matrix = ({onFormSubmit} : {onFormSubmit : (matrix : string[][]) => void}) => {
+const Matrix = ({handleFormSubmit: handleFormSubmit} : {handleFormSubmit : (matrix : string[][]) => void}) => {
     const [row, setRow] = useState(4);
     const [col, setCol] = useState(4);
     const [matrix, setMatrix] = useState<string[][]>([]);
@@ -15,12 +15,9 @@ const Matrix = ({onFormSubmit} : {onFormSubmit : (matrix : string[][]) => void})
       setRow(parseInt(event.target.value));
     };
     useEffect(() => {
-      if (row > 0 && col>0) {
-        const newMatrix = createZeroArray(row, col);
-        setMatrix(newMatrix);
-      } else {
-        setMatrix([]);
-      }
+      const newMatrix = createZeroArray(row, col);
+      setMatrix(newMatrix);
+      
     }, [row, col]);
   
           
@@ -29,7 +26,7 @@ const Matrix = ({onFormSubmit} : {onFormSubmit : (matrix : string[][]) => void})
         <MatrixSizeForm text="Enter the number of rows" number={row} onChange={onRowChange}/>
         <MatrixSizeForm text="Enter the number of columns" number={col} onChange={onColChange}/>
         <MatrixForm directed={true} matrix={matrix} 
-              setMatrix={setMatrix} onFormSubmit={onFormSubmit}/>
+              setMatrix={setMatrix} handleFormSubmit={handleFormSubmit}/>
        
       </div>
     )
@@ -51,19 +48,16 @@ const Matrix = ({onFormSubmit} : {onFormSubmit : (matrix : string[][]) => void})
     };
   
     useEffect(() => {
-      if (row > 0) {
-        const newMatrix : string[][] = createZeroArray(row, row);
-        setMatrix(newMatrix);
-      } else {
-        setMatrix([]);
-      }
+      const newMatrix : string[][] = createZeroArray(row, row);
+      setMatrix(newMatrix);
+      
     }, [row]);
   
   
     return (
       <div>
         <MatrixSizeForm text="Enter the number of rows/columns" number={row} onChange={onChange}/>
-        <MatrixForm directed={directed} matrix={matrix} setMatrix={setMatrix} onFormSubmit={onFormSubmit}/>
+        <MatrixForm directed={directed} matrix={matrix} setMatrix={setMatrix} handleFormSubmit={onFormSubmit}/>
       </div>
     )
   }
