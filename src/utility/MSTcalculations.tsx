@@ -3,7 +3,13 @@ import createZeroArrayNum from "./createZeroArray";
 
 import { PriorityQueue } from "./PriorityQueue";
 
+export type KruskalResultProps = {
+  edges: EdgeProps[], adjacencyMatrix: number[][]
+}
 
+export type PrimResultProps = {
+  start_vertex: string, vertices: string[], adjacencyMatrix: number[][]
+}
 export type EdgeProps  = {
     source : number,
     target : number,
@@ -33,7 +39,7 @@ const find = (parent : number[], i : number) : number => {
     }
   };
   
-  export const kruskal = (graph : number[][]) => {
+  export const kruskal = (graph : number[][]) : KruskalResultProps => {
     const n = graph.length;
     const parent = Array.from({ length: n }, (_, i) => i);
     const rank = Array(n).fill(0);
@@ -71,20 +77,9 @@ const find = (parent : number[], i : number) : number => {
   };
 
 
-function generateGraph(pairSet : EdgeProps[], graphLength : number, start_vertex : number) { 
-  let vertices : string[] = [];
-  let new_graph = createZeroArrayNum(graphLength, graphLength);
-  for (let i = 0; i < pairSet.length; i++) {
-      new_graph[pairSet[i].source][pairSet[i].target] = pairSet[i].weight;
-      new_graph[pairSet[i].target][pairSet[i].source] = pairSet[i].weight;
-      if (!vertices.includes(number_to_alpha(pairSet[i].target))) {
-        vertices.push(number_to_alpha(pairSet[i].target))
-      }
-  }      
-  return {start_vertex: number_to_alpha(start_vertex), vertices: vertices, adjacencyMatrix: new_graph};
-} 
+
  
-export function prim(graph : number[][], start_vertex : number) 
+export function prim(graph : number[][], start_vertex : number) : PrimResultProps
 { 
 
   const V = graph.length;
@@ -113,14 +108,11 @@ export function prim(graph : number[][], start_vertex : number)
   }
 
   key[start_vertex] = 0; 
-  console.log(key);
-  console.log(visited);
 
   for (let count = 0; count < V - 1; count++) { 
       let u : number = minKey(key, visited); 
       visited[u] = true; 
       for (let v = 0; v < V; v++) { 
-          console.log(u + " and " + v)
           if (u != -1 && v != -1 && graph[u][v] && !visited[v] && graph[u][v] < key[v]) { 
               parent[v] = u; 
               key[v] = graph[u][v]; 
@@ -136,3 +128,16 @@ export function prim(graph : number[][], start_vertex : number)
   return generateGraph(edgeSet, graph.length, start_vertex)
   
 }
+
+function generateGraph(pairSet : EdgeProps[], graphLength : number, start_vertex : number) { 
+  let vertices : string[] = [];
+  let new_graph = createZeroArrayNum(graphLength, graphLength);
+  for (let i = 0; i < pairSet.length; i++) {
+      new_graph[pairSet[i].source][pairSet[i].target] = pairSet[i].weight;
+      new_graph[pairSet[i].target][pairSet[i].source] = pairSet[i].weight;
+      if (!vertices.includes(number_to_alpha(pairSet[i].target))) {
+        vertices.push(number_to_alpha(pairSet[i].target))
+      }
+  }      
+  return {start_vertex: number_to_alpha(start_vertex), vertices: vertices, adjacencyMatrix: new_graph};
+} 
