@@ -1,5 +1,6 @@
 
 import createZeroArrayNum from "./createZeroArray";
+import { PriorityQueue } from "./PriorityQueue";
 
 export type KruskalResultProps = {
   edges: EdgeProps[], adjacencyMatrix: number[][]
@@ -78,49 +79,46 @@ const find = (parent : number[], i : number) : number => {
 
  
 export function prim(graph : number[][], start_vertex : number) : PrimResultProps
-{ 
+{   
+  let edgeSet : EdgeProps[] = []; //pairs of start vertex to end vertex and weights
+  let verticesInCut : number[] = [];
+  let verticesOutsideCut : number[] =  Array.from({ length: graph.length }, (_, i) => i)
 
-  const V = graph.length;
-  function minKey(key : number[], visited : boolean[]) { 
-    // Initialize min value 
-    let min = Number.MAX_VALUE, min_index = -1; 
-
-    for (let v = 0; v < V; v++) 
-        if (!visited[v] && key[v] < min) {
-            min = key[v];
-            min_index = v; 
+  let comparator = (a : EdgeProps, b : EdgeProps) => a.weight > b.weight
+  let equals = (a : EdgeProps, b : EdgeProps) => a.target == b.target
+  let PQ : PriorityQueue<EdgeProps>  = new PriorityQueue<EdgeProps>(comparator, equals)
+  let startEdge : EdgeProps = {source : start_vertex, target : start_vertex, weight: 0}
+  PQ.insert(startEdge)
+  while (verticesInCut.length < graph.length && verticesOutsideCut.length > 0) {
+    //if theres nothing in the PQ, pick another vertex and continue;
+    console.log(verticesInCut)
+    if (PQ.length() == 0) {
+      let chosenVertex : number = verticesOutsideCut.shift()!
+      for (let i = 0; i  < graph.length; i++) {
+        if (verticesOutsideCut.includes(i) && graph[chosenVertex][i] != 0) {
+           PQ.decreaseKey({source : chosenVertex, 
+                           target : i, 
+                           weight : graph[chosenVertex][i]})
         }
-
-      return min_index; 
-  } 
-  
-  let edgeSet : EdgeProps[] = [];
-  let parent : number[] = new Array(V); 
-  let key : number[] = new Array(V); 
-  let visited : boolean[] = new Array(V); 
-
-  for (let i = 0; i < V; i++) {
-      key[i] = Number.MAX_VALUE; 
-      visited[i] = false; 
-      parent[i] = -1;
-  }
-
-  key[start_vertex] = 0; 
-
-  for (let count = 0; count < V - 1; count++) { 
-      let u : number = minKey(key, visited); 
-      visited[u] = true; 
-      for (let v = 0; v < V; v++) { 
-          if (u != -1 && v != -1 && graph[u][v] && !visited[v] && graph[u][v] < key[v]) { 
-              parent[v] = u; 
-              key[v] = graph[u][v]; 
-          } 
-      } 
-  } 
-
-  for (let i = 1; i < V; i++) {
-    if (parent[i] != -1) {
-      edgeSet.push({source : parent[i], target: i, weight : graph[i][parent[i]]})
+      }
+      //put all the adjacent shit
+    } else {
+       //if theres sth in the PQ, extract the minimum;
+       let chosenEdge = PQ.extractMin()
+       console.log(chosenEdge)
+       if (verticesInCut.includes(chosenEdge.target)) continue
+       edgeSet.push(chosenEdge)
+       verticesInCut.push(chosenEdge.target)
+       verticesOutsideCut = verticesOutsideCut.filter(num => num != chosenEdge.target)
+       //add in new edges starting from chosenEdge.target
+       for (let i = 0; i  < graph.length; i++) {
+         if (verticesOutsideCut.includes(i) && graph[chosenEdge.target][i] != 0) {
+            console.log("inserting source: " + chosenEdge.target + " target: " + i + " weight : " + graph[chosenEdge.target][i])
+            PQ.decreaseKey({source : chosenEdge.target, 
+                            target : i, 
+                            weight : graph[chosenEdge.target][i]})
+         }
+       }
     }
   }
   return generateGraph(edgeSet, graph.length, start_vertex)

@@ -90,16 +90,11 @@ const DisplayKruskal = ({graphData, width, height, kruskalDict} : DisplayKruskal
           </div>
         </div>
       </div>
-      
-      
-  
+
       
     );
   };
   
-
-
-
 
   const DisplayPrim = ({graphData, width, height, primDict} : DisplayPrimProps) => {
     return (
