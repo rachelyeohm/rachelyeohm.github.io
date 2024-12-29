@@ -3,7 +3,7 @@ import createZeroArrayNum from "./createZeroArray";
 import { PriorityQueue } from "./PriorityQueue";
 
 export type KruskalResultProps = {
-  edges: EdgeProps[], adjacencyMatrix: number[][]
+  edges: EdgeProps[], adjacencyMatrixes: number[][][]
 }
 
 export type PrimResultProps = {
@@ -54,11 +54,12 @@ const find = (parent : number[], i : number) : number => {
     edges.sort((a, b) => a.weight - b.weight);    
   
     const result = [];
-    const minSpanningTree = createZeroArrayNum(n, n);
+    let minSpanningTree = createZeroArrayNum(n, n);
   
     const findParentOfSource = (edge : EdgeProps) => find(parent, edge.source);
     const findParentOfTarget = (edge : EdgeProps) => find(parent, edge.target);
   
+    const adjacencyMatrixes = [];
     for (let i = 0; i < edges.length; i++) {
       const { source, target, weight } = edges[i];
       const sourceParent = findParentOfSource(edges[i]);
@@ -68,11 +69,13 @@ const find = (parent : number[], i : number) : number => {
         result.push({ source, target, weight });
         minSpanningTree[source][target] = weight;
         minSpanningTree[target][source] = weight;
+        adjacencyMatrixes.push(minSpanningTree)
+        minSpanningTree = minSpanningTree.map(innerArray => [...innerArray]);
         union(parent, rank, sourceParent, targetParent)
       }
     }
   
-    return { edges: result, adjacencyMatrix: minSpanningTree }
+    return { edges: result, adjacencyMatrixes: adjacencyMatrixes }
   };
 
 

@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {SquareMatrix} from "../components/matrix/Matrix"
 import {kruskal, KruskalResultProps, PrimResultProps} from "../utility/MSTcalculations"
 import {prim} from "../utility/MSTcalculations"
@@ -13,7 +13,7 @@ const MST= () => {
 
   const [submittedMatrix, setSubmittedMatrix] = useState<string[][]>([])
   const [isMSTPossible, setIsMSTPossible] = useState(true)
-  const [kruskalDict, setKruskalDict] = useState<KruskalResultProps>({edges: [], adjacencyMatrix: []});
+  const [kruskalDict, setKruskalDict] = useState<KruskalResultProps>({edges: [], adjacencyMatrixes: []});
   const [primDict, setPrimDict] = useState<PrimResultProps>({start_vertex: "", vertices: [], adjacencyMatrix: []});
   const handleFormSubmit = (matrix : string[][]) => {
     setSubmittedMatrix(matrix)
@@ -83,41 +83,32 @@ const settings = {
 
 const DisplayKruskal = ({width, height, kruskalDict} : DisplayKruskalProps) => {
     
-    
+    const [slides, setSlides] = useState<any[]>([]);
+
+    useEffect(() => {
+      // Update kruskalSlides whenever kruskalDict changes
+      if (kruskalDict && kruskalDict.adjacencyMatrixes) {
+        const newSlides = kruskalDict.adjacencyMatrixes.map((matrix, _) => (
+          <Graph graphData={matrix} width={width} height={height} directed={false}/>
+        ));
+        setSlides(newSlides);
+      }
+    }, [kruskalDict, width, height]);
     return (
       <div>
         <h2>Kruskal's Algorithm</h2>
         <div style={{ display: 'flex' , justifyContent : "center"  }}>
         <div style = {{width : "300px"}}>
         <Slider {...settings}>
-        <div>
-          <h3>1</h3>
-        </div>
-        <div>
-          <h3>2</h3>
-        </div>
-        <div>
-          <h3>3</h3>
-        </div>
-        <div>
-          <h3>4</h3>
-        </div>
-        <div>
-          <h3>5</h3>
-        </div>
-        <div>
-          <h3>6</h3>
-        </div>
+        {slides.map(slide => {
+          return (
+            <div key={slide}>
+              <h3>{slide}</h3>
+            </div>
+          );
+        })}
       </Slider>
         </div>
-        
-          {/* <div  style={{ marginLeft: 32 }}>
-            <EdgeList edges={kruskalDict.edges}/>
-          </div>
-          <div style={{ marginLeft: 16 }}>
-            <p>Minimum Spanning Tree</p>
-            <Graph graphData = {kruskalDict.adjacencyMatrix} width={width} height={height} directed={false}/>
-          </div> */}
         </div>
       </div>
 
