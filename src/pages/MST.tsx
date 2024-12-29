@@ -5,8 +5,9 @@ import {prim} from "../utility/MSTcalculations"
 import { EdgeProps } from '../utility/MSTcalculations';
 import Graph from '../components/graph/Graph';
 import convertMatrixStrToFloat from '../utility/convertMatrixStrToFloat';
-
-
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 //for undirected
 const MST= () => {
 
@@ -33,12 +34,13 @@ const MST= () => {
             <>
             {isMSTPossible  ? 
             (<div>
+                  <p>Original graph</p>
+                  <Graph graphData = {convertMatrixStrToFloat(submittedMatrix)} width={600} height={200} directed={false}/>
                   <DisplayKruskal graphData={convertMatrixStrToFloat(submittedMatrix)} width={200} height={200}
                    kruskalDict={kruskalDict}/>
                   <DisplayPrim graphData={convertMatrixStrToFloat(submittedMatrix)} width={200} height={200}
                   primDict={primDict}/>
-            </div>
-            ) : 
+            </div>) : 
             <div style = {{display : "flex", justifyContent : "center"}}>
               A minimum spanning tree is not possible.
             </div>
@@ -68,26 +70,54 @@ type DisplayPrimProps = {
   primDict : PrimResultProps,
 }
 
-const DisplayKruskal = ({graphData, width, height, kruskalDict} : DisplayKruskalProps) => {
+
+const settings = {
+  dots: true,
+  infinite: false,
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1
+};
+
+
+
+const DisplayKruskal = ({width, height, kruskalDict} : DisplayKruskalProps) => {
     
-    const kruskal_dict = kruskal(graphData);
-    console.log(kruskal_dict.edges.length >= graphData.length - 1);
     
     return (
       <div>
         <h2>Kruskal's Algorithm</h2>
-        <div style={{ display: 'flex' }}>
-          <div>
-            <p>Original graph</p>
-            <Graph graphData = {graphData} width={width} height={height} directed={false}/>
-          </div>
-          <div  style={{ marginLeft: 32 }}>
+        <div style={{ display: 'flex' , justifyContent : "center"  }}>
+        <div style = {{width : "300px"}}>
+        <Slider {...settings}>
+        <div>
+          <h3>1</h3>
+        </div>
+        <div>
+          <h3>2</h3>
+        </div>
+        <div>
+          <h3>3</h3>
+        </div>
+        <div>
+          <h3>4</h3>
+        </div>
+        <div>
+          <h3>5</h3>
+        </div>
+        <div>
+          <h3>6</h3>
+        </div>
+      </Slider>
+        </div>
+        
+          {/* <div  style={{ marginLeft: 32 }}>
             <EdgeList edges={kruskalDict.edges}/>
           </div>
           <div style={{ marginLeft: 16 }}>
             <p>Minimum Spanning Tree</p>
             <Graph graphData = {kruskalDict.adjacencyMatrix} width={width} height={height} directed={false}/>
-          </div>
+          </div> */}
         </div>
       </div>
 
@@ -96,15 +126,11 @@ const DisplayKruskal = ({graphData, width, height, kruskalDict} : DisplayKruskal
   };
   
 
-  const DisplayPrim = ({graphData, width, height, primDict} : DisplayPrimProps) => {
+  const DisplayPrim = ({width, height, primDict} : DisplayPrimProps) => {
     return (
       <div>
         <h2>Prim's Algorithm</h2>
-        <div style={{ display: 'flex' }}>
-          <div>
-            <p>Original graph</p>
-            <Graph graphData = {graphData} width={width} height={height} directed={false}/>
-          </div>
+        <div style={{ display: 'flex', justifyContent : "center" }}>
           <div  style={{ marginLeft: 100 }}>
             <VertexList vertexList = {primDict}/>
           </div>

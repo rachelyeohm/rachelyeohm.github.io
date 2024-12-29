@@ -105,7 +105,6 @@ export function prim(graph : number[][], start_vertex : number) : PrimResultProp
     } else {
        //if theres sth in the PQ, extract the minimum;
        let chosenEdge = PQ.extractMin()
-       console.log(chosenEdge)
        if (verticesInCut.includes(chosenEdge.target)) continue
        edgeSet.push(chosenEdge)
        verticesInCut.push(chosenEdge.target)
