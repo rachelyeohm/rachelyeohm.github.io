@@ -1,13 +1,13 @@
 import CytoscapeComponent from 'react-cytoscapejs';
 import {createNodes, directed_stylesheet, undirected_stylesheet} from "./GraphFunction"
-import numberToAlpha from '../../utility/numberToAlpha';
+import { LIGHT_COLOUR, MAIN_COLOUR } from '../../main';
 
 type GraphProps = {
     graphData : number[][],
     width : number,
     height : number,
     directed : boolean,
-    highlightNodes?: number[]
+    highlightNodes?: string[]
 }
 
 const Graph = ({graphData, width, height, directed, highlightNodes} : GraphProps) => {
@@ -19,12 +19,12 @@ const Graph = ({graphData, width, height, directed, highlightNodes} : GraphProps
         ? [
             ...baseStylesheet,
             {
-                selector: highlightNodes.map(id => `node[id='${numberToAlpha(id)}']`).join(', '),
+                selector: highlightNodes.map(id => `node[id='${id}']`).join(', '),
                 style: {
-                    'background-color': 'yellow', // Highlight color
-                    'border-color': 'red',       // Optional: border styling for emphasis
+                    'background-color': LIGHT_COLOUR, // Highlight color
+                    'border-color': MAIN_COLOUR,  
                     'border-width': 2,
-                    'color': 'black'             // Text color (optional)
+                    'color': 'black'
                 }
             }
         ]

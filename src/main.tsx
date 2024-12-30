@@ -10,7 +10,8 @@ import GraphProject from './pages/GraphProject.tsx'
 import './index.css'
 
 
-// const { getDesignToken, useToken } = theme;
+export const MAIN_COLOUR : string = "#df2ab8"
+export const LIGHT_COLOUR : string = "#f7daf1"
 
 const config: ThemeConfig = {
     "token": {

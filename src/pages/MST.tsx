@@ -128,7 +128,8 @@ const DisplayKruskal = ({width, height, kruskalDict} : DisplayKruskalProps) => {
       if (primDict && primDict.generatedGraphs) {
         const newSlides = primDict.generatedGraphs.map((graph, i) => (
           <>
-          <Graph graphData={graph.adjacencyMatrix} width={width} height={height} directed={false}/>
+          <Graph graphData={graph.adjacencyMatrix} width={width} height={height} 
+              directed={false} highlightNodes={graph.vertices}/>
           <div style = {{display: "flex", justifyContent: "center", fontWeight: "normal", 
             fontSize: "16px"}}>
               Vertices added: {primDict.generatedGraphs[i].vertices.slice(-1)[0]}
