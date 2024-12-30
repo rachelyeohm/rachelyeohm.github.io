@@ -149,6 +149,7 @@ const DisplayKruskal = ({width, height, kruskalDict} : DisplayKruskalProps) => {
     };
 
     useEffect(() => {
+      setPrimDict({startVertex: "",generatedGraphs : []});
       setPrimDict(prim(graphData, selectedStartVertex))
     }, [selectedStartVertex])
 
@@ -168,6 +169,7 @@ const DisplayKruskal = ({width, height, kruskalDict} : DisplayKruskalProps) => {
     </select>
         <div style={{ display: 'flex', justifyContent : "center" }}>
             <div style = {{width: "300px"}}>
+              
             <Slider {...settings}>
               {slides.map(slide => {
                 return (
