@@ -218,3 +218,15 @@ button {
 {
     content: '⯇';
 }
+
+.dropdown {
+
+  width: 40px;
+  padding: 2px; /* Padding around the dropdown text */
+  border: none;
+  border-bottom: 1px solid #000; /* Line at the bottom */
+  background: transparent; /* No background rectangle */
+  font-size: 16px;
+  color: #333;
+  cursor: pointer;
+}

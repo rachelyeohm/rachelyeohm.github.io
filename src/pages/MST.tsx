@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import React, {SetStateAction, useEffect, useState} from 'react';
 import {SquareMatrix} from "../components/matrix/Matrix"
 import {kruskal, KruskalResultProps, PrimResultProps} from "../utility/MSTcalculations"
 import {prim} from "../utility/MSTcalculations"
@@ -7,6 +7,7 @@ import convertMatrixStrToFloat from '../utility/convertMatrixStrToFloat';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import numberToAlpha from '../utility/numberToAlpha';
 //for undirected
 const MST= () => {
 
@@ -38,7 +39,7 @@ const MST= () => {
                   <DisplayKruskal graphData={convertMatrixStrToFloat(submittedMatrix)} width={200} height={200}
                    kruskalDict={kruskalDict}/>
                   <DisplayPrim graphData={convertMatrixStrToFloat(submittedMatrix)} width={200} height={200}
-                  primDict={primDict}/>
+                  primDict={primDict} setPrimDict={setPrimDict}/>
             </div>) : 
             <div style = {{display : "flex", justifyContent : "center"}}>
               A minimum spanning tree is not possible.
@@ -66,6 +67,7 @@ type DisplayPrimProps = {
   width : number,
   height : number,
   primDict : PrimResultProps,
+  setPrimDict : React.Dispatch<SetStateAction<PrimResultProps>>
 }
 const settings = {
   dots: true,
@@ -96,6 +98,7 @@ const DisplayKruskal = ({width, height, kruskalDict} : DisplayKruskalProps) => {
         setSlides(newSlides);
       }
     }, [kruskalDict, width, height]);
+    
     return (
       <div>
         <h2>Kruskal's Algorithm</h2>
@@ -119,10 +122,10 @@ const DisplayKruskal = ({width, height, kruskalDict} : DisplayKruskalProps) => {
   };
   
 
-  const DisplayPrim = ({width, height, primDict} : DisplayPrimProps) => {
+  const DisplayPrim = ({graphData, width, height, primDict, setPrimDict} : DisplayPrimProps) => {
 
     const [slides, setSlides] = useState<any[]>([]);
-    console.log(primDict.generatedGraphs)
+    const [selectedStartVertex, setSelectedStartVertex] = useState<number>(0);
     useEffect(() => {
       // Update kruskalSlides whenever kruskalDict changes
       if (primDict && primDict.generatedGraphs) {
@@ -140,10 +143,29 @@ const DisplayKruskal = ({width, height, kruskalDict} : DisplayKruskalProps) => {
         setSlides(newSlides);
       }
     }, [primDict, width, height]);
+
+    const handleStartVertexChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+      setSelectedStartVertex(Number(event.target.value));
+    };
+
+    useEffect(() => {
+      setPrimDict(prim(graphData, selectedStartVertex))
+    }, [selectedStartVertex])
+
     return (
       <div>
         <h2>Prim's Algorithm</h2>
-        Start vertex: {primDict.startVertex}
+        Start vertex: &nbsp;
+        <select id="start vertex" name="start vertex" className="dropdown"
+           value={selectedStartVertex} onChange={handleStartVertexChange}>
+      {
+        primDict && primDict.generatedGraphs && Array.from(
+          { length: primDict.generatedGraphs[0].adjacencyMatrix.length }, (_, i) => (
+            <option value={i}>{numberToAlpha(i)}</option>
+          )
+        )
+      }
+    </select>
         <div style={{ display: 'flex', justifyContent : "center" }}>
             <div style = {{width: "300px"}}>
             <Slider {...settings}>
