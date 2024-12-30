@@ -2,7 +2,6 @@ import {useEffect, useState} from 'react';
 import {SquareMatrix} from "../components/matrix/Matrix"
 import {kruskal, KruskalResultProps, PrimResultProps} from "../utility/MSTcalculations"
 import {prim} from "../utility/MSTcalculations"
-import { EdgeProps } from '../utility/MSTcalculations';
 import Graph from '../components/graph/Graph';
 import convertMatrixStrToFloat from '../utility/convertMatrixStrToFloat';
 import Slider from "react-slick";
@@ -14,7 +13,7 @@ const MST= () => {
   const [submittedMatrix, setSubmittedMatrix] = useState<string[][]>([])
   const [isMSTPossible, setIsMSTPossible] = useState(true)
   const [kruskalDict, setKruskalDict] = useState<KruskalResultProps>({edges: [], adjacencyMatrixes: []});
-  const [primDict, setPrimDict] = useState<PrimResultProps>({start_vertex: "", vertices: [], adjacencyMatrix: []});
+  const [primDict, setPrimDict] = useState<PrimResultProps>({startVertex: "",generatedGraphs : []});
   const handleFormSubmit = (matrix : string[][]) => {
     setSubmittedMatrix(matrix)
     const kruskalDictNew = kruskal(convertMatrixStrToFloat(matrix))
@@ -55,7 +54,6 @@ const MST= () => {
 
 export default MST;
 
-
 type DisplayKruskalProps = {
     graphData : number[][],
     width : number,
@@ -69,8 +67,6 @@ type DisplayPrimProps = {
   height : number,
   primDict : PrimResultProps,
 }
-
-
 const settings = {
   dots: true,
   infinite: false,
@@ -79,8 +75,6 @@ const settings = {
   slidesToScroll: 1
 };
 
-
-
 const DisplayKruskal = ({width, height, kruskalDict} : DisplayKruskalProps) => {
     
     const [slides, setSlides] = useState<any[]>([]);
@@ -88,8 +82,16 @@ const DisplayKruskal = ({width, height, kruskalDict} : DisplayKruskalProps) => {
     useEffect(() => {
       // Update kruskalSlides whenever kruskalDict changes
       if (kruskalDict && kruskalDict.adjacencyMatrixes) {
-        const newSlides = kruskalDict.adjacencyMatrixes.map((matrix, _) => (
+        const newSlides = kruskalDict.adjacencyMatrixes.map((matrix, i) => (
+          <>
           <Graph graphData={matrix} width={width} height={height} directed={false}/>
+          <div style = {{display: "flex", justifyContent: "center", fontWeight: "normal", 
+            fontSize: "16px"}}>
+              Edge added from {number_to_alpha(kruskalDict.edges[i].source)} to {number_to_alpha(kruskalDict.edges[i].target)} with
+          weight {kruskalDict.edges[i].weight}
+          </div>
+          </>
+
         ));
         setSlides(newSlides);
       }
@@ -118,17 +120,42 @@ const DisplayKruskal = ({width, height, kruskalDict} : DisplayKruskalProps) => {
   
 
   const DisplayPrim = ({width, height, primDict} : DisplayPrimProps) => {
+
+    const [slides, setSlides] = useState<any[]>([]);
+    console.log(primDict.generatedGraphs)
+    useEffect(() => {
+      // Update kruskalSlides whenever kruskalDict changes
+      if (primDict && primDict.generatedGraphs) {
+        const newSlides = primDict.generatedGraphs.map((graph, i) => (
+          <>
+          <Graph graphData={graph.adjacencyMatrix} width={width} height={height} directed={false}/>
+          <div style = {{display: "flex", justifyContent: "center", fontWeight: "normal", 
+            fontSize: "16px"}}>
+              Vertices added: {primDict.generatedGraphs[i].vertices.slice(-1)[0]}
+          </div>
+          </>
+
+        ));
+        setSlides(newSlides);
+      }
+    }, [primDict, width, height]);
     return (
       <div>
         <h2>Prim's Algorithm</h2>
+        Start vertex: {primDict.startVertex}
         <div style={{ display: 'flex', justifyContent : "center" }}>
-          <div  style={{ marginLeft: 100 }}>
-            <VertexList vertexList = {primDict}/>
-          </div>
-          <div style={{ marginLeft: 100}}>
-            <p>Minimum Spanning Tree</p>
-            <Graph graphData = {primDict.adjacencyMatrix} width={width} height={height} directed={false}/>
-          </div>
+            <div style = {{width: "300px"}}>
+            <Slider {...settings}>
+              {slides.map(slide => {
+                return (
+                  <div key={slide}>
+                    <h3>{slide}</h3>
+                  </div>
+                );
+              })}
+            </Slider>
+            </div>
+            
         </div>
       </div>
   
@@ -139,63 +166,3 @@ const DisplayKruskal = ({width, height, kruskalDict} : DisplayKruskalProps) => {
   
   const number_to_alpha = (number : number) => String.fromCharCode(97 + number);
 
-  type VertexProps = {
-    start_vertex : string, 
-    vertices : string[], 
-    adjacencyMatrix : number[][]
-  }
-
-
-  const VertexList = ({ vertexList } : {vertexList : VertexProps}) => {
-    const listStyle = {
-        padding: 0,
-        margin: 0,
-        listStyleType: 'decimal',
-      };
-  
-      const listItemStyle = {
-        padding: 0,
-        margin: 0,
-        fontSize: '0.9em',  
-      };
-    return (
-      <div>
-        <p>Vertices added</p>
-        <p style = {listStyle}>Start vertex: {vertexList.start_vertex}</p>
-        <ol style={listStyle}>
-          {vertexList.vertices.map((vertex, index) => (
-            <li key={index} style={listItemStyle}>
-              Vertex added: {vertex}
-            </li>
-          ))}
-        </ol>
-      </div>
-    );
-  };
-
-  const EdgeList = ({ edges } : {edges : EdgeProps[]}) => {
-    const listStyle = {
-        padding: 0,
-        margin: 0,
-        listStyleType: 'decimal',
-      };
-  
-      const listItemStyle = {
-        padding: 0,
-        margin: 0,
-        fontSize: '0.9em',  
-      };
-    return (
-      <div>
-        <p>Edges added</p>
-        <ol style={listStyle}>
-          {edges.map((edge, index) => (
-            <li key={index} style={listItemStyle}>
-              First node: {number_to_alpha(edge.source)}, Second node: {number_to_alpha(edge.target)}, Weight: {edge.weight}
-            </li>
-          ))}
-        </ol>
-      </div>
-    );
-  };
-  

@@ -1,20 +1,18 @@
 import cytoscape from "cytoscape"
-const number_to_alpha = (number : number) => String.fromCharCode(97 + number);
-// function getDefaultStylesheet() {
-//   return [{ selector: "node", style: { label: "data(label)" } }];
-// }
+
+import numberToAlpha from "../../utility/numberToAlpha";
 
 export function createNodes(graphData : number[][], directed: boolean){
 
     var graphnodes = [];
     for (let i=0; i < graphData.length; i++){
-        graphnodes.push({data: {id : number_to_alpha(i), label: number_to_alpha(i)}})
+        graphnodes.push({data: {id : numberToAlpha(i), label: numberToAlpha(i)}})
     } 
     if (directed){
       for (let i=0; i < graphData.length; i++){
         for (let j=0; j < graphData.length; j++){
             if (graphData[i][j] > 0){
-              graphnodes.push({data: {source: number_to_alpha(i), target: number_to_alpha(j), label: graphData[i][j]}})
+              graphnodes.push({data: {source: numberToAlpha(i), target: numberToAlpha(j), label: graphData[i][j]}})
             }
         }
       }
@@ -31,8 +29,8 @@ export function createNodes(graphData : number[][], directed: boolean){
             if (!visitedEdges.includes(edgeKey) && !visitedEdges.includes(reverseEdgeKey)) {
               graphnodes.push({
                 data: {
-                  source: number_to_alpha(j),
-                  target: number_to_alpha(i),
+                  source: numberToAlpha(j),
+                  target: numberToAlpha(i),
                   label: graphData[i][j]
                 }
               });
@@ -44,8 +42,8 @@ export function createNodes(graphData : number[][], directed: boolean){
         if (graphData[i][i] > 0) {
           graphnodes.push({
               data: {
-                source: number_to_alpha(i),
-                target: number_to_alpha(i),
+                source: numberToAlpha(i),
+                target: numberToAlpha(i),
                 label: graphData[i][i]
               }
             });

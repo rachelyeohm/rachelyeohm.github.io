@@ -6,8 +6,12 @@ export type KruskalResultProps = {
   edges: EdgeProps[], adjacencyMatrixes: number[][][]
 }
 
+export type GraphProps = {
+  vertices: string[]
+  adjacencyMatrix: number[][]
+}
 export type PrimResultProps = {
-  start_vertex: string, vertices: string[], adjacencyMatrix: number[][]
+  startVertex: string, generatedGraphs: GraphProps[]
 }
 export type EdgeProps  = {
     source : number,
@@ -81,8 +85,9 @@ const find = (parent : number[], i : number) : number => {
 
 
  
-export function prim(graph : number[][], start_vertex : number) : PrimResultProps
+export function prim(graph : number[][], startVertex : number) : PrimResultProps
 {   
+  let generatedGraphs : GraphProps[] = [];
   let edgeSet : EdgeProps[] = []; //pairs of start vertex to end vertex and weights
   let verticesInCut : number[] = [];
   let verticesOutsideCut : number[] =  Array.from({ length: graph.length }, (_, i) => i)
@@ -90,7 +95,7 @@ export function prim(graph : number[][], start_vertex : number) : PrimResultProp
   let comparator = (a : EdgeProps, b : EdgeProps) => a.weight > b.weight
   let equals = (a : EdgeProps, b : EdgeProps) => a.target == b.target
   let PQ : PriorityQueue<EdgeProps>  = new PriorityQueue<EdgeProps>(comparator, equals)
-  let startEdge : EdgeProps = {source : start_vertex, target : start_vertex, weight: 0}
+  let startEdge : EdgeProps = {source : startVertex, target : startVertex, weight: 0}
   PQ.insert(startEdge)
   while (verticesInCut.length < graph.length && verticesOutsideCut.length > 0) {
     //if theres nothing in the PQ, pick another vertex and continue;
@@ -110,6 +115,7 @@ export function prim(graph : number[][], start_vertex : number) : PrimResultProp
        let chosenEdge = PQ.extractMin()
        if (verticesInCut.includes(chosenEdge.target)) continue
        edgeSet.push(chosenEdge)
+       generatedGraphs.push(generateGraph(edgeSet, graph.length));
        verticesInCut.push(chosenEdge.target)
        verticesOutsideCut = verticesOutsideCut.filter(num => num != chosenEdge.target)
        //add in new edges starting from chosenEdge.target
@@ -123,11 +129,12 @@ export function prim(graph : number[][], start_vertex : number) : PrimResultProp
        }
     }
   }
-  return generateGraph(edgeSet, graph.length, start_vertex)
+  
+  return {startVertex : number_to_alpha(startVertex), generatedGraphs : generatedGraphs}
   
 }
 
-function generateGraph(pairSet : EdgeProps[], graphLength : number, start_vertex : number) { 
+function generateGraph(pairSet : EdgeProps[], graphLength : number) : GraphProps{ 
   let vertices : string[] = [];
   let new_graph = createZeroArrayNum(graphLength, graphLength);
   for (let i = 0; i < pairSet.length; i++) {
@@ -137,5 +144,5 @@ function generateGraph(pairSet : EdgeProps[], graphLength : number, start_vertex
         vertices.push(number_to_alpha(pairSet[i].target))
       }
   }      
-  return {start_vertex: number_to_alpha(start_vertex), vertices: vertices, adjacencyMatrix: new_graph};
+  return {vertices: vertices, adjacencyMatrix: new_graph};
 } 
