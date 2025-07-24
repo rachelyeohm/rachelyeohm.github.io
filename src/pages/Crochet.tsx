@@ -1,7 +1,8 @@
 import React from 'react';
-import { Row, Col, Card } from 'antd';
+import { Row, Col, Card, Modal, Carousel } from 'antd';
 import { useState } from 'react';
 import { Meta } from 'antd/es/list/Item';
+import { Item } from '../utility/getCrochetItems';
 
 
 import { generateItems } from '../utility/getCrochetItems';
@@ -9,22 +10,27 @@ import { generateItems } from '../utility/getCrochetItems';
 const items = generateItems();
 const width = 300
 
+
+function getItemById(id: number | undefined): Item | undefined {
+  return items.find(item => item.id === id);
+}
+
 const ImageGrid: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [currentFolder, setCurrentFolder] = useState<string | null>(null);
-  const [imageCount, setImageCount] = useState<number>(3); // assume each item has 3 slides max
+  const [currentId, setCurrentId] = useState<number>(1);
 
-  const handleOpen = (folder: string) => {
-    setCurrentFolder(folder);
+  const handleOpen = (id : number) => {
+    setCurrentId(id);
     setIsModalOpen(true);
   };
 
   const handleClose = () => {
     setIsModalOpen(false);
-    setCurrentFolder(null);
+    setCurrentId(1);
   };
   return (
     <div>
+      <div style = {{height : "20px"}}></div>
       <div>
         <h2 style={{display : "flex", justifyContent : "center", color : "rgb(255,122,186)"}}> Crochet Gallery ♡</h2>
       </div>
@@ -56,7 +62,7 @@ const ImageGrid: React.FC = () => {
                     src={item.front_image} />
                   
                   }
-                onClick = {() => handleOpen(item.front_image)}
+                onClick = {() => handleOpen(item.id)}
               >
                 <Meta
                   style = {{
@@ -72,7 +78,27 @@ const ImageGrid: React.FC = () => {
         ))}
       </Row>
       </div>
-
+      <Modal
+        open={isModalOpen}
+        onCancel={handleClose}
+        footer={null}
+        centered
+        width={600}
+        bodyStyle={{ padding: 0 }}
+      >
+        <Carousel autoplay>
+          {currentId &&
+            getItemById(currentId)!.images.map((src, idx) => (
+              <div key={idx}>
+                <img
+                  src={src}
+                  alt={`Slide ${idx + 1}`}
+                  style={{ width: '100%', maxHeight: '500px', objectFit: 'contain' }}
+                />
+              </div>
+            ))}
+        </Carousel>
+      </Modal>
     </div>
     
   );

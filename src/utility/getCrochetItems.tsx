@@ -1,11 +1,11 @@
 // If you're using Vite
 const imageModules = import.meta.glob('/src/images/*/*.jpg', { eager: true, as: 'url' });
 
-type Item = {
+export type Item = {
   id: number;
   key: string;
   front_image: string;
-  image_count: number;
+  images: string[];
   description: string;
 };
 
@@ -47,9 +47,9 @@ export function generateItems(): Item[] {
   // Generate final items
   const items: Item[] = Object.entries(folderImages).map(([key, images], idx) => ({
     id: idx + 1,
-    key,
+    key: key,
     front_image: images[0],
-    image_count: images.length,
+    images: images,
     description: descriptions[key] ?? 'No description yet',
   }));
 
