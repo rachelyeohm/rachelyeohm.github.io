@@ -13,6 +13,9 @@ const RREF = () => {
     //
     return (
       <div>
+        <div style = {{display : "flex", alignSelf : "center"}}>
+            Find the RREF
+        </div>
         <div>
             <Matrix handleFormSubmit={handleFormSubmit}/>
             {submittedMatrix.length === 0 ? null : <DisplayRREF array={submittedMatrix}/>}

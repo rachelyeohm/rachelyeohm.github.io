@@ -6,8 +6,9 @@ import {ConfigProvider} from 'antd';
 
 import Home from './pages/Home.tsx'
 import LinAlgProject from './pages/LinAlgProject.tsx'
-import GraphProject from './pages/GraphProject.tsx'
+import Crochet from './pages/Crochet.tsx'
 import './index.css'
+import Math from './pages/Math.tsx';
 
 
 // const { getDesignToken, useToken } = theme;
@@ -36,7 +37,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/linear_algebra" element={<LinAlgProject />} />
-          <Route path="/graph_theory" element={<GraphProject />} />
+          <Route path="/crochet" element={<Crochet />} />
+          <Route path="/math" element={<Math />} />
         </Routes>
       </BrowserRouter>
     </ConfigProvider>
