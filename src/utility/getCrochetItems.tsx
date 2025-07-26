@@ -17,8 +17,8 @@ const descriptions: Record<string, string> = {
   kokomi : 'A large doll of Kokomi from Genshin Impact. Clothes are removable (in case I want to make more clothes for her)',
   miku : 'A small doll of Hatsune Miku. My favourite!',
   mizuki : 'A small doll of Mizuki from Project Sekai. I crocheted the ribbed cuffs on the ends of the sleeves and jacket myself (third slide)',
-  sparkle : 'A small doll of Sparkle from Honkai Star Rail. I crocheted and painted the tiny flower myself (third slide)'
-  // ... add the rest
+  sparkle : 'A small doll of Sparkle from Honkai Star Rail. I crocheted and painted the tiny flower myself (third slide)',
+  cinnamoroll : 'A tapestry piece of Cinnamoroll, made with popcorn stitches.'
 };
 
 export function generateItems(): Item[] {

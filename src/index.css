@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -118,4 +119,27 @@ button {
   display : flex;
   justify-content: center;
   gap : 10px;
+}
+
+.my-masonry-grid {
+  display: -webkit-box; /* Not needed if autoprefixing */
+  display: -ms-flexbox; /* Not needed if autoprefixing */
+  display: flex;
+  margin-left: -30px; /* gutter size offset */
+  width: auto;
+}
+.my-masonry-grid_column {
+  padding-left: 30px; /* gutter size */
+  background-clip: padding-box;
+}
+
+/* Style your individual items */
+.masonry-item-wrapper {
+  margin-bottom: 30px; /* Space between items vertically */
+}
+
+.ant-carousel .slick-prev,.ant-carousel .slick-next {
+
+    color: #756161;
+    opacity: 0.8;
 }
