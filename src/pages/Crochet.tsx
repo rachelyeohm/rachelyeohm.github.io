@@ -1,10 +1,7 @@
 import React from 'react';
 import {useNavigate} from 'react-router-dom';
 import { Card, Modal, Carousel } from 'antd';
-import { Button} from 'antd';
-import {
-  LeftOutlined, 
-} from '@ant-design/icons';
+
 import { useState } from 'react';
 import { Meta } from 'antd/es/list/Item';
 import { Item } from '../utility/getCrochetItems';
