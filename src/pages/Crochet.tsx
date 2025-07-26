@@ -1,6 +1,6 @@
 import React from 'react';
 import {useNavigate} from 'react-router-dom';
-import { Row, Col, Card, Modal, Carousel } from 'antd';
+import { Card, Modal, Carousel } from 'antd';
 import { Button} from 'antd';
 import {
   LeftOutlined, 
