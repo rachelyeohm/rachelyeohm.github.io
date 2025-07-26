@@ -30,8 +30,9 @@ const Solutions = () => {
     
 
     return (
-      <div>
-        <div>
+
+        <div  className = "general" style = {{width : "60vw", display : "flex", justifyContent : "center"}}>
+            <a className = "math-title">Find number of solutions</a>
             <AugmentedMatrix onFormSubmit={handleFormSubmit}/>
             <p className='general-no-space'>The reduced row-echelon form is {submittedCoeffMatrix.length === 0 
                   ? "_____"
@@ -47,7 +48,6 @@ const Solutions = () => {
                     : displaySolutions(solutions.solution)}</p>
         </div>
             
-      </div>
         
     );
 }

@@ -1,10 +1,8 @@
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import { Menu , Button} from 'antd';
+import { Menu } from 'antd';
 import type { MenuProps } from 'antd';
-import {
-  LeftOutlined, 
-} from '@ant-design/icons';
+import { BackButton } from '../ui/BackButton.tsx';
 import RREF from "./Rref.tsx";
 import Solutions from "./Solutions.tsx";
 import LinearIndependence from "./LinearIndependence.tsx";
@@ -51,9 +49,7 @@ const Math = () => {
   return (
     <div style={{ display: 'flex' , justifyContent : "center", width: '100vw'}}>
       <div>
-        <Button type="primary" onClick={navigateBack} style={{marginBottom: 16}}>
-          <LeftOutlined/>
-        </Button>
+         <BackButton onClick={navigateBack} color={"var(--math-color-dark"}/>
         <Menu
           defaultSelectedKeys={['rref']}
           defaultOpenKeys={['rref']}
@@ -67,7 +63,7 @@ const Math = () => {
         {openKey === 'rref' && <RREF/>}
         {openKey === 'solutions' && <Solutions/>}
         {openKey === 'linearindep' && <LinearIndependence/>}
-        {openKey === 'graph' && <GraphVisualisation/>}
+        {openKey === 'graphvis' && <GraphVisualisation/>}
         {openKey === 'tree' && <MST />}
       </div>
     </div>

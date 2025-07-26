@@ -9,13 +9,9 @@ const Home = () => {
 
   return (
 
-
-          <div style = {{paddingLeft: 30, fontFamily: "Inter"}}>
-        <div>
-          <h1>Home</h1>
-          <p>Welcome to math!</p>
-        </div>
-        <div style={{ display: 'flex', flexDirection: "column", alignContent: "center",   justifyContent: 'center' }}>
+    <div style = {{display : "flex",  width : "100vw", justifyContent : "center", alignItems : "center"}}>
+        <div style={{ display: 'flex', margin : "0 auto", flexDirection: "column", alignContent: "center",   justifyContent: 'center' }}>
+          <p style = {{fontSize : "32px"}}>Welcome to my website!</p>
           <div >
             <MainButton name = "Math" onClick = {()=>navigate("/math")}/>
             <p>Functionality:</p>
@@ -30,7 +26,7 @@ const Home = () => {
           </div>
         </div>
           
-      </div>
+   </div>
     
     
   );

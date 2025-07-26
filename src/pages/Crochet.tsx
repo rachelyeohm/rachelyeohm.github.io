@@ -9,15 +9,13 @@ import { useState } from 'react';
 import { Meta } from 'antd/es/list/Item';
 import { Item } from '../utility/getCrochetItems';
 import Masonry from 'react-masonry-css';
+import { BackButton } from '../ui/BackButton';
 
 
 import { generateItems } from '../utility/getCrochetItems';
 
 const items = generateItems();
 const width = 300
-const theme_color = "rgb(189, 149, 160)"
-const theme_color_dark = "rgb(85, 47, 57)"
-
 
 const breakpointColumnsObj = {
   default: 2, // 2 columns by default (for larger screens)
@@ -47,14 +45,7 @@ const ImageGrid: React.FC = () => {
   };
   return (
     <div>
-      <Button type="primary" onClick={navigateBack} 
-      style={{
-        marginBottom: 16, 
-        background : "#ffffff", 
-        boxShadow: "0 0 0",
-        color : theme_color_dark}}>
-          <LeftOutlined/> Back
-        </Button>
+      <BackButton onClick={navigateBack} color={"var(--crochet-color-dark"}/>
     <div style={{
     minHeight: "100vh", 
     width: "100vw",    
@@ -68,8 +59,8 @@ const ImageGrid: React.FC = () => {
         <a style={{display : "flex", 
               fontWeight : "bold",
               justifyContent : "center", 
-              fontSize : 28,
-              color : theme_color}}> Crochet Gallery ♡</a>
+              fontSize : 26,
+              color : "var(--crochet-color)"}}> Crochet Gallery ♡</a>
 
         <a style={{display : "flex", 
               justifyContent : "center", 
@@ -157,7 +148,7 @@ const ImageCarousel = ({currentId} : {currentId : number}) => {
   if (itemCount == undefined) {
     return <></>
   } else if (itemCount > 1  ) {
-    return <Carousel arrows autoplay >
+    return <Carousel arrows >
           {currentId &&
             currentItem!.images.map((src, idx) => (
               <div key={idx} style={{ width: '100%', maxHeight: '500px', objectFit: 'contain' }}>
@@ -170,7 +161,7 @@ const ImageCarousel = ({currentId} : {currentId : number}) => {
             ))}
         </Carousel>
   } else {
-    return <Carousel autoplay >
+    return <Carousel >
           {currentId &&
             currentItem!.images.map((src, idx) => (
               <div key={idx} style={{ width: '100%', maxHeight: '500px', objectFit: 'contain' }}>

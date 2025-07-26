@@ -12,17 +12,16 @@ const RREF = () => {
   
     //
     return (
-      <div>
-        <div style = {{display : "flex", alignSelf : "center"}}>
-            Find the RREF
-        </div>
-        <div>
+
+
+        
+        <div  className = "general" style = {{width : "60vw", display : "flex", justifyContent : "center"}}>
+            <a className = "math-title">Find the RREF</a>
             <Matrix handleFormSubmit={handleFormSubmit}/>
             {submittedMatrix.length === 0 ? null : <DisplayRREF array={submittedMatrix}/>}
 
         </div>
-            
-      </div>
+
         
     );
   };

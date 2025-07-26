@@ -14,7 +14,8 @@ const GraphVisualisation= () => {
         setSubmittedMatrix(matrix);
     }
     return (
-        <div>
+        <div className='general'>
+            <a className = "math-title">Visualise your graph!</a>
             <p className='general'>Here, an adjacency matrix is used to represent a graph.</p>
             <SquareMatrix directed = {true} onFormSubmit = {handleFormSubmit} />
             
