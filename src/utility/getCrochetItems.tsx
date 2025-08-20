@@ -37,12 +37,12 @@ export function generateItems(): Item[] {
   }
 
   // Sort images in each folder by index
-  Object.values(folderImages).forEach((arr) =>
-    arr.sort((a, b) => {
-      const getNum = (s: string) => parseInt(s.match(/(\d+)\.jpg$/)?.[1] || '0');
-      return getNum(a) - getNum(b);
-    })
-  );
+  // Object.values(folderImages).forEach((arr) =>
+  //   arr.sort((a, b) => {
+  //     const getNum = (s: string) => parseInt(s.match(/(\d+)\.jpg$/)?.[1] || '0');
+  //     return getNum(a) - getNum(b);
+  //   })
+  // );
 
   // Generate final items
   const items: Item[] = Object.entries(folderImages).map(([key, images], idx) => ({
