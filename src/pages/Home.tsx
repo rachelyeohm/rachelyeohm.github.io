@@ -13,6 +13,8 @@ const Home = () => {
         <div style={{ display: 'flex', margin : "0 auto", flexDirection: "column", alignContent: "center",   justifyContent: 'center' }}>
           <p style = {{fontSize : "32px"}}>Welcome to my website!</p>
           <div >
+            <MainButton name = "Projects" onClick = {()=>navigate("/projects")}/>
+            <p>View details about my past projects!</p>
             <MainButton name = "Math" onClick = {()=>navigate("/math")}/>
             <p>Functionality:</p>
               <ul>

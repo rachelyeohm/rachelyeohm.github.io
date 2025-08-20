@@ -8,11 +8,13 @@
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
+  --home-color: #f17fa7;
   --math-color-dark: #6f185c;
   --math-color: #df2ab8;
   --math-color-light: #faeaf5;
   --crochet-color : rgb(189, 149, 160);
   --crochet-color-dark : rgb(85, 47, 57);
+  --project-color : rgb(130, 12, 189);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -48,6 +50,11 @@ button {
   background-color: lightpink; /* Light pink background */
 }
 
+
+.ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover {
+  color : var(--home-color);
+  border-color : var(--home-color);
+}
 
 @media (prefers-color-scheme: light) {
   :root {
@@ -171,4 +178,13 @@ button {
 :where(.css-dev-only-do-not-override-1okl62o).ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover {
   color : var(--math-color);
   border-color : var(--math-color);
+}
+
+.projects .ant-menu-light.ant-menu-horizontal >.ant-menu-item-selected, .ant-menu.ant-menu-horizontal >.ant-menu-submenu-selected {
+    color: var(--project-color);
+    background-color: transparent;
+}
+.projects .ant-menu-light.ant-menu-horizontal >.ant-menu-item-selected::after,.ant-menu-light>.ant-menu.ant-menu-horizontal >.ant-menu-submenu-selected::after {
+    border-bottom-width: 2px;
+    border-bottom-color: var(--project-color);
 }
